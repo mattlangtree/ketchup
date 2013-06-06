@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Ketchup' target in the 'Ketchup' project
+//
+
+#ifdef __OBJC__
+  #import <Cocoa/Cocoa.h>
+#endif

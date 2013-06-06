@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3871F651175FF34200AB5900 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3871F650175FF34200AB5900 /* Cocoa.framework */; };
+		3871F65B175FF34200AB5900 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3871F659175FF34200AB5900 /* InfoPlist.strings */; };
+		3871F65D175FF34200AB5900 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F65C175FF34200AB5900 /* main.m */; };
+		3871F661175FF34200AB5900 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3871F65F175FF34200AB5900 /* Credits.rtf */; };
+		3871F664175FF34200AB5900 /* KDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F663175FF34200AB5900 /* KDocument.m */; };
+		3871F667175FF34200AB5900 /* KDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3871F665175FF34200AB5900 /* KDocument.xib */; };
+		3871F66A175FF34200AB5900 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3871F668175FF34200AB5900 /* MainMenu.xib */; };
+		3871F672175FF34200AB5900 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3871F671175FF34200AB5900 /* SenTestingKit.framework */; };
+		3871F673175FF34200AB5900 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3871F650175FF34200AB5900 /* Cocoa.framework */; };
+		3871F67B175FF34200AB5900 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3871F679175FF34200AB5900 /* InfoPlist.strings */; };
+		3871F67E175FF34200AB5900 /* KetchupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F67D175FF34200AB5900 /* KetchupTests.m */; };
+		3871F68D175FFA9F00AB5900 /* appicon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 3871F68C175FFA9F00AB5900 /* appicon.iconset */; };
+		3871F690175FFDEA00AB5900 /* KDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F68F175FFDEA00AB5900 /* KDocumentController.m */; };
+		3871F6991760025200AB5900 /* KSVNDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F6971760025200AB5900 /* KSVNDocument.m */; };
+		3871F69E1760026B00AB5900 /* KGitDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F69C1760026B00AB5900 /* KGitDocument.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3871F674175FF34200AB5900 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3871F645175FF34200AB5900 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3871F64C175FF34200AB5900;
+			remoteInfo = Ketchup;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3871F64D175FF34200AB5900 /* Ketchup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ketchup.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3871F650175FF34200AB5900 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		3871F653175FF34200AB5900 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		3871F654175FF34200AB5900 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		3871F655175FF34200AB5900 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3871F658175FF34200AB5900 /* Ketchup-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ketchup-Info.plist"; sourceTree = "<group>"; };
+		3871F65A175FF34200AB5900 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3871F65C175FF34200AB5900 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3871F65E175FF34200AB5900 /* Ketchup-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ketchup-Prefix.pch"; sourceTree = "<group>"; };
+		3871F660175FF34200AB5900 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		3871F662175FF34200AB5900 /* KDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KDocument.h; sourceTree = "<group>"; };
+		3871F663175FF34200AB5900 /* KDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KDocument.m; sourceTree = "<group>"; };
+		3871F666175FF34200AB5900 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KDocument.xib; sourceTree = "<group>"; };
+		3871F669175FF34200AB5900 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		3871F670175FF34200AB5900 /* KetchupTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KetchupTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3871F671175FF34200AB5900 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		3871F678175FF34200AB5900 /* KetchupTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KetchupTests-Info.plist"; sourceTree = "<group>"; };
+		3871F67A175FF34200AB5900 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3871F67C175FF34200AB5900 /* KetchupTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KetchupTests.h; sourceTree = "<group>"; };
+		3871F67D175FF34200AB5900 /* KetchupTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KetchupTests.m; sourceTree = "<group>"; };
+		3871F687175FF35100AB5900 /* Ketchup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Ketchup.entitlements; sourceTree = "<group>"; };
+		3871F68C175FFA9F00AB5900 /* appicon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = appicon.iconset; sourceTree = "<group>"; };
+		3871F68E175FFDEA00AB5900 /* KDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDocumentController.h; sourceTree = "<group>"; };
+		3871F68F175FFDEA00AB5900 /* KDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDocumentController.m; sourceTree = "<group>"; };
+		3871F6961760025200AB5900 /* KSVNDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSVNDocument.h; sourceTree = "<group>"; };
+		3871F6971760025200AB5900 /* KSVNDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSVNDocument.m; sourceTree = "<group>"; };
+		3871F69B1760026B00AB5900 /* KGitDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGitDocument.h; sourceTree = "<group>"; };
+		3871F69C1760026B00AB5900 /* KGitDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGitDocument.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3871F64A175FF34200AB5900 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3871F651175FF34200AB5900 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3871F66C175FF34200AB5900 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3871F672175FF34200AB5900 /* SenTestingKit.framework in Frameworks */,
+				3871F673175FF34200AB5900 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3871F644175FF34200AB5900 = {
+			isa = PBXGroup;
+			children = (
+				3871F68C175FFA9F00AB5900 /* appicon.iconset */,
+				3871F656175FF34200AB5900 /* Ketchup */,
+				3871F676175FF34200AB5900 /* KetchupTests */,
+				3871F64F175FF34200AB5900 /* Frameworks */,
+				3871F64E175FF34200AB5900 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3871F64E175FF34200AB5900 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3871F64D175FF34200AB5900 /* Ketchup.app */,
+				3871F670175FF34200AB5900 /* KetchupTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3871F64F175FF34200AB5900 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3871F650175FF34200AB5900 /* Cocoa.framework */,
+				3871F671175FF34200AB5900 /* SenTestingKit.framework */,
+				3871F652175FF34200AB5900 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3871F652175FF34200AB5900 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3871F653175FF34200AB5900 /* AppKit.framework */,
+				3871F654175FF34200AB5900 /* CoreData.framework */,
+				3871F655175FF34200AB5900 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		3871F656175FF34200AB5900 /* Ketchup */ = {
+			isa = PBXGroup;
+			children = (
+				3871F687175FF35100AB5900 /* Ketchup.entitlements */,
+				3871F68E175FFDEA00AB5900 /* KDocumentController.h */,
+				3871F68F175FFDEA00AB5900 /* KDocumentController.m */,
+				3871F662175FF34200AB5900 /* KDocument.h */,
+				3871F663175FF34200AB5900 /* KDocument.m */,
+				3871F665175FF34200AB5900 /* KDocument.xib */,
+				3871F6961760025200AB5900 /* KSVNDocument.h */,
+				3871F6971760025200AB5900 /* KSVNDocument.m */,
+				3871F69B1760026B00AB5900 /* KGitDocument.h */,
+				3871F69C1760026B00AB5900 /* KGitDocument.m */,
+				3871F668175FF34200AB5900 /* MainMenu.xib */,
+				3871F657175FF34200AB5900 /* Supporting Files */,
+			);
+			path = Ketchup;
+			sourceTree = "<group>";
+		};
+		3871F657175FF34200AB5900 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3871F658175FF34200AB5900 /* Ketchup-Info.plist */,
+				3871F659175FF34200AB5900 /* InfoPlist.strings */,
+				3871F65C175FF34200AB5900 /* main.m */,
+				3871F65E175FF34200AB5900 /* Ketchup-Prefix.pch */,
+				3871F65F175FF34200AB5900 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3871F676175FF34200AB5900 /* KetchupTests */ = {
+			isa = PBXGroup;
+			children = (
+				3871F67C175FF34200AB5900 /* KetchupTests.h */,
+				3871F67D175FF34200AB5900 /* KetchupTests.m */,
+				3871F677175FF34200AB5900 /* Supporting Files */,
+			);
+			path = KetchupTests;
+			sourceTree = "<group>";
+		};
+		3871F677175FF34200AB5900 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3871F678175FF34200AB5900 /* KetchupTests-Info.plist */,
+				3871F679175FF34200AB5900 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3871F64C175FF34200AB5900 /* Ketchup */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3871F681175FF34200AB5900 /* Build configuration list for PBXNativeTarget "Ketchup" */;
+			buildPhases = (
+				3871F649175FF34200AB5900 /* Sources */,
+				3871F64A175FF34200AB5900 /* Frameworks */,
+				3871F64B175FF34200AB5900 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Ketchup;
+			productName = Ketchup;
+			productReference = 3871F64D175FF34200AB5900 /* Ketchup.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3871F66F175FF34200AB5900 /* KetchupTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3871F684175FF34200AB5900 /* Build configuration list for PBXNativeTarget "KetchupTests" */;
+			buildPhases = (
+				3871F66B175FF34200AB5900 /* Sources */,
+				3871F66C175FF34200AB5900 /* Frameworks */,
+				3871F66D175FF34200AB5900 /* Resources */,
+				3871F66E175FF34200AB5900 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3871F675175FF34200AB5900 /* PBXTargetDependency */,
+			);
+			name = KetchupTests;
+			productName = KetchupTests;
+			productReference = 3871F670175FF34200AB5900 /* KetchupTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3871F645175FF34200AB5900 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = K;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Abhi Beckert";
+			};
+			buildConfigurationList = 3871F648175FF34200AB5900 /* Build configuration list for PBXProject "Ketchup" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3871F644175FF34200AB5900;
+			productRefGroup = 3871F64E175FF34200AB5900 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3871F64C175FF34200AB5900 /* Ketchup */,
+				3871F66F175FF34200AB5900 /* KetchupTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3871F64B175FF34200AB5900 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3871F65B175FF34200AB5900 /* InfoPlist.strings in Resources */,
+				3871F661175FF34200AB5900 /* Credits.rtf in Resources */,
+				3871F667175FF34200AB5900 /* KDocument.xib in Resources */,
+				3871F66A175FF34200AB5900 /* MainMenu.xib in Resources */,
+				3871F68D175FFA9F00AB5900 /* appicon.iconset in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3871F66D175FF34200AB5900 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3871F67B175FF34200AB5900 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3871F66E175FF34200AB5900 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3871F649175FF34200AB5900 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3871F65D175FF34200AB5900 /* main.m in Sources */,
+				3871F664175FF34200AB5900 /* KDocument.m in Sources */,
+				3871F690175FFDEA00AB5900 /* KDocumentController.m in Sources */,
+				3871F6991760025200AB5900 /* KSVNDocument.m in Sources */,
+				3871F69E1760026B00AB5900 /* KGitDocument.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3871F66B175FF34200AB5900 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3871F67E175FF34200AB5900 /* KetchupTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3871F675175FF34200AB5900 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3871F64C175FF34200AB5900 /* Ketchup */;
+			targetProxy = 3871F674175FF34200AB5900 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3871F659175FF34200AB5900 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3871F65A175FF34200AB5900 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3871F65F175FF34200AB5900 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3871F660175FF34200AB5900 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		3871F665175FF34200AB5900 /* KDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3871F666175FF34200AB5900 /* en */,
+			);
+			name = KDocument.xib;
+			sourceTree = "<group>";
+		};
+		3871F668175FF34200AB5900 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3871F669175FF34200AB5900 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		3871F679175FF34200AB5900 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3871F67A175FF34200AB5900 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3871F67F175FF34200AB5900 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3871F680175FF34200AB5900 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		3871F682175FF34200AB5900 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Ketchup/Ketchup.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Ketchup/Ketchup-Prefix.pch";
+				INFOPLIST_FILE = "Ketchup/Ketchup-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3871F683175FF34200AB5900 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Ketchup/Ketchup.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Ketchup/Ketchup-Prefix.pch";
+				INFOPLIST_FILE = "Ketchup/Ketchup-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		3871F685175FF34200AB5900 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Ketchup.app/Contents/MacOS/Ketchup";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Ketchup/Ketchup-Prefix.pch";
+				INFOPLIST_FILE = "KetchupTests/KetchupTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		3871F686175FF34200AB5900 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Ketchup.app/Contents/MacOS/Ketchup";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Ketchup/Ketchup-Prefix.pch";
+				INFOPLIST_FILE = "KetchupTests/KetchupTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3871F648175FF34200AB5900 /* Build configuration list for PBXProject "Ketchup" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3871F67F175FF34200AB5900 /* Debug */,
+				3871F680175FF34200AB5900 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3871F681175FF34200AB5900 /* Build configuration list for PBXNativeTarget "Ketchup" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3871F682175FF34200AB5900 /* Debug */,
+				3871F683175FF34200AB5900 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		3871F684175FF34200AB5900 /* Build configuration list for PBXNativeTarget "KetchupTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3871F685175FF34200AB5900 /* Debug */,
+				3871F686175FF34200AB5900 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3871F645175FF34200AB5900 /* Project object */;
+}
