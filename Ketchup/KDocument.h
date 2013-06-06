@@ -7,9 +7,38 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <QuartzCore/QuartzCore.h>
 
-@interface KDocument : NSDocument
+@interface KDocument : NSDocument <NSSplitViewDelegate>
 
+// window (created by in xib file)
 @property (strong) IBOutlet NSWindow *window;
+
+// main window split view, and it's two child views
+@property (strong) NSSplitView *windowSplitView;
+@property (strong) NSView *sidebarView;
+@property (strong) NSView *contentView;
+
+// "remote" section at the top of the sidebar
+@property (strong) NSView *remoteView;
+@property (strong) NSTextField *remoteLabel;
+@property (strong) NSButton *remoteSyncButton;
+@property (strong) NSImageView *remoteStatusIconView;
+@property (strong) NSTextField *remoteStatusField;
+
+// "files" section in the sidebar
+@property (strong) NSView *filesView;
+@property (strong) NSTextField *filesLabel;
+@property (strong) NSOutlineView *filesOutlineView;
+
+// "commit" section at the bottom of the sidebar
+@property (strong) NSView *commitView;
+@property (strong) NSTextField *commitLabel;
+@property (strong) NSTextView *commitTextView;
+@property (strong) NSButton *commitAutoSyncButton;
+@property (strong) NSButton *commitButton;
+
+// main text view to display diff of the selected file
+@property (strong) NSTextView *diffView;
 
 @end

@@ -30,34 +30,88 @@
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
+  [self.window setFrame:NSMakeRect(0, 0, 900, 600) display:NO];
+  [self.window center];
+  self.window.minSize = NSMakeSize(400, 300);
+  
+  CGFloat windowHeight = [self.window.contentView frame].size.height;
+  CGFloat sidebarWidth = 250;
+  CGFloat contentWidth = [self.window.contentView frame].size.width - sidebarWidth;
+  
+  // create window
   [super windowControllerDidLoadNib:aController];
   
+  self.window.title = [self.fileURL.path stringByAbbreviatingWithTildeInPath];
+  self.window.representedURL = self.fileURL;
   
-  NSTextField *label = [[NSTextField alloc] initWithFrame:NSMakeRect(10, 10, 600, 20)];
-  label.editable = NO;
-  label.bordered = NO;
-  label.backgroundColor = [NSColor clearColor];
-  label.stringValue = self.fileURL ? [self.fileURL description] : @"(nil)";
-  [self.window.contentView addSubview:label];
+  // create sidebar views
+  self.sidebarView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, windowHeight)];
   
-  label = [[NSTextField alloc] initWithFrame:NSMakeRect(10, 30, 600, 20)];
-  label.editable = NO;
-  label.backgroundColor = [NSColor clearColor];
-  label.bordered = NO;
-  label.stringValue = NSStringFromClass([self class]);
-  [self.window.contentView addSubview:label];
+  self.remoteView = [[NSView alloc] initWithFrame:NSMakeRect(0, windowHeight - 100, sidebarWidth, 100)];
+  self.remoteView.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
+  self.sidebarView.wantsLayer = YES;
+  self.sidebarView.layer = [CAGradientLayer layer];
+  self.sidebarView.layer.frame = self.sidebarView.bounds;
+  ((CAGradientLayer *)self.sidebarView.layer).colors = @[(id)([NSColor colorWithDeviceRed:0.82 green:0.85 blue:0.88 alpha:1.0].CGColor), (id)([NSColor colorWithDeviceRed:0.87 green:0.89 blue:0.91 alpha:1.0].CGColor)];
+  
+  [self.sidebarView addSubview:self.remoteView];
+  
+  self.remoteLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.remoteLabel.backgroundColor = [NSColor clearColor];
+  self.remoteLabel.editable = NO;
+  self.remoteLabel.bordered = NO;
+  self.remoteLabel.font = [NSFont boldSystemFontOfSize:13];
+  self.remoteLabel.stringValue = @"Remote";
+  [self.remoteLabel sizeToFit];
+  self.remoteLabel.frame = NSMakeRect(14, 100 - 9 - self.remoteLabel.frame.size.height, self.remoteLabel.frame.size.width, self.remoteLabel.frame.size.height);
+  [self.remoteView addSubview:self.remoteLabel];
+  
+  self.remoteSyncButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.remoteSyncButton.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+  self.remoteSyncButton.title = [self syncButtonTitle];
+  self.remoteSyncButton.buttonType = NSMomentaryLightButton;
+  self.remoteSyncButton.bezelStyle = NSRoundedBezelStyle;
+  [self.remoteSyncButton sizeToFit];
+  self.remoteSyncButton.frame = NSMakeRect(sidebarWidth - 10 - self.remoteSyncButton.frame.size.width, 100 - 5 - self.remoteSyncButton.frame.size.height, self.remoteSyncButton.frame.size.width, self.remoteSyncButton.frame.size.height);
+  [self.remoteView addSubview:self.remoteSyncButton];
+  
+  // create content views
+  self.contentView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, contentWidth, windowHeight)];
+  
+  // create split view
+  self.windowSplitView = [[NSSplitView alloc] initWithFrame:[self.window.contentView bounds]];
+  self.windowSplitView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+  [self.windowSplitView setVertical:YES];
+  self.windowSplitView.delegate = self;
+  [self.windowSplitView addSubview:self.sidebarView];
+  [self.windowSplitView addSubview:self.contentView];
+  [self.windowSplitView setPosition:sidebarWidth ofDividerAtIndex:0];
+  [self.window.contentView addSubview:self.windowSplitView];
   
   [self.window makeKeyAndOrderFront:self];
-}
-
-+ (BOOL)autosavesInPlace
-{
-    return YES;
 }
 
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError
 {
   return YES;
+}
+
+- (BOOL)splitView:(NSSplitView *)splitView shouldAdjustSizeOfSubview:(NSView *)view
+{
+  if (view == self.sidebarView)
+    return NO;
+  
+  return YES;
+}
+
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
+{
+  return MAX(150, proposedMinimumPosition);
+}
+
+- (NSString *)syncButtonTitle
+{
+  return @"Sync";
 }
 
 @end

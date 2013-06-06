@@ -22,6 +22,7 @@
 		3871F690175FFDEA00AB5900 /* KDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F68F175FFDEA00AB5900 /* KDocumentController.m */; };
 		3871F6991760025200AB5900 /* KSVNDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F6971760025200AB5900 /* KSVNDocument.m */; };
 		3871F69E1760026B00AB5900 /* KGitDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F69C1760026B00AB5900 /* KGitDocument.m */; };
+		3875E49217608D11002D427E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3875E49117608D11002D427E /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		3871F6971760025200AB5900 /* KSVNDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSVNDocument.m; sourceTree = "<group>"; };
 		3871F69B1760026B00AB5900 /* KGitDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGitDocument.h; sourceTree = "<group>"; };
 		3871F69C1760026B00AB5900 /* KGitDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGitDocument.m; sourceTree = "<group>"; };
+		3875E49117608D11002D427E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3875E49217608D11002D427E /* QuartzCore.framework in Frameworks */,
 				3871F651175FF34200AB5900 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,6 +92,7 @@
 		3871F644175FF34200AB5900 = {
 			isa = PBXGroup;
 			children = (
+				3875E49117608D11002D427E /* QuartzCore.framework */,
 				3871F68C175FFA9F00AB5900 /* appicon.iconset */,
 				3871F656175FF34200AB5900 /* Ketchup */,
 				3871F676175FF34200AB5900 /* KetchupTests */,
@@ -493,6 +497,7 @@
 				3871F683175FF34200AB5900 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3871F684175FF34200AB5900 /* Build configuration list for PBXNativeTarget "KetchupTests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +506,7 @@
 				3871F686175FF34200AB5900 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
