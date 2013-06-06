@@ -23,6 +23,8 @@
 		3871F6991760025200AB5900 /* KSVNDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F6971760025200AB5900 /* KSVNDocument.m */; };
 		3871F69E1760026B00AB5900 /* KGitDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F69C1760026B00AB5900 /* KGitDocument.m */; };
 		3875E49217608D11002D427E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3875E49117608D11002D427E /* QuartzCore.framework */; };
+		3875E4961760B667002D427E /* led-up-to-date.png in Resources */ = {isa = PBXBuildFile; fileRef = 3875E4941760B667002D427E /* led-up-to-date.png */; };
+		3875E4971760B667002D427E /* led-up-to-date@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3875E4951760B667002D427E /* led-up-to-date@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +59,7 @@
 		3871F67C175FF34200AB5900 /* KetchupTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KetchupTests.h; sourceTree = "<group>"; };
 		3871F67D175FF34200AB5900 /* KetchupTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KetchupTests.m; sourceTree = "<group>"; };
 		3871F687175FF35100AB5900 /* Ketchup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Ketchup.entitlements; sourceTree = "<group>"; };
-		3871F68C175FFA9F00AB5900 /* appicon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = appicon.iconset; sourceTree = "<group>"; };
+		3871F68C175FFA9F00AB5900 /* appicon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = appicon.iconset; path = ../appicon.iconset; sourceTree = "<group>"; };
 		3871F68E175FFDEA00AB5900 /* KDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDocumentController.h; sourceTree = "<group>"; };
 		3871F68F175FFDEA00AB5900 /* KDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDocumentController.m; sourceTree = "<group>"; };
 		3871F6961760025200AB5900 /* KSVNDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSVNDocument.h; sourceTree = "<group>"; };
@@ -65,6 +67,8 @@
 		3871F69B1760026B00AB5900 /* KGitDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGitDocument.h; sourceTree = "<group>"; };
 		3871F69C1760026B00AB5900 /* KGitDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGitDocument.m; sourceTree = "<group>"; };
 		3875E49117608D11002D427E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3875E4941760B667002D427E /* led-up-to-date.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "led-up-to-date.png"; path = "artwork/led-up-to-date.png"; sourceTree = SOURCE_ROOT; };
+		3875E4951760B667002D427E /* led-up-to-date@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "led-up-to-date@2x.png"; path = "artwork/led-up-to-date@2x.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +97,6 @@
 			isa = PBXGroup;
 			children = (
 				3875E49117608D11002D427E /* QuartzCore.framework */,
-				3871F68C175FFA9F00AB5900 /* appicon.iconset */,
 				3871F656175FF34200AB5900 /* Ketchup */,
 				3871F676175FF34200AB5900 /* KetchupTests */,
 				3871F64F175FF34200AB5900 /* Frameworks */,
@@ -152,6 +155,7 @@
 		3871F657175FF34200AB5900 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3875E4931760B64D002D427E /* artwork */,
 				3871F658175FF34200AB5900 /* Ketchup-Info.plist */,
 				3871F659175FF34200AB5900 /* InfoPlist.strings */,
 				3871F65C175FF34200AB5900 /* main.m */,
@@ -178,6 +182,16 @@
 				3871F679175FF34200AB5900 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3875E4931760B64D002D427E /* artwork */ = {
+			isa = PBXGroup;
+			children = (
+				3871F68C175FFA9F00AB5900 /* appicon.iconset */,
+				3875E4941760B667002D427E /* led-up-to-date.png */,
+				3875E4951760B667002D427E /* led-up-to-date@2x.png */,
+			);
+			name = artwork;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +271,8 @@
 				3871F667175FF34200AB5900 /* KDocument.xib in Resources */,
 				3871F66A175FF34200AB5900 /* MainMenu.xib in Resources */,
 				3871F68D175FFA9F00AB5900 /* appicon.iconset in Resources */,
+				3875E4961760B667002D427E /* led-up-to-date.png in Resources */,
+				3875E4971760B667002D427E /* led-up-to-date@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
