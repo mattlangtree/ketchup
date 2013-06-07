@@ -10,4 +10,9 @@
 
 @implementation KSVNDocument
 
+- (NSString *)syncButtonTitle
+{
+  return @"Update";
+}
+
 @end
