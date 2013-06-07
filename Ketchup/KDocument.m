@@ -37,6 +37,7 @@
   CGFloat windowHeight = [self.window.contentView frame].size.height;
   CGFloat sidebarWidth = 250;
   CGFloat contentWidth = [self.window.contentView frame].size.width - sidebarWidth;
+  CGFloat commitMessageHeight = 200;
   
   // create window
   [super windowControllerDidLoadNib:aController];
@@ -137,6 +138,59 @@
   scrollViewBottomBorder.alphaValue = 0.25;
   [self.filesView addSubview:scrollViewBottomBorder];
   
+  
+  self.commitView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, commitMessageHeight)];
+  self.remoteView.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
+  [self.sidebarView addSubview:self.commitView];
+  
+  self.commitLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.commitLabel.autoresizingMask = NSViewHeightSizable | NSViewWidthSizable;
+  self.commitLabel.font = [NSFont boldSystemFontOfSize:13];
+  self.commitLabel.textColor = [NSColor colorWithDeviceRed:0.44 green:0.49 blue:0.55 alpha:1.0];
+  self.commitLabel.shadow = [[NSShadow alloc] init];
+  self.commitLabel.shadow.shadowOffset = NSMakeSize(0, 1);
+  self.commitLabel.shadow.shadowBlurRadius = 0.25;
+  self.commitLabel.shadow.shadowColor = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+  self.commitLabel.stringValue = @"COMMIT";
+  self.commitLabel.editable = NO;
+  [self.commitLabel sizeToFit];
+  self.commitLabel.backgroundColor = [NSColor clearColor];
+  self.commitLabel.bordered = NO;
+  self.commitLabel.frame = NSMakeRect(10, commitMessageHeight - 9 - self.commitLabel.frame.size.height, self.commitLabel.frame.size.width, self.commitLabel.frame.size.height);
+  
+  [self.commitView addSubview:self.commitLabel];
+  
+  self.commitTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.commitTextView.font = [NSFont systemFontOfSize:13];
+  self.commitTextView.textColor = [NSColor blackColor];
+  
+  NSScrollView *commitScrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(10, 40, sidebarWidth-20, commitMessageHeight-80)];
+  commitScrollView.backgroundColor = [NSColor redColor];
+  commitScrollView.documentView = self.commitTextView;
+  commitScrollView.hasVerticalScroller = YES;
+  commitScrollView.autoresizesSubviews = YES;
+  commitScrollView.autoresizingMask = NSViewMinYMargin;
+  [self.commitView addSubview:commitScrollView];
+  self.commitTextView.frame = NSMakeRect(10, 10, commitScrollView.frame.size.width, commitScrollView.frame.size.height);
+  
+  self.commitAutoSyncButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.commitAutoSyncButton.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+  self.commitAutoSyncButton.title = [self autoSyncButtonTitle];
+  self.commitAutoSyncButton.buttonType = NSSwitchButton;
+  self.commitAutoSyncButton.bezelStyle = NSRoundedBezelStyle;
+  [self.commitAutoSyncButton sizeToFit];
+  self.commitAutoSyncButton.frame = NSMakeRect(10, 10, sidebarWidth - 20, 20);
+  [self.commitView addSubview:self.commitAutoSyncButton];
+  
+  self.commitButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.commitButton.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+  self.commitButton.title = @"Commit";
+  self.commitButton.buttonType = NSMomentaryLightButton;
+  self.commitButton.bezelStyle = NSRoundedBezelStyle;
+  [self.commitButton sizeToFit];
+  self.commitButton.frame = NSMakeRect(sidebarWidth - 16 - self.commitButton.frame.size.width, 4, self.commitButton.frame.size.width + 6, self.commitButton.frame.size.height + 1);
+  [self.commitView addSubview:self.commitButton];
+  
   // create content views
   self.contentView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, contentWidth, windowHeight)];
   
@@ -175,6 +229,11 @@
 - (NSString *)syncButtonTitle
 {
   return @"Sync";
+}
+
+- (NSString *)autoSyncButtonTitle
+{
+  return @"Auto-sync";
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
