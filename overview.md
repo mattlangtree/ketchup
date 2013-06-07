@@ -9,15 +9,13 @@ Ketchup is a version control app that allows you to keep your "Sauce" code versi
 - Put it on the App Store
 - Choose a news outlet like theverge, arstechnica, macstories, macworld etc and put an embargo on the app (get one of them to exclusively cover it and involve them in final builds before offering it to the public). Lex Friedman (Unprofessional/MacWorld) suggested this one.
 
-## Advantage over competitors: ##
+## Advantage over competitors:
 - Simplicity
 - It works exactly how we want
 - You get SVN and Git support in one app.
 
-## Other possible features: ##
-- Open a folder in Ketchup from Terminal.app by typing `kcommit .` or `kcommit /Library/WebServer/Documents/sequelpro.com/`
-- 
-
+## Other possible features: 
+- Open a folder in Ketchup from Terminal.app by typing kcommit .` or `kcommit /Library/WebServer/Documents/sequelpro.com/`
 
 ## Other avenues to explore:
 - Integration with text editors (what's involved?)
@@ -64,15 +62,15 @@ https://developer.apple.com/xcode/
 
 ### Pricing Tiers
 
-Pricing Option 1 — Public Beta
+**Pricing Option 1 — Public Beta**
 Do what kaleidoscope did and offer a free public beta with the intention of paying.
-Offer a beta-stage purchase price. (30% cost)
-Offer a launch day pricing (50% cost)
-Normal costing after 1 week (100% cost)
+- Offer a beta-stage purchase price. (30% cost)
+- Offer a launch day pricing (50% cost)
+- Normal costing after 1 week (100% cost)
 
-Pricing Option 2 — Public Version 
-Launch week pricing 50% cost
-Normal costing after 1 week (100% cost)
+**Pricing Option 2 — Public Version**
+- Launch week pricing 50% cost
+- Normal costing after 1 week (100% cost)
 
 
 ### Comparing pricing models:
