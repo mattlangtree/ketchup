@@ -15,7 +15,7 @@ Ketchup is a version control app that allows you to keep your "Sauce" code versi
 - You get SVN and Git support in one app.
 
 ## Other possible features: 
-- Open a folder in Ketchup from Terminal.app by typing kcommit .` or `kcommit /Library/WebServer/Documents/sequelpro.com/`
+- Open a folder in Ketchup from Terminal.app by typing `kcommit .` or `kcommit /Library/WebServer/Documents/sequelpro.com/`
 
 ## Other avenues to explore:
 - Integration with text editors (what's involved?)
