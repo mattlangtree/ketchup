@@ -1,4 +1,4 @@
-# App Brief
+# App Brief #
 
 Ketchup is a version control app that allows you to keep your "Sauce" code versioned. It’s main user base would be developers or anybody that does iterative work and half a brain. Think of it as the best thing since sliced bread.
 
@@ -9,12 +9,12 @@ Ketchup is a version control app that allows you to keep your "Sauce" code versi
 - Put it on the App Store
 - Choose a news outlet like theverge, arstechnica, macstories, macworld etc and put an embargo on the app (get one of them to exclusively cover it and involve them in final builds before offering it to the public). Lex Friedman (Unprofessional/MacWorld) suggested this one.
 
-## Advantage over competitors:
+## Advantage over competitors: ##
 - Simplicity
 - It works exactly how we want
 - You get SVN and Git support in one app.
 
-## Other possible features:
+## Other possible features: ##
 - Open a folder in Ketchup from Terminal.app by typing `kcommit .` or `kcommit /Library/WebServer/Documents/sequelpro.com/`
 - 
 
