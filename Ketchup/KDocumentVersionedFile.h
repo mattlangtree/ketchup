@@ -25,6 +25,7 @@ typedef NS_OPTIONS(NSUInteger, KDocumentVersionedFileStatus) {
 @property (readonly) NSURL *fileUrl;
 @property (readonly) KDocumentVersionedFileStatus status;
 @property (readonly) NSString *humanReadibleStatus;
+@property (readonly) BOOL isWarningStatus; // status is deleted, conflict, untracked, etc
 
 + (id)fileWithUrl:(NSURL *)url status:(KDocumentVersionedFileStatus)status;
 - (id)initWithUrl:(NSURL *)url status:(KDocumentVersionedFileStatus)status;

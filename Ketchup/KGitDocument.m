@@ -64,8 +64,13 @@
       NSLog(@"failed to parse git output");
       return @[];
     }
+    nonWhitespaceLocation = [scanString rangeOfCharacterFromSet:whitespaceCharacters.invertedSet options:0 range:NSMakeRange(whitespaceLocation, scanString.length - whitespaceLocation)].location;
+    if (nonWhitespaceLocation == NSNotFound) {
+      NSLog(@"failed to parse git output");
+      return @[];
+    }
     NSString *statusString = [scanString substringToIndex:whitespaceLocation];
-    NSString *filePathString = [scanString substringFromIndex:whitespaceLocation + 1];
+    NSString *filePathString = [scanString substringFromIndex:nonWhitespaceLocation];
     
     // decode the status
     KDocumentVersionedFileStatus status = 0;
@@ -103,8 +108,8 @@
     
     // create a url and make sure it actually exists (to see if we decoded the string properly)
     NSURL *fileUrl = [self.fileURL URLByAppendingPathComponent:filePathString];
-    if (!fileUrl || ![[NSFileManager defaultManager] fileExistsAtPath:fileUrl.path]) {
-      NSLog(@"cannot find file '%@'", filePathString);
+    if (!fileUrl) {
+      NSLog(@"cannot find file '%@' in '%@'", filePathString, scanString);
       return @[];
     }
     

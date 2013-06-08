@@ -73,6 +73,16 @@
   return [statusStrings componentsJoinedByString:@", "];
 }
 
+- (BOOL)isWarningStatus
+{
+  if (self.status & KFileStatusUntracked)
+    return YES;
+  if (self.status & KFileStatusDeleted)
+    return YES;
+  
+  return NO;
+}
+
 - (NSString *)description
 {
   return [NSString stringWithFormat:@"Versioned File: %@ - %@", self.fileUrl.path.stringByAbbreviatingWithTildeInPath, self.humanReadibleStatus];
