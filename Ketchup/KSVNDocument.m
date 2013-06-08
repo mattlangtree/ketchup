@@ -17,19 +17,7 @@
 
 - (void)commit
 {
-  NSLog(@"Commit not implemented for SVN. yet.");
+  NSLog(@"Commit not implemented for SVN yet.");
 }
-
-- (void)addFiles
-{
-  
-}
-
-- (void)commitFiles
-{
-  
-}
-
-
 
 @end
