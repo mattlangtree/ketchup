@@ -25,6 +25,7 @@
 		3875E49217608D11002D427E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3875E49117608D11002D427E /* QuartzCore.framework */; };
 		3875E4961760B667002D427E /* led-up-to-date.png in Resources */ = {isa = PBXBuildFile; fileRef = 3875E4941760B667002D427E /* led-up-to-date.png */; };
 		3875E4971760B667002D427E /* led-up-to-date@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3875E4951760B667002D427E /* led-up-to-date@2x.png */; };
+		38C8A3BB1762CF50005DBC23 /* KDocumentVersionedFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3BA1762CF50005DBC23 /* KDocumentVersionedFile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,8 @@
 		3875E49117608D11002D427E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3875E4941760B667002D427E /* led-up-to-date.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "led-up-to-date.png"; path = "artwork/led-up-to-date.png"; sourceTree = SOURCE_ROOT; };
 		3875E4951760B667002D427E /* led-up-to-date@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "led-up-to-date@2x.png"; path = "artwork/led-up-to-date@2x.png"; sourceTree = SOURCE_ROOT; };
+		38C8A3B91762CF50005DBC23 /* KDocumentVersionedFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDocumentVersionedFile.h; sourceTree = "<group>"; };
+		38C8A3BA1762CF50005DBC23 /* KDocumentVersionedFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDocumentVersionedFile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +149,8 @@
 				3871F6971760025200AB5900 /* KSVNDocument.m */,
 				3871F69B1760026B00AB5900 /* KGitDocument.h */,
 				3871F69C1760026B00AB5900 /* KGitDocument.m */,
+				38C8A3B91762CF50005DBC23 /* KDocumentVersionedFile.h */,
+				38C8A3BA1762CF50005DBC23 /* KDocumentVersionedFile.m */,
 				3871F668175FF34200AB5900 /* MainMenu.xib */,
 				3871F657175FF34200AB5900 /* Supporting Files */,
 			);
@@ -312,6 +317,7 @@
 				3871F690175FFDEA00AB5900 /* KDocumentController.m in Sources */,
 				3871F6991760025200AB5900 /* KSVNDocument.m in Sources */,
 				3871F69E1760026B00AB5900 /* KGitDocument.m in Sources */,
+				38C8A3BB1762CF50005DBC23 /* KDocumentVersionedFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
