@@ -41,4 +41,11 @@
 // main text view to display diff of the selected file
 @property (strong) NSTextView *diffView;
 
+// User authentication dialog
+@property (strong) NSTextField *usernameTextField;
+@property (strong) NSSecureTextField *passwordTextField;
+@property (strong) NSButton *storePasswordButton;
+
+- (void)showAuthenticationDialog:(id)sender;
+
 @end

@@ -351,22 +351,58 @@
 
 
 #pragma mark - Core Version Control functionality 
-// (git and SVN to subclass)
 
 - (void)commit
 {
-//  [self addFiles];
-//  [self commitFiles];
+  NSLog(@"%s: subclass should implement this.", __PRETTY_FUNCTION__);
 }
 
-- (void)addFiles
+- (void)showAuthenticationDialog:(id)sender
 {
+  CGFloat textFieldHeight = 23;
   
+  NSView *authenticationView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 280, 110)];
+  
+  self.usernameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.usernameTextField.font = [NSFont systemFontOfSize:13];
+  self.usernameTextField.stringValue = @"";
+  [(NSTextFieldCell *)self.usernameTextField.cell setPlaceholderString:@"Username"];
+  self.usernameTextField.backgroundColor = [NSColor clearColor];
+  self.usernameTextField.frame = NSMakeRect(0, authenticationView.frame.size.height - textFieldHeight - 10, 245, textFieldHeight);
+  [authenticationView addSubview:self.usernameTextField];
+
+  self.passwordTextField = [[NSSecureTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.passwordTextField.font = [NSFont systemFontOfSize:13];
+  self.passwordTextField.stringValue = @"";
+  [(NSTextFieldCell *)self.passwordTextField.cell setPlaceholderString:@"Password"];
+  self.passwordTextField.backgroundColor = [NSColor clearColor];
+  self.passwordTextField.frame = NSMakeRect(0, authenticationView.frame.size.height - 2 * (textFieldHeight + 10), 245, textFieldHeight);
+  [authenticationView addSubview:self.passwordTextField];
+  
+  self.storePasswordButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.storePasswordButton.title = @"Save password in Keychain";
+  self.storePasswordButton.buttonType = NSSwitchButton;
+  self.storePasswordButton.bezelStyle = NSRoundedBezelStyle;
+  [self.storePasswordButton sizeToFit];
+  self.storePasswordButton.frame = NSMakeRect(0, 10, 200, 20);
+  [authenticationView addSubview:self.storePasswordButton];
+  
+  NSAlert *alert = [[NSAlert alloc] init];
+  [alert addButtonWithTitle:@"OK"];
+  [alert addButtonWithTitle:@"Cancel"];
+  [alert setMessageText:@"Repository Authenticate"];
+  [alert setInformativeText:@"For Ketchup to sync with your remote server we need a username and password"];
+  [alert setAlertStyle:NSInformationalAlertStyle];
+  [alert setAccessoryView:authenticationView];
+  NSInteger result = [alert runModal];
+  
+  if ( result == NSAlertFirstButtonReturn ) { // OK button
+    NSLog(@"first button");
+  }
+//  else if ( result == NSAlertSecondButtonReturn ) { // Cancel button
+//    NSLog(@"second button");
+//  }
 }
 
-- (void)commitFiles
-{
-  
-}
 
 @end

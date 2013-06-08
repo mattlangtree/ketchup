@@ -184,11 +184,17 @@
 
 - (void)pushFiles
 {
+  // Need to add logic in here to make sure that the authentication dialog is
+  // shown if the user hasn't authenticated with git yet.
+  
+//  [self showAuthenticationDialog:self.commitButton];
+//  return;
+  
   NSLog(@"Current directory: %@",self.fileURL.path);
   
   NSTask *task = [[NSTask alloc] init];
   task.launchPath = @"/usr/bin/git";
-  task.arguments = @[@"push", @"origin",@"master"];
+  task.arguments = @[@"push", @"origin",@"master",@"--porcelain"];
   task.currentDirectoryPath = self.fileURL.path;
   task.standardOutput = [NSPipe pipe];
   task.standardError = [NSPipe pipe];
