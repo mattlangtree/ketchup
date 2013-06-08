@@ -420,7 +420,7 @@
   
   
   // create right diff view
-  self.rightDiffTextStorage = [[NSTextStorage alloc] initWithString:textContentToLoad attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+  self.rightDiffTextStorage = [[NSTextStorage alloc] initWithString:[self headContentsOfFile:file] attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
   self.rightSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
   self.rightDiffTextStorage.delegate = self.rightSyntaxHighlighter;
   [self.rightSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.rightDiffTextStorage];
@@ -470,6 +470,12 @@
       [encodingWarningAlert beginSheetModalForWindow:self.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
     });
   }
+}
+
+- (NSString *)headContentsOfFile:(KDocumentVersionedFile *)file
+{
+  NSLog(@"subclass must implement this");
+  return @"";
 }
 
 - (NSArray *)fetchFilesWithStatus

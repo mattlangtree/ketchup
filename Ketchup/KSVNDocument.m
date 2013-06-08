@@ -29,9 +29,7 @@
 
 - (NSArray *)fetchFilesWithStatus
 {
-  // find the svn path
-  
-  // run `git status --percelain -z`
+  // run `svn status --xml`
   NSTask *task = [[NSTask alloc] init];
   task.launchPath = self.svnLaunchPath;
   task.arguments = @[@"status", @"--xml"];
@@ -123,6 +121,37 @@
   }
   
   return files.copy;
+}
+
+- (NSString *)headContentsOfFile:(KDocumentVersionedFile *)file
+{
+  // run `svn cat -r HEAD file`
+  NSTask *task = [[NSTask alloc] init];
+  task.launchPath = self.svnLaunchPath;
+  task.arguments = @[@"cat", @"-r", @"HEAD", file.fileUrl.path];
+  task.currentDirectoryPath = self.fileURL.path;
+  task.standardOutput = [NSPipe pipe];
+  task.standardError = [NSPipe pipe];
+  
+  [task launch];
+  [task waitUntilExit];
+  
+  // grab the output data, and check for an error
+  NSData *outputData = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
+  NSString *error = [[NSString alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile] encoding:NSUTF8StringEncoding];
+  
+  if (error.length > 0) {
+    NSLog(@"Svn error: %@", error);
+    return @"";
+  }
+  
+  NSString *textContent = [NSString stringWithUnknownData:outputData usedEncoding:NULL];
+  if (!textContent) {
+    NSLog(@"cannot read file %@", file.fileUrl);
+    return @"";
+  }
+  
+  return textContent;
 }
 
 - (NSString *)syncButtonTitle

@@ -42,7 +42,8 @@ static NSCharacterSet *nonWhitespaceCharacterSet;
     string = [[NSString alloc] initWithData:data encoding:encodings[encodingIndex]];
     
     if (string) {
-      *enc = encodings[encodingIndex];
+      if (enc != NULL)
+        *enc = encodings[encodingIndex];
       return string;
     }
   }
