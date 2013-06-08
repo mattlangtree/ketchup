@@ -7,6 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3833B2A61763385800F5F5DC /* DuxJSONBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B29B1763385800F5F5DC /* DuxJSONBaseElement.m */; };
+		3833B2A71763385800F5F5DC /* DuxJSONKeyElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B29D1763385800F5F5DC /* DuxJSONKeyElement.m */; };
+		3833B2A81763385800F5F5DC /* DuxJSONLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B29F1763385800F5F5DC /* DuxJSONLanguage.m */; };
+		3833B2A91763385800F5F5DC /* DuxJSONStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2A11763385800F5F5DC /* DuxJSONStringElement.m */; };
+		3833B2AA1763385800F5F5DC /* DuxJSONNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2A31763385800F5F5DC /* DuxJSONNumberElement.m */; };
+		3833B2AB1763385800F5F5DC /* DuxJSONKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2A51763385800F5F5DC /* DuxJSONKeywordElement.m */; };
+		3833B2BC1763386400F5F5DC /* DuxRubyLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2AD1763386400F5F5DC /* DuxRubyLanguage.m */; };
+		3833B2BD1763386400F5F5DC /* DuxRubyBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2AF1763386400F5F5DC /* DuxRubyBaseElement.m */; };
+		3833B2BE1763386400F5F5DC /* DuxRubySingleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2B11763386400F5F5DC /* DuxRubySingleQuotedStringElement.m */; };
+		3833B2BF1763386400F5F5DC /* DuxRubyDoubleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2B31763386400F5F5DC /* DuxRubyDoubleQuotedStringElement.m */; };
+		3833B2C01763386400F5F5DC /* DuxRubyNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2B51763386400F5F5DC /* DuxRubyNumberElement.m */; };
+		3833B2C11763386400F5F5DC /* DuxRubyKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2B71763386400F5F5DC /* DuxRubyKeywordElement.m */; };
+		3833B2C21763386400F5F5DC /* DuxRubySingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2B91763386400F5F5DC /* DuxRubySingleLineCommentElement.m */; };
+		3833B2C31763386400F5F5DC /* DuxRubyRegularExpressionElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2BB1763386400F5F5DC /* DuxRubyRegularExpressionElement.m */; };
+		3833B2C81763386F00F5F5DC /* DuxPlainTextLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2C51763386F00F5F5DC /* DuxPlainTextLanguage.m */; };
+		3833B2C91763386F00F5F5DC /* DuxPlainTextBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2C71763386F00F5F5DC /* DuxPlainTextBaseElement.m */; };
+		3833B2DC1763387900F5F5DC /* DuxPHPLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2CB1763387900F5F5DC /* DuxPHPLanguage.m */; };
+		3833B2DD1763387900F5F5DC /* DuxPHPBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2CD1763387900F5F5DC /* DuxPHPBaseElement.m */; };
+		3833B2DE1763387900F5F5DC /* DuxPHPSingleQuoteStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2CF1763387900F5F5DC /* DuxPHPSingleQuoteStringElement.m */; };
+		3833B2DF1763387900F5F5DC /* DuxPHPDoubleQuoteStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2D11763387900F5F5DC /* DuxPHPDoubleQuoteStringElement.m */; };
+		3833B2E01763387900F5F5DC /* DuxPHPNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2D31763387900F5F5DC /* DuxPHPNumberElement.m */; };
+		3833B2E11763387900F5F5DC /* DuxPHPVariableElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2D51763387900F5F5DC /* DuxPHPVariableElement.m */; };
+		3833B2E21763387900F5F5DC /* DuxPHPKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2D71763387900F5F5DC /* DuxPHPKeywordElement.m */; };
+		3833B2E31763387900F5F5DC /* DuxPHPSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2D91763387900F5F5DC /* DuxPHPSingleLineCommentElement.m */; };
+		3833B2E41763387900F5F5DC /* DuxPHPBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2DB1763387900F5F5DC /* DuxPHPBlockCommentElement.m */; };
+		3833B2F51763388200F5F5DC /* DuxShellLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2E61763388200F5F5DC /* DuxShellLanguage.m */; };
+		3833B2F61763388200F5F5DC /* DuxShellBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2E81763388200F5F5DC /* DuxShellBaseElement.m */; };
+		3833B2F71763388200F5F5DC /* DuxShellKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2EA1763388200F5F5DC /* DuxShellKeywordElement.m */; };
+		3833B2F81763388200F5F5DC /* DuxShellVariableElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2EC1763388200F5F5DC /* DuxShellVariableElement.m */; };
+		3833B2F91763388200F5F5DC /* DuxShellCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2EE1763388200F5F5DC /* DuxShellCommentElement.m */; };
+		3833B2FA1763388200F5F5DC /* DuxShellNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2F01763388200F5F5DC /* DuxShellNumberElement.m */; };
+		3833B2FB1763388200F5F5DC /* DuxShellSingleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2F21763388200F5F5DC /* DuxShellSingleQuotedStringElement.m */; };
+		3833B2FC1763388200F5F5DC /* DuxShellDoubleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2F41763388200F5F5DC /* DuxShellDoubleQuotedStringElement.m */; };
+		3833B3091763388F00F5F5DC /* DuxXMLLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B2FE1763388F00F5F5DC /* DuxXMLLanguage.m */; };
+		3833B30A1763388F00F5F5DC /* DuxXMLBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B3001763388F00F5F5DC /* DuxXMLBaseElement.m */; };
+		3833B30B1763388F00F5F5DC /* DuxXMLTagElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B3021763388F00F5F5DC /* DuxXMLTagElement.m */; };
+		3833B30C1763388F00F5F5DC /* DuxXMLTagAttributeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B3041763388F00F5F5DC /* DuxXMLTagAttributeElement.m */; };
+		3833B30D1763388F00F5F5DC /* DuxXMLEntityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B3061763388F00F5F5DC /* DuxXMLEntityElement.m */; };
+		3833B30E1763388F00F5F5DC /* DuxXMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B3081763388F00F5F5DC /* DuxXMLCommentElement.m */; };
+		3833B3171763390200F5F5DC /* NSColor+DuxColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B3161763390200F5F5DC /* NSColor+DuxColors.m */; };
+		3833B31A1763391E00F5F5DC /* NSStringDuxAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B3191763391E00F5F5DC /* NSStringDuxAdditions.m */; };
+		3833B3221763394200F5F5DC /* DuxPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B31C1763394200F5F5DC /* DuxPreferences.m */; };
+		3833B3231763394200F5F5DC /* DuxPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B31E1763394200F5F5DC /* DuxPreferencesWindowController.m */; };
+		3833B3241763394200F5F5DC /* DuxFontSelectorTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B3201763394200F5F5DC /* DuxFontSelectorTextField.m */; };
+		3833B3251763394200F5F5DC /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3833B3211763394200F5F5DC /* PreferencesWindow.xib */; };
+		3833B3291763395C00F5F5DC /* DuxStringLineEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B3281763395C00F5F5DC /* DuxStringLineEnumerator.m */; };
+		3833B32C1763397400F5F5DC /* DuxScrollViewAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B32B1763397400F5F5DC /* DuxScrollViewAnimation.m */; };
 		3871F651175FF34200AB5900 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3871F650175FF34200AB5900 /* Cocoa.framework */; };
 		3871F65B175FF34200AB5900 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3871F659175FF34200AB5900 /* InfoPlist.strings */; };
 		3871F65D175FF34200AB5900 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3871F65C175FF34200AB5900 /* main.m */; };
@@ -25,7 +72,58 @@
 		3875E49217608D11002D427E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3875E49117608D11002D427E /* QuartzCore.framework */; };
 		3875E4961760B667002D427E /* led-up-to-date.png in Resources */ = {isa = PBXBuildFile; fileRef = 3875E4941760B667002D427E /* led-up-to-date.png */; };
 		3875E4971760B667002D427E /* led-up-to-date@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3875E4951760B667002D427E /* led-up-to-date@2x.png */; };
+		388CD05B176337B600ECAAC9 /* DuxCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD04C176337B600ECAAC9 /* DuxCLanguage.m */; };
+		388CD05C176337B600ECAAC9 /* DuxCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD04C176337B600ECAAC9 /* DuxCLanguage.m */; };
+		388CD05D176337B600ECAAC9 /* DuxCBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD04E176337B600ECAAC9 /* DuxCBaseElement.m */; };
+		388CD05E176337B600ECAAC9 /* DuxCBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD04E176337B600ECAAC9 /* DuxCBaseElement.m */; };
+		388CD05F176337B600ECAAC9 /* DuxCSingleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD050176337B600ECAAC9 /* DuxCSingleQuotedStringElement.m */; };
+		388CD060176337B600ECAAC9 /* DuxCSingleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD050176337B600ECAAC9 /* DuxCSingleQuotedStringElement.m */; };
+		388CD061176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD052176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.m */; };
+		388CD062176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD052176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.m */; };
+		388CD063176337B600ECAAC9 /* DuxCNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD054176337B600ECAAC9 /* DuxCNumberElement.m */; };
+		388CD064176337B600ECAAC9 /* DuxCNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD054176337B600ECAAC9 /* DuxCNumberElement.m */; };
+		388CD065176337B600ECAAC9 /* DuxCKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD056176337B600ECAAC9 /* DuxCKeywordElement.m */; };
+		388CD066176337B600ECAAC9 /* DuxCKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD056176337B600ECAAC9 /* DuxCKeywordElement.m */; };
+		388CD067176337B600ECAAC9 /* DuxCSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD058176337B600ECAAC9 /* DuxCSingleLineCommentElement.m */; };
+		388CD068176337B600ECAAC9 /* DuxCSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD058176337B600ECAAC9 /* DuxCSingleLineCommentElement.m */; };
+		388CD069176337B600ECAAC9 /* DuxCBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD05A176337B600ECAAC9 /* DuxCBlockCommentElement.m */; };
+		388CD06A176337B600ECAAC9 /* DuxCBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD05A176337B600ECAAC9 /* DuxCBlockCommentElement.m */; };
+		388CD079176337E800ECAAC9 /* DuxHTMLLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD06E176337E800ECAAC9 /* DuxHTMLLanguage.m */; };
+		388CD07A176337E800ECAAC9 /* DuxHTMLBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD070176337E800ECAAC9 /* DuxHTMLBaseElement.m */; };
+		388CD07B176337E800ECAAC9 /* DuxHTMLTagElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD072176337E800ECAAC9 /* DuxHTMLTagElement.m */; };
+		388CD07C176337E800ECAAC9 /* DuxHTMLTagAttributeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD074176337E800ECAAC9 /* DuxHTMLTagAttributeElement.m */; };
+		388CD07D176337E800ECAAC9 /* DuxHTMLEntityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD076176337E800ECAAC9 /* DuxHTMLEntityElement.m */; };
+		388CD07E176337E800ECAAC9 /* DuxHTMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD078176337E800ECAAC9 /* DuxHTMLCommentElement.m */; };
+		388CD092176337FE00ECAAC9 /* DuxJavaScriptLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD081176337FE00ECAAC9 /* DuxJavaScriptLanguage.m */; };
+		388CD093176337FE00ECAAC9 /* DuxJavaScriptBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD083176337FE00ECAAC9 /* DuxJavaScriptBaseElement.m */; };
+		388CD094176337FE00ECAAC9 /* DuxJavaScriptSingleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD085176337FE00ECAAC9 /* DuxJavaScriptSingleQuotedStringElement.m */; };
+		388CD095176337FE00ECAAC9 /* DuxJavaScriptDoubleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD087176337FE00ECAAC9 /* DuxJavaScriptDoubleQuotedStringElement.m */; };
+		388CD096176337FE00ECAAC9 /* DuxJavaScriptNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD089176337FE00ECAAC9 /* DuxJavaScriptNumberElement.m */; };
+		388CD097176337FE00ECAAC9 /* DuxJavaScriptKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD08B176337FE00ECAAC9 /* DuxJavaScriptKeywordElement.m */; };
+		388CD098176337FE00ECAAC9 /* DuxJavaScriptSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD08D176337FE00ECAAC9 /* DuxJavaScriptSingleLineCommentElement.m */; };
+		388CD099176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD08F176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.m */; };
+		388CD09A176337FE00ECAAC9 /* DuxJavaScriptRegexElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD091176337FE00ECAAC9 /* DuxJavaScriptRegexElement.m */; };
 		38C8A3BB1762CF50005DBC23 /* KDocumentVersionedFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3BA1762CF50005DBC23 /* KDocumentVersionedFile.m */; };
+		38C8A3CB17633729005DBC23 /* DuxTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3BD17633728005DBC23 /* DuxTextView.m */; };
+		38C8A3CC17633729005DBC23 /* DuxTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3BF17633728005DBC23 /* DuxTextContainer.m */; };
+		38C8A3CD17633729005DBC23 /* DuxSyntaxHighlighter.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3C117633728005DBC23 /* DuxSyntaxHighlighter.m */; };
+		38C8A3CE17633729005DBC23 /* DuxLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3C317633728005DBC23 /* DuxLanguage.m */; };
+		38C8A3CF17633729005DBC23 /* DuxLanguageElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3C517633729005DBC23 /* DuxLanguageElement.m */; };
+		38C8A3D017633729005DBC23 /* DuxLanguageMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3C717633729005DBC23 /* DuxLanguageMenuItem.m */; };
+		38C8A3D117633729005DBC23 /* DuxLineNumberString.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3C917633729005DBC23 /* DuxLineNumberString.m */; };
+		38C8A3D217633729005DBC23 /* JumpToLinePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38C8A3CA17633729005DBC23 /* JumpToLinePanel.xib */; };
+		38C8A3EC17633742005DBC23 /* DuxCSSLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3D517633742005DBC23 /* DuxCSSLanguage.m */; };
+		38C8A3ED17633742005DBC23 /* DuxCSSBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3D717633742005DBC23 /* DuxCSSBaseElement.m */; };
+		38C8A3EE17633742005DBC23 /* DuxCSSCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3D917633742005DBC23 /* DuxCSSCommentElement.m */; };
+		38C8A3EF17633742005DBC23 /* DuxCSSClassSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3DB17633742005DBC23 /* DuxCSSClassSelectorElement.m */; };
+		38C8A3F017633742005DBC23 /* DuxCSSIDSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3DD17633742005DBC23 /* DuxCSSIDSelectorElement.m */; };
+		38C8A3F117633742005DBC23 /* DuxCSSPseudoSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3DF17633742005DBC23 /* DuxCSSPseudoSelectorElement.m */; };
+		38C8A3F217633742005DBC23 /* DuxCSSDefinitionBlockElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3E117633742005DBC23 /* DuxCSSDefinitionBlockElement.m */; };
+		38C8A3F317633742005DBC23 /* DuxCSSPropertyNameElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3E317633742005DBC23 /* DuxCSSPropertyNameElement.m */; };
+		38C8A3F417633742005DBC23 /* DuxCSSPropertyValueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3E517633742005DBC23 /* DuxCSSPropertyValueElement.m */; };
+		38C8A3F517633742005DBC23 /* DuxCSSNumberValueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3E717633742005DBC23 /* DuxCSSNumberValueElement.m */; };
+		38C8A3F617633742005DBC23 /* DuxCSSColorValueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3E917633742005DBC23 /* DuxCSSColorValueElement.m */; };
+		38C8A3F717633742005DBC23 /* DuxCSSAtRuleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3EB17633742005DBC23 /* DuxCSSAtRuleElement.m */; };
 		C9D21E9B1763010900A3DDDE /* KHGDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D21E9A1763010900A3DDDE /* KHGDocument.m */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +138,99 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3833B29A1763385800F5F5DC /* DuxJSONBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONBaseElement.h; sourceTree = "<group>"; };
+		3833B29B1763385800F5F5DC /* DuxJSONBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONBaseElement.m; sourceTree = "<group>"; };
+		3833B29C1763385800F5F5DC /* DuxJSONKeyElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONKeyElement.h; sourceTree = "<group>"; };
+		3833B29D1763385800F5F5DC /* DuxJSONKeyElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONKeyElement.m; sourceTree = "<group>"; };
+		3833B29E1763385800F5F5DC /* DuxJSONLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONLanguage.h; sourceTree = "<group>"; };
+		3833B29F1763385800F5F5DC /* DuxJSONLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONLanguage.m; sourceTree = "<group>"; };
+		3833B2A01763385800F5F5DC /* DuxJSONStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONStringElement.h; sourceTree = "<group>"; };
+		3833B2A11763385800F5F5DC /* DuxJSONStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONStringElement.m; sourceTree = "<group>"; };
+		3833B2A21763385800F5F5DC /* DuxJSONNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONNumberElement.h; sourceTree = "<group>"; };
+		3833B2A31763385800F5F5DC /* DuxJSONNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONNumberElement.m; sourceTree = "<group>"; };
+		3833B2A41763385800F5F5DC /* DuxJSONKeywordElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONKeywordElement.h; sourceTree = "<group>"; };
+		3833B2A51763385800F5F5DC /* DuxJSONKeywordElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONKeywordElement.m; sourceTree = "<group>"; };
+		3833B2AC1763386400F5F5DC /* DuxRubyLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyLanguage.h; sourceTree = "<group>"; };
+		3833B2AD1763386400F5F5DC /* DuxRubyLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyLanguage.m; sourceTree = "<group>"; };
+		3833B2AE1763386400F5F5DC /* DuxRubyBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyBaseElement.h; sourceTree = "<group>"; };
+		3833B2AF1763386400F5F5DC /* DuxRubyBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyBaseElement.m; sourceTree = "<group>"; };
+		3833B2B01763386400F5F5DC /* DuxRubySingleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubySingleQuotedStringElement.h; sourceTree = "<group>"; };
+		3833B2B11763386400F5F5DC /* DuxRubySingleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubySingleQuotedStringElement.m; sourceTree = "<group>"; };
+		3833B2B21763386400F5F5DC /* DuxRubyDoubleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyDoubleQuotedStringElement.h; sourceTree = "<group>"; };
+		3833B2B31763386400F5F5DC /* DuxRubyDoubleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyDoubleQuotedStringElement.m; sourceTree = "<group>"; };
+		3833B2B41763386400F5F5DC /* DuxRubyNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyNumberElement.h; sourceTree = "<group>"; };
+		3833B2B51763386400F5F5DC /* DuxRubyNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyNumberElement.m; sourceTree = "<group>"; };
+		3833B2B61763386400F5F5DC /* DuxRubyKeywordElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyKeywordElement.h; sourceTree = "<group>"; };
+		3833B2B71763386400F5F5DC /* DuxRubyKeywordElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyKeywordElement.m; sourceTree = "<group>"; };
+		3833B2B81763386400F5F5DC /* DuxRubySingleLineCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubySingleLineCommentElement.h; sourceTree = "<group>"; };
+		3833B2B91763386400F5F5DC /* DuxRubySingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubySingleLineCommentElement.m; sourceTree = "<group>"; };
+		3833B2BA1763386400F5F5DC /* DuxRubyRegularExpressionElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyRegularExpressionElement.h; sourceTree = "<group>"; };
+		3833B2BB1763386400F5F5DC /* DuxRubyRegularExpressionElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyRegularExpressionElement.m; sourceTree = "<group>"; };
+		3833B2C41763386F00F5F5DC /* DuxPlainTextLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextLanguage.h; sourceTree = "<group>"; };
+		3833B2C51763386F00F5F5DC /* DuxPlainTextLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPlainTextLanguage.m; sourceTree = "<group>"; };
+		3833B2C61763386F00F5F5DC /* DuxPlainTextBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextBaseElement.h; sourceTree = "<group>"; };
+		3833B2C71763386F00F5F5DC /* DuxPlainTextBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPlainTextBaseElement.m; sourceTree = "<group>"; };
+		3833B2CA1763387900F5F5DC /* DuxPHPLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPLanguage.h; sourceTree = "<group>"; };
+		3833B2CB1763387900F5F5DC /* DuxPHPLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPLanguage.m; sourceTree = "<group>"; };
+		3833B2CC1763387900F5F5DC /* DuxPHPBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPBaseElement.h; sourceTree = "<group>"; };
+		3833B2CD1763387900F5F5DC /* DuxPHPBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPBaseElement.m; sourceTree = "<group>"; };
+		3833B2CE1763387900F5F5DC /* DuxPHPSingleQuoteStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPSingleQuoteStringElement.h; sourceTree = "<group>"; };
+		3833B2CF1763387900F5F5DC /* DuxPHPSingleQuoteStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPSingleQuoteStringElement.m; sourceTree = "<group>"; };
+		3833B2D01763387900F5F5DC /* DuxPHPDoubleQuoteStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPDoubleQuoteStringElement.h; sourceTree = "<group>"; };
+		3833B2D11763387900F5F5DC /* DuxPHPDoubleQuoteStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPDoubleQuoteStringElement.m; sourceTree = "<group>"; };
+		3833B2D21763387900F5F5DC /* DuxPHPNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPNumberElement.h; sourceTree = "<group>"; };
+		3833B2D31763387900F5F5DC /* DuxPHPNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPNumberElement.m; sourceTree = "<group>"; };
+		3833B2D41763387900F5F5DC /* DuxPHPVariableElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPVariableElement.h; sourceTree = "<group>"; };
+		3833B2D51763387900F5F5DC /* DuxPHPVariableElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPVariableElement.m; sourceTree = "<group>"; };
+		3833B2D61763387900F5F5DC /* DuxPHPKeywordElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPKeywordElement.h; sourceTree = "<group>"; };
+		3833B2D71763387900F5F5DC /* DuxPHPKeywordElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPKeywordElement.m; sourceTree = "<group>"; };
+		3833B2D81763387900F5F5DC /* DuxPHPSingleLineCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPSingleLineCommentElement.h; sourceTree = "<group>"; };
+		3833B2D91763387900F5F5DC /* DuxPHPSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPSingleLineCommentElement.m; sourceTree = "<group>"; };
+		3833B2DA1763387900F5F5DC /* DuxPHPBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPBlockCommentElement.h; sourceTree = "<group>"; };
+		3833B2DB1763387900F5F5DC /* DuxPHPBlockCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPBlockCommentElement.m; sourceTree = "<group>"; };
+		3833B2E51763388200F5F5DC /* DuxShellLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellLanguage.h; sourceTree = "<group>"; };
+		3833B2E61763388200F5F5DC /* DuxShellLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellLanguage.m; sourceTree = "<group>"; };
+		3833B2E71763388200F5F5DC /* DuxShellBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellBaseElement.h; sourceTree = "<group>"; };
+		3833B2E81763388200F5F5DC /* DuxShellBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellBaseElement.m; sourceTree = "<group>"; };
+		3833B2E91763388200F5F5DC /* DuxShellKeywordElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellKeywordElement.h; sourceTree = "<group>"; };
+		3833B2EA1763388200F5F5DC /* DuxShellKeywordElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellKeywordElement.m; sourceTree = "<group>"; };
+		3833B2EB1763388200F5F5DC /* DuxShellVariableElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellVariableElement.h; sourceTree = "<group>"; };
+		3833B2EC1763388200F5F5DC /* DuxShellVariableElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellVariableElement.m; sourceTree = "<group>"; };
+		3833B2ED1763388200F5F5DC /* DuxShellCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellCommentElement.h; sourceTree = "<group>"; };
+		3833B2EE1763388200F5F5DC /* DuxShellCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellCommentElement.m; sourceTree = "<group>"; };
+		3833B2EF1763388200F5F5DC /* DuxShellNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellNumberElement.h; sourceTree = "<group>"; };
+		3833B2F01763388200F5F5DC /* DuxShellNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellNumberElement.m; sourceTree = "<group>"; };
+		3833B2F11763388200F5F5DC /* DuxShellSingleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellSingleQuotedStringElement.h; sourceTree = "<group>"; };
+		3833B2F21763388200F5F5DC /* DuxShellSingleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellSingleQuotedStringElement.m; sourceTree = "<group>"; };
+		3833B2F31763388200F5F5DC /* DuxShellDoubleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellDoubleQuotedStringElement.h; sourceTree = "<group>"; };
+		3833B2F41763388200F5F5DC /* DuxShellDoubleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellDoubleQuotedStringElement.m; sourceTree = "<group>"; };
+		3833B2FD1763388F00F5F5DC /* DuxXMLLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLLanguage.h; sourceTree = "<group>"; };
+		3833B2FE1763388F00F5F5DC /* DuxXMLLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLLanguage.m; sourceTree = "<group>"; };
+		3833B2FF1763388F00F5F5DC /* DuxXMLBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLBaseElement.h; sourceTree = "<group>"; };
+		3833B3001763388F00F5F5DC /* DuxXMLBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLBaseElement.m; sourceTree = "<group>"; };
+		3833B3011763388F00F5F5DC /* DuxXMLTagElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLTagElement.h; sourceTree = "<group>"; };
+		3833B3021763388F00F5F5DC /* DuxXMLTagElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLTagElement.m; sourceTree = "<group>"; };
+		3833B3031763388F00F5F5DC /* DuxXMLTagAttributeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLTagAttributeElement.h; sourceTree = "<group>"; };
+		3833B3041763388F00F5F5DC /* DuxXMLTagAttributeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLTagAttributeElement.m; sourceTree = "<group>"; };
+		3833B3051763388F00F5F5DC /* DuxXMLEntityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLEntityElement.h; sourceTree = "<group>"; };
+		3833B3061763388F00F5F5DC /* DuxXMLEntityElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLEntityElement.m; sourceTree = "<group>"; };
+		3833B3071763388F00F5F5DC /* DuxXMLCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLCommentElement.h; sourceTree = "<group>"; };
+		3833B3081763388F00F5F5DC /* DuxXMLCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLCommentElement.m; sourceTree = "<group>"; };
+		3833B3151763390200F5F5DC /* NSColor+DuxColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+DuxColors.h"; sourceTree = "<group>"; };
+		3833B3161763390200F5F5DC /* NSColor+DuxColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+DuxColors.m"; sourceTree = "<group>"; };
+		3833B3181763391E00F5F5DC /* NSStringDuxAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringDuxAdditions.h; sourceTree = "<group>"; };
+		3833B3191763391E00F5F5DC /* NSStringDuxAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringDuxAdditions.m; sourceTree = "<group>"; };
+		3833B31B1763394200F5F5DC /* DuxPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPreferences.h; sourceTree = "<group>"; };
+		3833B31C1763394200F5F5DC /* DuxPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPreferences.m; sourceTree = "<group>"; };
+		3833B31D1763394200F5F5DC /* DuxPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPreferencesWindowController.h; sourceTree = "<group>"; };
+		3833B31E1763394200F5F5DC /* DuxPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPreferencesWindowController.m; sourceTree = "<group>"; };
+		3833B31F1763394200F5F5DC /* DuxFontSelectorTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxFontSelectorTextField.h; sourceTree = "<group>"; };
+		3833B3201763394200F5F5DC /* DuxFontSelectorTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxFontSelectorTextField.m; sourceTree = "<group>"; };
+		3833B3211763394200F5F5DC /* PreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
+		3833B3271763395C00F5F5DC /* DuxStringLineEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxStringLineEnumerator.h; sourceTree = "<group>"; };
+		3833B3281763395C00F5F5DC /* DuxStringLineEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxStringLineEnumerator.m; sourceTree = "<group>"; };
+		3833B32A1763397400F5F5DC /* DuxScrollViewAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxScrollViewAnimation.h; sourceTree = "<group>"; };
+		3833B32B1763397400F5F5DC /* DuxScrollViewAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxScrollViewAnimation.m; sourceTree = "<group>"; };
 		3871F64D175FF34200AB5900 /* Ketchup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ketchup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3871F650175FF34200AB5900 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		3871F653175FF34200AB5900 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -71,8 +262,93 @@
 		3875E49117608D11002D427E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3875E4941760B667002D427E /* led-up-to-date.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "led-up-to-date.png"; path = "artwork/led-up-to-date.png"; sourceTree = SOURCE_ROOT; };
 		3875E4951760B667002D427E /* led-up-to-date@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "led-up-to-date@2x.png"; path = "artwork/led-up-to-date@2x.png"; sourceTree = SOURCE_ROOT; };
+		388CD04B176337B600ECAAC9 /* DuxCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCLanguage.h; sourceTree = "<group>"; };
+		388CD04C176337B600ECAAC9 /* DuxCLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCLanguage.m; sourceTree = "<group>"; };
+		388CD04D176337B600ECAAC9 /* DuxCBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCBaseElement.h; sourceTree = "<group>"; };
+		388CD04E176337B600ECAAC9 /* DuxCBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCBaseElement.m; sourceTree = "<group>"; };
+		388CD04F176337B600ECAAC9 /* DuxCSingleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSingleQuotedStringElement.h; sourceTree = "<group>"; };
+		388CD050176337B600ECAAC9 /* DuxCSingleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSingleQuotedStringElement.m; sourceTree = "<group>"; };
+		388CD051176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCDoubleQuotedStringElement.h; sourceTree = "<group>"; };
+		388CD052176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCDoubleQuotedStringElement.m; sourceTree = "<group>"; };
+		388CD053176337B600ECAAC9 /* DuxCNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCNumberElement.h; sourceTree = "<group>"; };
+		388CD054176337B600ECAAC9 /* DuxCNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCNumberElement.m; sourceTree = "<group>"; };
+		388CD055176337B600ECAAC9 /* DuxCKeywordElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCKeywordElement.h; sourceTree = "<group>"; };
+		388CD056176337B600ECAAC9 /* DuxCKeywordElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCKeywordElement.m; sourceTree = "<group>"; };
+		388CD057176337B600ECAAC9 /* DuxCSingleLineCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSingleLineCommentElement.h; sourceTree = "<group>"; };
+		388CD058176337B600ECAAC9 /* DuxCSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSingleLineCommentElement.m; sourceTree = "<group>"; };
+		388CD059176337B600ECAAC9 /* DuxCBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCBlockCommentElement.h; sourceTree = "<group>"; };
+		388CD05A176337B600ECAAC9 /* DuxCBlockCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCBlockCommentElement.m; sourceTree = "<group>"; };
+		388CD06D176337E800ECAAC9 /* DuxHTMLLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLLanguage.h; sourceTree = "<group>"; };
+		388CD06E176337E800ECAAC9 /* DuxHTMLLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLLanguage.m; sourceTree = "<group>"; };
+		388CD06F176337E800ECAAC9 /* DuxHTMLBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLBaseElement.h; sourceTree = "<group>"; };
+		388CD070176337E800ECAAC9 /* DuxHTMLBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLBaseElement.m; sourceTree = "<group>"; };
+		388CD071176337E800ECAAC9 /* DuxHTMLTagElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLTagElement.h; sourceTree = "<group>"; };
+		388CD072176337E800ECAAC9 /* DuxHTMLTagElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLTagElement.m; sourceTree = "<group>"; };
+		388CD073176337E800ECAAC9 /* DuxHTMLTagAttributeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLTagAttributeElement.h; sourceTree = "<group>"; };
+		388CD074176337E800ECAAC9 /* DuxHTMLTagAttributeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLTagAttributeElement.m; sourceTree = "<group>"; };
+		388CD075176337E800ECAAC9 /* DuxHTMLEntityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLEntityElement.h; sourceTree = "<group>"; };
+		388CD076176337E800ECAAC9 /* DuxHTMLEntityElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLEntityElement.m; sourceTree = "<group>"; };
+		388CD077176337E800ECAAC9 /* DuxHTMLCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLCommentElement.h; sourceTree = "<group>"; };
+		388CD078176337E800ECAAC9 /* DuxHTMLCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLCommentElement.m; sourceTree = "<group>"; };
+		388CD080176337FE00ECAAC9 /* DuxJavaScriptLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptLanguage.h; sourceTree = "<group>"; };
+		388CD081176337FE00ECAAC9 /* DuxJavaScriptLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptLanguage.m; sourceTree = "<group>"; };
+		388CD082176337FE00ECAAC9 /* DuxJavaScriptBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptBaseElement.h; sourceTree = "<group>"; };
+		388CD083176337FE00ECAAC9 /* DuxJavaScriptBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptBaseElement.m; sourceTree = "<group>"; };
+		388CD084176337FE00ECAAC9 /* DuxJavaScriptSingleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptSingleQuotedStringElement.h; sourceTree = "<group>"; };
+		388CD085176337FE00ECAAC9 /* DuxJavaScriptSingleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptSingleQuotedStringElement.m; sourceTree = "<group>"; };
+		388CD086176337FE00ECAAC9 /* DuxJavaScriptDoubleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptDoubleQuotedStringElement.h; sourceTree = "<group>"; };
+		388CD087176337FE00ECAAC9 /* DuxJavaScriptDoubleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptDoubleQuotedStringElement.m; sourceTree = "<group>"; };
+		388CD088176337FE00ECAAC9 /* DuxJavaScriptNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptNumberElement.h; sourceTree = "<group>"; };
+		388CD089176337FE00ECAAC9 /* DuxJavaScriptNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptNumberElement.m; sourceTree = "<group>"; };
+		388CD08A176337FE00ECAAC9 /* DuxJavaScriptKeywordElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptKeywordElement.h; sourceTree = "<group>"; };
+		388CD08B176337FE00ECAAC9 /* DuxJavaScriptKeywordElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptKeywordElement.m; sourceTree = "<group>"; };
+		388CD08C176337FE00ECAAC9 /* DuxJavaScriptSingleLineCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptSingleLineCommentElement.h; sourceTree = "<group>"; };
+		388CD08D176337FE00ECAAC9 /* DuxJavaScriptSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptSingleLineCommentElement.m; sourceTree = "<group>"; };
+		388CD08E176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptBlockCommentElement.h; sourceTree = "<group>"; };
+		388CD08F176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptBlockCommentElement.m; sourceTree = "<group>"; };
+		388CD090176337FE00ECAAC9 /* DuxJavaScriptRegexElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptRegexElement.h; sourceTree = "<group>"; };
+		388CD091176337FE00ECAAC9 /* DuxJavaScriptRegexElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptRegexElement.m; sourceTree = "<group>"; };
 		38C8A3B91762CF50005DBC23 /* KDocumentVersionedFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDocumentVersionedFile.h; sourceTree = "<group>"; };
 		38C8A3BA1762CF50005DBC23 /* KDocumentVersionedFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDocumentVersionedFile.m; sourceTree = "<group>"; };
+		38C8A3BC17633728005DBC23 /* DuxTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextView.h; sourceTree = "<group>"; };
+		38C8A3BD17633728005DBC23 /* DuxTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTextView.m; sourceTree = "<group>"; };
+		38C8A3BE17633728005DBC23 /* DuxTextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextContainer.h; sourceTree = "<group>"; };
+		38C8A3BF17633728005DBC23 /* DuxTextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTextContainer.m; sourceTree = "<group>"; };
+		38C8A3C017633728005DBC23 /* DuxSyntaxHighlighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxSyntaxHighlighter.h; sourceTree = "<group>"; };
+		38C8A3C117633728005DBC23 /* DuxSyntaxHighlighter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxSyntaxHighlighter.m; sourceTree = "<group>"; };
+		38C8A3C217633728005DBC23 /* DuxLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLanguage.h; sourceTree = "<group>"; };
+		38C8A3C317633728005DBC23 /* DuxLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguage.m; sourceTree = "<group>"; };
+		38C8A3C417633729005DBC23 /* DuxLanguageElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLanguageElement.h; sourceTree = "<group>"; };
+		38C8A3C517633729005DBC23 /* DuxLanguageElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguageElement.m; sourceTree = "<group>"; };
+		38C8A3C617633729005DBC23 /* DuxLanguageMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLanguageMenuItem.h; sourceTree = "<group>"; };
+		38C8A3C717633729005DBC23 /* DuxLanguageMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguageMenuItem.m; sourceTree = "<group>"; };
+		38C8A3C817633729005DBC23 /* DuxLineNumberString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLineNumberString.h; sourceTree = "<group>"; };
+		38C8A3C917633729005DBC23 /* DuxLineNumberString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLineNumberString.m; sourceTree = "<group>"; };
+		38C8A3CA17633729005DBC23 /* JumpToLinePanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JumpToLinePanel.xib; sourceTree = "<group>"; };
+		38C8A3D417633742005DBC23 /* DuxCSSLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSLanguage.h; sourceTree = "<group>"; };
+		38C8A3D517633742005DBC23 /* DuxCSSLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSLanguage.m; sourceTree = "<group>"; };
+		38C8A3D617633742005DBC23 /* DuxCSSBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSBaseElement.h; sourceTree = "<group>"; };
+		38C8A3D717633742005DBC23 /* DuxCSSBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSBaseElement.m; sourceTree = "<group>"; };
+		38C8A3D817633742005DBC23 /* DuxCSSCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSCommentElement.h; sourceTree = "<group>"; };
+		38C8A3D917633742005DBC23 /* DuxCSSCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSCommentElement.m; sourceTree = "<group>"; };
+		38C8A3DA17633742005DBC23 /* DuxCSSClassSelectorElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSClassSelectorElement.h; sourceTree = "<group>"; };
+		38C8A3DB17633742005DBC23 /* DuxCSSClassSelectorElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSClassSelectorElement.m; sourceTree = "<group>"; };
+		38C8A3DC17633742005DBC23 /* DuxCSSIDSelectorElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSIDSelectorElement.h; sourceTree = "<group>"; };
+		38C8A3DD17633742005DBC23 /* DuxCSSIDSelectorElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSIDSelectorElement.m; sourceTree = "<group>"; };
+		38C8A3DE17633742005DBC23 /* DuxCSSPseudoSelectorElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSPseudoSelectorElement.h; sourceTree = "<group>"; };
+		38C8A3DF17633742005DBC23 /* DuxCSSPseudoSelectorElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSPseudoSelectorElement.m; sourceTree = "<group>"; };
+		38C8A3E017633742005DBC23 /* DuxCSSDefinitionBlockElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSDefinitionBlockElement.h; sourceTree = "<group>"; };
+		38C8A3E117633742005DBC23 /* DuxCSSDefinitionBlockElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSDefinitionBlockElement.m; sourceTree = "<group>"; };
+		38C8A3E217633742005DBC23 /* DuxCSSPropertyNameElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSPropertyNameElement.h; sourceTree = "<group>"; };
+		38C8A3E317633742005DBC23 /* DuxCSSPropertyNameElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSPropertyNameElement.m; sourceTree = "<group>"; };
+		38C8A3E417633742005DBC23 /* DuxCSSPropertyValueElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSPropertyValueElement.h; sourceTree = "<group>"; };
+		38C8A3E517633742005DBC23 /* DuxCSSPropertyValueElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSPropertyValueElement.m; sourceTree = "<group>"; };
+		38C8A3E617633742005DBC23 /* DuxCSSNumberValueElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSNumberValueElement.h; sourceTree = "<group>"; };
+		38C8A3E717633742005DBC23 /* DuxCSSNumberValueElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSNumberValueElement.m; sourceTree = "<group>"; };
+		38C8A3E817633742005DBC23 /* DuxCSSColorValueElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSColorValueElement.h; sourceTree = "<group>"; };
+		38C8A3E917633742005DBC23 /* DuxCSSColorValueElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSColorValueElement.m; sourceTree = "<group>"; };
+		38C8A3EA17633742005DBC23 /* DuxCSSAtRuleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSAtRuleElement.h; sourceTree = "<group>"; };
+		38C8A3EB17633742005DBC23 /* DuxCSSAtRuleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSAtRuleElement.m; sourceTree = "<group>"; };
 		C9D21E991763010900A3DDDE /* KHGDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGDocument.h; sourceTree = "<group>"; };
 		C9D21E9A1763010900A3DDDE /* KHGDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHGDocument.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,12 +375,173 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3833B2991763382A00F5F5DC /* JavaScript */ = {
+			isa = PBXGroup;
+			children = (
+				388CD080176337FE00ECAAC9 /* DuxJavaScriptLanguage.h */,
+				388CD081176337FE00ECAAC9 /* DuxJavaScriptLanguage.m */,
+				388CD082176337FE00ECAAC9 /* DuxJavaScriptBaseElement.h */,
+				388CD083176337FE00ECAAC9 /* DuxJavaScriptBaseElement.m */,
+				388CD084176337FE00ECAAC9 /* DuxJavaScriptSingleQuotedStringElement.h */,
+				388CD085176337FE00ECAAC9 /* DuxJavaScriptSingleQuotedStringElement.m */,
+				388CD086176337FE00ECAAC9 /* DuxJavaScriptDoubleQuotedStringElement.h */,
+				388CD087176337FE00ECAAC9 /* DuxJavaScriptDoubleQuotedStringElement.m */,
+				388CD088176337FE00ECAAC9 /* DuxJavaScriptNumberElement.h */,
+				388CD089176337FE00ECAAC9 /* DuxJavaScriptNumberElement.m */,
+				388CD08A176337FE00ECAAC9 /* DuxJavaScriptKeywordElement.h */,
+				388CD08B176337FE00ECAAC9 /* DuxJavaScriptKeywordElement.m */,
+				388CD08C176337FE00ECAAC9 /* DuxJavaScriptSingleLineCommentElement.h */,
+				388CD08D176337FE00ECAAC9 /* DuxJavaScriptSingleLineCommentElement.m */,
+				388CD08E176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.h */,
+				388CD08F176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.m */,
+				388CD090176337FE00ECAAC9 /* DuxJavaScriptRegexElement.h */,
+				388CD091176337FE00ECAAC9 /* DuxJavaScriptRegexElement.m */,
+			);
+			name = JavaScript;
+			sourceTree = "<group>";
+		};
+		3833B30F1763389400F5F5DC /* XML */ = {
+			isa = PBXGroup;
+			children = (
+				3833B2FD1763388F00F5F5DC /* DuxXMLLanguage.h */,
+				3833B2FE1763388F00F5F5DC /* DuxXMLLanguage.m */,
+				3833B2FF1763388F00F5F5DC /* DuxXMLBaseElement.h */,
+				3833B3001763388F00F5F5DC /* DuxXMLBaseElement.m */,
+				3833B3011763388F00F5F5DC /* DuxXMLTagElement.h */,
+				3833B3021763388F00F5F5DC /* DuxXMLTagElement.m */,
+				3833B3031763388F00F5F5DC /* DuxXMLTagAttributeElement.h */,
+				3833B3041763388F00F5F5DC /* DuxXMLTagAttributeElement.m */,
+				3833B3051763388F00F5F5DC /* DuxXMLEntityElement.h */,
+				3833B3061763388F00F5F5DC /* DuxXMLEntityElement.m */,
+				3833B3071763388F00F5F5DC /* DuxXMLCommentElement.h */,
+				3833B3081763388F00F5F5DC /* DuxXMLCommentElement.m */,
+			);
+			name = XML;
+			sourceTree = "<group>";
+		};
+		3833B3101763389D00F5F5DC /* Shell */ = {
+			isa = PBXGroup;
+			children = (
+				3833B2E51763388200F5F5DC /* DuxShellLanguage.h */,
+				3833B2E61763388200F5F5DC /* DuxShellLanguage.m */,
+				3833B2E71763388200F5F5DC /* DuxShellBaseElement.h */,
+				3833B2E81763388200F5F5DC /* DuxShellBaseElement.m */,
+				3833B2E91763388200F5F5DC /* DuxShellKeywordElement.h */,
+				3833B2EA1763388200F5F5DC /* DuxShellKeywordElement.m */,
+				3833B2EB1763388200F5F5DC /* DuxShellVariableElement.h */,
+				3833B2EC1763388200F5F5DC /* DuxShellVariableElement.m */,
+				3833B2ED1763388200F5F5DC /* DuxShellCommentElement.h */,
+				3833B2EE1763388200F5F5DC /* DuxShellCommentElement.m */,
+				3833B2EF1763388200F5F5DC /* DuxShellNumberElement.h */,
+				3833B2F01763388200F5F5DC /* DuxShellNumberElement.m */,
+				3833B2F11763388200F5F5DC /* DuxShellSingleQuotedStringElement.h */,
+				3833B2F21763388200F5F5DC /* DuxShellSingleQuotedStringElement.m */,
+				3833B2F31763388200F5F5DC /* DuxShellDoubleQuotedStringElement.h */,
+				3833B2F41763388200F5F5DC /* DuxShellDoubleQuotedStringElement.m */,
+			);
+			name = Shell;
+			sourceTree = "<group>";
+		};
+		3833B311176338AB00F5F5DC /* PHP */ = {
+			isa = PBXGroup;
+			children = (
+				3833B2CA1763387900F5F5DC /* DuxPHPLanguage.h */,
+				3833B2CB1763387900F5F5DC /* DuxPHPLanguage.m */,
+				3833B2CC1763387900F5F5DC /* DuxPHPBaseElement.h */,
+				3833B2CD1763387900F5F5DC /* DuxPHPBaseElement.m */,
+				3833B2CE1763387900F5F5DC /* DuxPHPSingleQuoteStringElement.h */,
+				3833B2CF1763387900F5F5DC /* DuxPHPSingleQuoteStringElement.m */,
+				3833B2D01763387900F5F5DC /* DuxPHPDoubleQuoteStringElement.h */,
+				3833B2D11763387900F5F5DC /* DuxPHPDoubleQuoteStringElement.m */,
+				3833B2D21763387900F5F5DC /* DuxPHPNumberElement.h */,
+				3833B2D31763387900F5F5DC /* DuxPHPNumberElement.m */,
+				3833B2D41763387900F5F5DC /* DuxPHPVariableElement.h */,
+				3833B2D51763387900F5F5DC /* DuxPHPVariableElement.m */,
+				3833B2D61763387900F5F5DC /* DuxPHPKeywordElement.h */,
+				3833B2D71763387900F5F5DC /* DuxPHPKeywordElement.m */,
+				3833B2D81763387900F5F5DC /* DuxPHPSingleLineCommentElement.h */,
+				3833B2D91763387900F5F5DC /* DuxPHPSingleLineCommentElement.m */,
+				3833B2DA1763387900F5F5DC /* DuxPHPBlockCommentElement.h */,
+				3833B2DB1763387900F5F5DC /* DuxPHPBlockCommentElement.m */,
+			);
+			name = PHP;
+			sourceTree = "<group>";
+		};
+		3833B312176338B700F5F5DC /* Plain Text */ = {
+			isa = PBXGroup;
+			children = (
+				3833B2C41763386F00F5F5DC /* DuxPlainTextLanguage.h */,
+				3833B2C51763386F00F5F5DC /* DuxPlainTextLanguage.m */,
+				3833B2C61763386F00F5F5DC /* DuxPlainTextBaseElement.h */,
+				3833B2C71763386F00F5F5DC /* DuxPlainTextBaseElement.m */,
+			);
+			name = "Plain Text";
+			sourceTree = "<group>";
+		};
+		3833B313176338C200F5F5DC /* Ruby */ = {
+			isa = PBXGroup;
+			children = (
+				3833B2AC1763386400F5F5DC /* DuxRubyLanguage.h */,
+				3833B2AD1763386400F5F5DC /* DuxRubyLanguage.m */,
+				3833B2AE1763386400F5F5DC /* DuxRubyBaseElement.h */,
+				3833B2AF1763386400F5F5DC /* DuxRubyBaseElement.m */,
+				3833B2B01763386400F5F5DC /* DuxRubySingleQuotedStringElement.h */,
+				3833B2B11763386400F5F5DC /* DuxRubySingleQuotedStringElement.m */,
+				3833B2B21763386400F5F5DC /* DuxRubyDoubleQuotedStringElement.h */,
+				3833B2B31763386400F5F5DC /* DuxRubyDoubleQuotedStringElement.m */,
+				3833B2B41763386400F5F5DC /* DuxRubyNumberElement.h */,
+				3833B2B51763386400F5F5DC /* DuxRubyNumberElement.m */,
+				3833B2B61763386400F5F5DC /* DuxRubyKeywordElement.h */,
+				3833B2B71763386400F5F5DC /* DuxRubyKeywordElement.m */,
+				3833B2B81763386400F5F5DC /* DuxRubySingleLineCommentElement.h */,
+				3833B2B91763386400F5F5DC /* DuxRubySingleLineCommentElement.m */,
+				3833B2BA1763386400F5F5DC /* DuxRubyRegularExpressionElement.h */,
+				3833B2BB1763386400F5F5DC /* DuxRubyRegularExpressionElement.m */,
+			);
+			name = Ruby;
+			sourceTree = "<group>";
+		};
+		3833B314176338CB00F5F5DC /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				3833B29A1763385800F5F5DC /* DuxJSONBaseElement.h */,
+				3833B29B1763385800F5F5DC /* DuxJSONBaseElement.m */,
+				3833B29C1763385800F5F5DC /* DuxJSONKeyElement.h */,
+				3833B29D1763385800F5F5DC /* DuxJSONKeyElement.m */,
+				3833B29E1763385800F5F5DC /* DuxJSONLanguage.h */,
+				3833B29F1763385800F5F5DC /* DuxJSONLanguage.m */,
+				3833B2A01763385800F5F5DC /* DuxJSONStringElement.h */,
+				3833B2A11763385800F5F5DC /* DuxJSONStringElement.m */,
+				3833B2A21763385800F5F5DC /* DuxJSONNumberElement.h */,
+				3833B2A31763385800F5F5DC /* DuxJSONNumberElement.m */,
+				3833B2A41763385800F5F5DC /* DuxJSONKeywordElement.h */,
+				3833B2A51763385800F5F5DC /* DuxJSONKeywordElement.m */,
+			);
+			name = JSON;
+			sourceTree = "<group>";
+		};
+		3833B3261763394700F5F5DC /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				3833B31B1763394200F5F5DC /* DuxPreferences.h */,
+				3833B31C1763394200F5F5DC /* DuxPreferences.m */,
+				3833B31D1763394200F5F5DC /* DuxPreferencesWindowController.h */,
+				3833B31E1763394200F5F5DC /* DuxPreferencesWindowController.m */,
+				3833B31F1763394200F5F5DC /* DuxFontSelectorTextField.h */,
+				3833B3201763394200F5F5DC /* DuxFontSelectorTextField.m */,
+				3833B3211763394200F5F5DC /* PreferencesWindow.xib */,
+				3833B3271763395C00F5F5DC /* DuxStringLineEnumerator.h */,
+				3833B3281763395C00F5F5DC /* DuxStringLineEnumerator.m */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
 		3871F644175FF34200AB5900 = {
 			isa = PBXGroup;
 			children = (
-				3875E49117608D11002D427E /* QuartzCore.framework */,
 				3871F656175FF34200AB5900 /* Ketchup */,
 				3871F676175FF34200AB5900 /* KetchupTests */,
+				38C8A3D31763372D005DBC23 /* DuxTextView */,
 				3871F64F175FF34200AB5900 /* Frameworks */,
 				3871F64E175FF34200AB5900 /* Products */,
 			);
@@ -122,6 +559,7 @@
 		3871F64F175FF34200AB5900 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3875E49117608D11002D427E /* QuartzCore.framework */,
 				3871F650175FF34200AB5900 /* Cocoa.framework */,
 				3871F671175FF34200AB5900 /* SenTestingKit.framework */,
 				3871F652175FF34200AB5900 /* Other Frameworks */,
@@ -204,6 +642,126 @@
 			name = artwork;
 			sourceTree = "<group>";
 		};
+		388CD0491763378E00ECAAC9 /* CSS */ = {
+			isa = PBXGroup;
+			children = (
+				38C8A3D417633742005DBC23 /* DuxCSSLanguage.h */,
+				38C8A3D517633742005DBC23 /* DuxCSSLanguage.m */,
+				38C8A3D617633742005DBC23 /* DuxCSSBaseElement.h */,
+				38C8A3D717633742005DBC23 /* DuxCSSBaseElement.m */,
+				38C8A3D817633742005DBC23 /* DuxCSSCommentElement.h */,
+				38C8A3D917633742005DBC23 /* DuxCSSCommentElement.m */,
+				38C8A3DA17633742005DBC23 /* DuxCSSClassSelectorElement.h */,
+				38C8A3DB17633742005DBC23 /* DuxCSSClassSelectorElement.m */,
+				38C8A3DC17633742005DBC23 /* DuxCSSIDSelectorElement.h */,
+				38C8A3DD17633742005DBC23 /* DuxCSSIDSelectorElement.m */,
+				38C8A3DE17633742005DBC23 /* DuxCSSPseudoSelectorElement.h */,
+				38C8A3DF17633742005DBC23 /* DuxCSSPseudoSelectorElement.m */,
+				38C8A3E017633742005DBC23 /* DuxCSSDefinitionBlockElement.h */,
+				38C8A3E117633742005DBC23 /* DuxCSSDefinitionBlockElement.m */,
+				38C8A3E217633742005DBC23 /* DuxCSSPropertyNameElement.h */,
+				38C8A3E317633742005DBC23 /* DuxCSSPropertyNameElement.m */,
+				38C8A3E417633742005DBC23 /* DuxCSSPropertyValueElement.h */,
+				38C8A3E517633742005DBC23 /* DuxCSSPropertyValueElement.m */,
+				38C8A3E617633742005DBC23 /* DuxCSSNumberValueElement.h */,
+				38C8A3E717633742005DBC23 /* DuxCSSNumberValueElement.m */,
+				38C8A3E817633742005DBC23 /* DuxCSSColorValueElement.h */,
+				38C8A3E917633742005DBC23 /* DuxCSSColorValueElement.m */,
+				38C8A3EA17633742005DBC23 /* DuxCSSAtRuleElement.h */,
+				38C8A3EB17633742005DBC23 /* DuxCSSAtRuleElement.m */,
+			);
+			name = CSS;
+			sourceTree = "<group>";
+		};
+		388CD04A1763379700ECAAC9 /* Languages */ = {
+			isa = PBXGroup;
+			children = (
+				388CD0491763378E00ECAAC9 /* CSS */,
+				388CD06C176337C400ECAAC9 /* C */,
+				388CD07F176337ED00ECAAC9 /* HTML */,
+				3833B2991763382A00F5F5DC /* JavaScript */,
+				3833B314176338CB00F5F5DC /* JSON */,
+				3833B313176338C200F5F5DC /* Ruby */,
+				3833B312176338B700F5F5DC /* Plain Text */,
+				3833B311176338AB00F5F5DC /* PHP */,
+				3833B3101763389D00F5F5DC /* Shell */,
+				3833B30F1763389400F5F5DC /* XML */,
+			);
+			name = Languages;
+			sourceTree = "<group>";
+		};
+		388CD06C176337C400ECAAC9 /* C */ = {
+			isa = PBXGroup;
+			children = (
+				388CD04B176337B600ECAAC9 /* DuxCLanguage.h */,
+				388CD04C176337B600ECAAC9 /* DuxCLanguage.m */,
+				388CD04D176337B600ECAAC9 /* DuxCBaseElement.h */,
+				388CD04E176337B600ECAAC9 /* DuxCBaseElement.m */,
+				388CD04F176337B600ECAAC9 /* DuxCSingleQuotedStringElement.h */,
+				388CD050176337B600ECAAC9 /* DuxCSingleQuotedStringElement.m */,
+				388CD051176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.h */,
+				388CD052176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.m */,
+				388CD053176337B600ECAAC9 /* DuxCNumberElement.h */,
+				388CD054176337B600ECAAC9 /* DuxCNumberElement.m */,
+				388CD055176337B600ECAAC9 /* DuxCKeywordElement.h */,
+				388CD056176337B600ECAAC9 /* DuxCKeywordElement.m */,
+				388CD057176337B600ECAAC9 /* DuxCSingleLineCommentElement.h */,
+				388CD058176337B600ECAAC9 /* DuxCSingleLineCommentElement.m */,
+				388CD059176337B600ECAAC9 /* DuxCBlockCommentElement.h */,
+				388CD05A176337B600ECAAC9 /* DuxCBlockCommentElement.m */,
+			);
+			name = C;
+			sourceTree = "<group>";
+		};
+		388CD07F176337ED00ECAAC9 /* HTML */ = {
+			isa = PBXGroup;
+			children = (
+				388CD06D176337E800ECAAC9 /* DuxHTMLLanguage.h */,
+				388CD06E176337E800ECAAC9 /* DuxHTMLLanguage.m */,
+				388CD06F176337E800ECAAC9 /* DuxHTMLBaseElement.h */,
+				388CD070176337E800ECAAC9 /* DuxHTMLBaseElement.m */,
+				388CD071176337E800ECAAC9 /* DuxHTMLTagElement.h */,
+				388CD072176337E800ECAAC9 /* DuxHTMLTagElement.m */,
+				388CD073176337E800ECAAC9 /* DuxHTMLTagAttributeElement.h */,
+				388CD074176337E800ECAAC9 /* DuxHTMLTagAttributeElement.m */,
+				388CD075176337E800ECAAC9 /* DuxHTMLEntityElement.h */,
+				388CD076176337E800ECAAC9 /* DuxHTMLEntityElement.m */,
+				388CD077176337E800ECAAC9 /* DuxHTMLCommentElement.h */,
+				388CD078176337E800ECAAC9 /* DuxHTMLCommentElement.m */,
+			);
+			name = HTML;
+			sourceTree = "<group>";
+		};
+		38C8A3D31763372D005DBC23 /* DuxTextView */ = {
+			isa = PBXGroup;
+			children = (
+				38C8A3BC17633728005DBC23 /* DuxTextView.h */,
+				38C8A3BD17633728005DBC23 /* DuxTextView.m */,
+				38C8A3BE17633728005DBC23 /* DuxTextContainer.h */,
+				38C8A3BF17633728005DBC23 /* DuxTextContainer.m */,
+				38C8A3C017633728005DBC23 /* DuxSyntaxHighlighter.h */,
+				38C8A3C117633728005DBC23 /* DuxSyntaxHighlighter.m */,
+				38C8A3C217633728005DBC23 /* DuxLanguage.h */,
+				38C8A3C317633728005DBC23 /* DuxLanguage.m */,
+				38C8A3C417633729005DBC23 /* DuxLanguageElement.h */,
+				38C8A3C517633729005DBC23 /* DuxLanguageElement.m */,
+				38C8A3C617633729005DBC23 /* DuxLanguageMenuItem.h */,
+				38C8A3C717633729005DBC23 /* DuxLanguageMenuItem.m */,
+				38C8A3C817633729005DBC23 /* DuxLineNumberString.h */,
+				38C8A3C917633729005DBC23 /* DuxLineNumberString.m */,
+				38C8A3CA17633729005DBC23 /* JumpToLinePanel.xib */,
+				3833B3151763390200F5F5DC /* NSColor+DuxColors.h */,
+				3833B3161763390200F5F5DC /* NSColor+DuxColors.m */,
+				3833B3181763391E00F5F5DC /* NSStringDuxAdditions.h */,
+				3833B3191763391E00F5F5DC /* NSStringDuxAdditions.m */,
+				3833B32A1763397400F5F5DC /* DuxScrollViewAnimation.h */,
+				3833B32B1763397400F5F5DC /* DuxScrollViewAnimation.m */,
+				3833B3261763394700F5F5DC /* Preferences */,
+				388CD04A1763379700ECAAC9 /* Languages */,
+			);
+			name = DuxTextView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -283,6 +841,8 @@
 				3871F68D175FFA9F00AB5900 /* appicon.iconset in Resources */,
 				3875E4961760B667002D427E /* led-up-to-date.png in Resources */,
 				3875E4971760B667002D427E /* led-up-to-date@2x.png in Resources */,
+				38C8A3D217633729005DBC23 /* JumpToLinePanel.xib in Resources */,
+				3833B3251763394200F5F5DC /* PreferencesWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +884,94 @@
 				3871F69E1760026B00AB5900 /* KGitDocument.m in Sources */,
 				38C8A3BB1762CF50005DBC23 /* KDocumentVersionedFile.m in Sources */,
 				C9D21E9B1763010900A3DDDE /* KHGDocument.m in Sources */,
+				38C8A3CB17633729005DBC23 /* DuxTextView.m in Sources */,
+				38C8A3CC17633729005DBC23 /* DuxTextContainer.m in Sources */,
+				38C8A3CD17633729005DBC23 /* DuxSyntaxHighlighter.m in Sources */,
+				38C8A3CE17633729005DBC23 /* DuxLanguage.m in Sources */,
+				38C8A3CF17633729005DBC23 /* DuxLanguageElement.m in Sources */,
+				38C8A3D017633729005DBC23 /* DuxLanguageMenuItem.m in Sources */,
+				38C8A3D117633729005DBC23 /* DuxLineNumberString.m in Sources */,
+				38C8A3EC17633742005DBC23 /* DuxCSSLanguage.m in Sources */,
+				38C8A3ED17633742005DBC23 /* DuxCSSBaseElement.m in Sources */,
+				38C8A3EE17633742005DBC23 /* DuxCSSCommentElement.m in Sources */,
+				38C8A3EF17633742005DBC23 /* DuxCSSClassSelectorElement.m in Sources */,
+				38C8A3F017633742005DBC23 /* DuxCSSIDSelectorElement.m in Sources */,
+				38C8A3F117633742005DBC23 /* DuxCSSPseudoSelectorElement.m in Sources */,
+				38C8A3F217633742005DBC23 /* DuxCSSDefinitionBlockElement.m in Sources */,
+				38C8A3F317633742005DBC23 /* DuxCSSPropertyNameElement.m in Sources */,
+				38C8A3F417633742005DBC23 /* DuxCSSPropertyValueElement.m in Sources */,
+				38C8A3F517633742005DBC23 /* DuxCSSNumberValueElement.m in Sources */,
+				38C8A3F617633742005DBC23 /* DuxCSSColorValueElement.m in Sources */,
+				38C8A3F717633742005DBC23 /* DuxCSSAtRuleElement.m in Sources */,
+				388CD05B176337B600ECAAC9 /* DuxCLanguage.m in Sources */,
+				388CD05D176337B600ECAAC9 /* DuxCBaseElement.m in Sources */,
+				388CD05F176337B600ECAAC9 /* DuxCSingleQuotedStringElement.m in Sources */,
+				388CD061176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.m in Sources */,
+				388CD063176337B600ECAAC9 /* DuxCNumberElement.m in Sources */,
+				388CD065176337B600ECAAC9 /* DuxCKeywordElement.m in Sources */,
+				388CD067176337B600ECAAC9 /* DuxCSingleLineCommentElement.m in Sources */,
+				388CD069176337B600ECAAC9 /* DuxCBlockCommentElement.m in Sources */,
+				388CD079176337E800ECAAC9 /* DuxHTMLLanguage.m in Sources */,
+				388CD07A176337E800ECAAC9 /* DuxHTMLBaseElement.m in Sources */,
+				388CD07B176337E800ECAAC9 /* DuxHTMLTagElement.m in Sources */,
+				388CD07C176337E800ECAAC9 /* DuxHTMLTagAttributeElement.m in Sources */,
+				388CD07D176337E800ECAAC9 /* DuxHTMLEntityElement.m in Sources */,
+				388CD07E176337E800ECAAC9 /* DuxHTMLCommentElement.m in Sources */,
+				388CD092176337FE00ECAAC9 /* DuxJavaScriptLanguage.m in Sources */,
+				388CD093176337FE00ECAAC9 /* DuxJavaScriptBaseElement.m in Sources */,
+				388CD094176337FE00ECAAC9 /* DuxJavaScriptSingleQuotedStringElement.m in Sources */,
+				388CD095176337FE00ECAAC9 /* DuxJavaScriptDoubleQuotedStringElement.m in Sources */,
+				388CD096176337FE00ECAAC9 /* DuxJavaScriptNumberElement.m in Sources */,
+				388CD097176337FE00ECAAC9 /* DuxJavaScriptKeywordElement.m in Sources */,
+				388CD098176337FE00ECAAC9 /* DuxJavaScriptSingleLineCommentElement.m in Sources */,
+				388CD099176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.m in Sources */,
+				388CD09A176337FE00ECAAC9 /* DuxJavaScriptRegexElement.m in Sources */,
+				3833B2A61763385800F5F5DC /* DuxJSONBaseElement.m in Sources */,
+				3833B2A71763385800F5F5DC /* DuxJSONKeyElement.m in Sources */,
+				3833B2A81763385800F5F5DC /* DuxJSONLanguage.m in Sources */,
+				3833B2A91763385800F5F5DC /* DuxJSONStringElement.m in Sources */,
+				3833B2AA1763385800F5F5DC /* DuxJSONNumberElement.m in Sources */,
+				3833B2AB1763385800F5F5DC /* DuxJSONKeywordElement.m in Sources */,
+				3833B2BC1763386400F5F5DC /* DuxRubyLanguage.m in Sources */,
+				3833B2BD1763386400F5F5DC /* DuxRubyBaseElement.m in Sources */,
+				3833B2BE1763386400F5F5DC /* DuxRubySingleQuotedStringElement.m in Sources */,
+				3833B2BF1763386400F5F5DC /* DuxRubyDoubleQuotedStringElement.m in Sources */,
+				3833B2C01763386400F5F5DC /* DuxRubyNumberElement.m in Sources */,
+				3833B2C11763386400F5F5DC /* DuxRubyKeywordElement.m in Sources */,
+				3833B2C21763386400F5F5DC /* DuxRubySingleLineCommentElement.m in Sources */,
+				3833B2C31763386400F5F5DC /* DuxRubyRegularExpressionElement.m in Sources */,
+				3833B2C81763386F00F5F5DC /* DuxPlainTextLanguage.m in Sources */,
+				3833B2C91763386F00F5F5DC /* DuxPlainTextBaseElement.m in Sources */,
+				3833B2DC1763387900F5F5DC /* DuxPHPLanguage.m in Sources */,
+				3833B2DD1763387900F5F5DC /* DuxPHPBaseElement.m in Sources */,
+				3833B2DE1763387900F5F5DC /* DuxPHPSingleQuoteStringElement.m in Sources */,
+				3833B2DF1763387900F5F5DC /* DuxPHPDoubleQuoteStringElement.m in Sources */,
+				3833B2E01763387900F5F5DC /* DuxPHPNumberElement.m in Sources */,
+				3833B2E11763387900F5F5DC /* DuxPHPVariableElement.m in Sources */,
+				3833B2E21763387900F5F5DC /* DuxPHPKeywordElement.m in Sources */,
+				3833B2E31763387900F5F5DC /* DuxPHPSingleLineCommentElement.m in Sources */,
+				3833B2E41763387900F5F5DC /* DuxPHPBlockCommentElement.m in Sources */,
+				3833B2F51763388200F5F5DC /* DuxShellLanguage.m in Sources */,
+				3833B2F61763388200F5F5DC /* DuxShellBaseElement.m in Sources */,
+				3833B2F71763388200F5F5DC /* DuxShellKeywordElement.m in Sources */,
+				3833B2F81763388200F5F5DC /* DuxShellVariableElement.m in Sources */,
+				3833B2F91763388200F5F5DC /* DuxShellCommentElement.m in Sources */,
+				3833B2FA1763388200F5F5DC /* DuxShellNumberElement.m in Sources */,
+				3833B2FB1763388200F5F5DC /* DuxShellSingleQuotedStringElement.m in Sources */,
+				3833B2FC1763388200F5F5DC /* DuxShellDoubleQuotedStringElement.m in Sources */,
+				3833B3091763388F00F5F5DC /* DuxXMLLanguage.m in Sources */,
+				3833B30A1763388F00F5F5DC /* DuxXMLBaseElement.m in Sources */,
+				3833B30B1763388F00F5F5DC /* DuxXMLTagElement.m in Sources */,
+				3833B30C1763388F00F5F5DC /* DuxXMLTagAttributeElement.m in Sources */,
+				3833B30D1763388F00F5F5DC /* DuxXMLEntityElement.m in Sources */,
+				3833B30E1763388F00F5F5DC /* DuxXMLCommentElement.m in Sources */,
+				3833B3171763390200F5F5DC /* NSColor+DuxColors.m in Sources */,
+				3833B31A1763391E00F5F5DC /* NSStringDuxAdditions.m in Sources */,
+				3833B3221763394200F5F5DC /* DuxPreferences.m in Sources */,
+				3833B3231763394200F5F5DC /* DuxPreferencesWindowController.m in Sources */,
+				3833B3241763394200F5F5DC /* DuxFontSelectorTextField.m in Sources */,
+				3833B3291763395C00F5F5DC /* DuxStringLineEnumerator.m in Sources */,
+				3833B32C1763397400F5F5DC /* DuxScrollViewAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +980,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3871F67E175FF34200AB5900 /* KetchupTests.m in Sources */,
+				388CD05C176337B600ECAAC9 /* DuxCLanguage.m in Sources */,
+				388CD05E176337B600ECAAC9 /* DuxCBaseElement.m in Sources */,
+				388CD060176337B600ECAAC9 /* DuxCSingleQuotedStringElement.m in Sources */,
+				388CD062176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.m in Sources */,
+				388CD064176337B600ECAAC9 /* DuxCNumberElement.m in Sources */,
+				388CD066176337B600ECAAC9 /* DuxCKeywordElement.m in Sources */,
+				388CD068176337B600ECAAC9 /* DuxCSingleLineCommentElement.m in Sources */,
+				388CD06A176337B600ECAAC9 /* DuxCBlockCommentElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

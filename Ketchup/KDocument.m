@@ -214,6 +214,7 @@
   [self.windowSplitView addSubview:self.contentView];
   [self.windowSplitView setPosition:sidebarWidth ofDividerAtIndex:0];
   [self.window.contentView addSubview:self.windowSplitView];
+  [self.windowSplitView adjustSubviews];
   
   [self.window makeFirstResponder:self.filesOutlineView];
   [self.window makeKeyAndOrderFront:self];
@@ -265,8 +266,6 @@
 {
   return NO;
 }
-
-
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(KDocumentVersionedFile *)file
 {
@@ -344,6 +343,133 @@
   [filenameField setFrame:NSMakeRect(filenameField.frame.origin.x, filenameField.frame.origin.y, view.frame.size.width - statusField.frame.size.width - filenameField.frame.origin.x - 4, filenameField.frame.size.height)];
   
   return view;
+}
+
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
+{
+  for (NSView *view in self.contentView.subviews.copy) {
+    [view removeFromSuperview];
+  }
+  
+  // figure out which file is selected
+  if (self.filesOutlineView.selectedRow == -1) {
+    return;
+  }
+  
+  KDocumentVersionedFile *file = [self.filesWithStatus objectAtIndex:self.filesOutlineView.selectedRow];
+  
+  // read diff view data
+  NSStringEncoding encoding;
+  NSString *textContentToLoad = [NSString stringWithUnknownData:[NSData dataWithContentsOfURL:file.fileUrl] usedEncoding:&encoding];
+  if (!textContentToLoad) {
+    NSLog(@"couldn't read file");
+  }
+  
+  // figure out what language to use
+  DuxLanguage *chosenLanguage = [DuxPlainTextLanguage sharedInstance];
+  for (Class language in [DuxLanguage registeredLanguages]) {
+    if (![language isDefaultLanguageForURL:file.fileUrl textContents:textContentToLoad])
+      continue;
+    
+    chosenLanguage = [language sharedInstance];
+    break;
+  }
+  
+  CGFloat diffViewWidth = floor(self.contentView.frame.size.width / 2) - 30;
+  
+  // create left diff view
+  self.leftDiffTextStorage = [[NSTextStorage alloc] initWithString:textContentToLoad attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+  self.leftSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
+  self.leftDiffTextStorage.delegate = self.leftSyntaxHighlighter;
+  [self.leftSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.leftDiffTextStorage];
+  
+  NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+  NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(diffViewWidth, FLT_MAX)];
+  textContainer.widthTracksTextView = YES;
+  
+  [self.leftDiffTextStorage addLayoutManager:layoutManager];
+  [layoutManager addTextContainer:textContainer];
+  
+  self.leftDiffView = [[DuxTextView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, 100) textContainer:textContainer];
+  self.leftDiffView.editable = NO;
+  self.leftDiffView.minSize = NSMakeSize(0, 100);
+  self.leftDiffView.maxSize = NSMakeSize(FLT_MAX, FLT_MAX);
+  [self.leftDiffView setVerticallyResizable:YES];
+  [self.leftDiffView setHorizontallyResizable:NO];
+  [self.leftDiffView setAutoresizingMask:NSViewWidthSizable];
+  self.leftDiffView.usesFindBar = YES;
+  self.leftDiffView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
+  self.leftDiffView.highlighter = self.leftSyntaxHighlighter;
+  
+  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, self.contentView.frame.size.height)];
+  scrollView.borderType = NSNoBorder;
+  scrollView.hasVerticalScroller = YES;
+  scrollView.hasHorizontalScroller = NO;
+  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMaxXMargin;
+  scrollView.autoresizesSubviews = YES;
+  scrollView.documentView = self.leftDiffView;
+  if ([DuxPreferences editorDarkMode]) {
+    scrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
+  }
+  [self.contentView addSubview:scrollView];
+  
+  // make sure scroll bars are good
+  [self.leftDiffView.layoutManager ensureLayoutForTextContainer:self.leftDiffView.textContainer];
+  
+  
+  
+  
+  // create right diff view
+  self.rightDiffTextStorage = [[NSTextStorage alloc] initWithString:textContentToLoad attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+  self.rightSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
+  self.rightDiffTextStorage.delegate = self.rightSyntaxHighlighter;
+  [self.rightSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.rightDiffTextStorage];
+  
+  layoutManager = [[NSLayoutManager alloc] init];
+  textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(diffViewWidth, FLT_MAX)];
+  textContainer.widthTracksTextView = YES;
+  
+  [self.rightDiffTextStorage addLayoutManager:layoutManager];
+  [layoutManager addTextContainer:textContainer];
+  
+  self.rightDiffView = [[DuxTextView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, 100) textContainer:textContainer];
+  self.rightDiffView.editable = NO;
+  self.rightDiffView.minSize = NSMakeSize(0, 100);
+  self.rightDiffView.maxSize = NSMakeSize(FLT_MAX, FLT_MAX);
+  [self.rightDiffView setVerticallyResizable:YES];
+  [self.rightDiffView setHorizontallyResizable:NO];
+  [self.rightDiffView setAutoresizingMask:NSViewWidthSizable];
+  self.rightDiffView.usesFindBar = YES;
+  self.rightDiffView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
+  self.rightDiffView.highlighter = self.rightSyntaxHighlighter;
+  
+  scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(self.contentView.frame.size.width - diffViewWidth, 0, diffViewWidth, self.contentView.frame.size.height)];
+  scrollView.borderType = NSNoBorder;
+  scrollView.hasVerticalScroller = YES;
+  scrollView.hasHorizontalScroller = NO;
+  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMinXMargin;
+  scrollView.autoresizesSubviews = YES;
+  scrollView.documentView = self.rightDiffView;
+  if ([DuxPreferences editorDarkMode]) {
+    scrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
+  }
+  [self.contentView addSubview:scrollView];
+  
+  // make sure scroll bars are good
+  [self.rightDiffView.layoutManager ensureLayoutForTextContainer:self.rightDiffView.textContainer];
+  
+  // show encoding alert
+  if (encoding != NSUTF8StringEncoding) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NSAlert *encodingWarningAlert = [[NSAlert alloc] init];
+      encodingWarningAlert.alertStyle = NSCriticalAlertStyle;
+      encodingWarningAlert.messageText = @"File could not be read as UTF-8";
+      encodingWarningAlert.informativeText = @"Dux has guessed the encoding, but could be wrong. Please use the Editor -> Text Encoding menu to choose the correct encoding for this file.";
+      [encodingWarningAlert addButtonWithTitle:@"Dismiss"];
+      
+      [encodingWarningAlert beginSheetModalForWindow:self.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+    });
+  }
 }
 
 - (NSArray *)fetchFilesWithStatus
