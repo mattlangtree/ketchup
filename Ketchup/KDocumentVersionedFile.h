@@ -24,6 +24,7 @@ typedef NS_OPTIONS(NSUInteger, KDocumentVersionedFileStatus) {
 
 @property (readonly) NSURL *fileUrl;
 @property (readonly) KDocumentVersionedFileStatus status;
+@property (readonly) NSString *humanReadibleStatus;
 
 + (id)fileWithUrl:(NSURL *)url status:(KDocumentVersionedFileStatus)status;
 - (id)initWithUrl:(NSURL *)url status:(KDocumentVersionedFileStatus)status;

@@ -7,6 +7,7 @@
 //
 
 #import "KDocument.h"
+#import "KDocumentVersionedFile.h"
 
 @interface KDocument()
 
@@ -123,13 +124,15 @@
   self.filesOutlineView.backgroundColor = [NSColor clearColor];
   self.filesOutlineView.headerView = nil;
   self.filesOutlineView.dataSource = self;
+  self.filesOutlineView.delegate = self;
+  self.filesOutlineView.rowHeight = 40;
   
   NSTableColumn * column = [[NSTableColumn alloc] initWithIdentifier:@"filename"];
   [column setWidth:sidebarWidth];
   [self.filesOutlineView addTableColumn:column];
   self.filesOutlineView.outlineTableColumn = column;
   
-  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 1, sidebarWidth, self.filesView.frame.size.height - 32)];
+  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(-5, 1, sidebarWidth, self.filesView.frame.size.height - 32)];
   scrollView.documentView = self.filesOutlineView;
   scrollView.hasVerticalScroller = YES;
   scrollView.autoresizesSubviews = YES;
@@ -263,9 +266,81 @@
   return NO;
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
+
+
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(KDocumentVersionedFile *)file
 {
-  return [item description];
+  NSView *view = [outlineView makeViewWithIdentifier:tableColumn.identifier owner:self];
+  NSImageView *iconView;
+  NSTextField *filenameField;
+  NSTextField *pathField;
+  NSTextField *statusField;
+  if (view) {
+    filenameField = [view viewWithTag:1];
+    pathField = [view viewWithTag:2];
+    iconView = [view viewWithTag:3];
+    statusField = [view viewWithTag:4];
+  } else {
+    view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, tableColumn.width, outlineView.rowHeight)];
+    
+    filenameField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 17, tableColumn.width - 37, 20)];
+    filenameField.autoresizingMask = NSViewWidthSizable;
+    filenameField.backgroundColor = [NSColor clearColor];
+    filenameField.bordered = NO;
+    filenameField.editable = NO;
+    filenameField.font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+    filenameField.tag = 1;
+    NSTextFieldCell *cell = filenameField.cell;
+    cell.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    [view addSubview:filenameField];
+    
+    pathField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 0, tableColumn.width - 37, 17)];
+    pathField.autoresizingMask = NSViewWidthSizable;
+    pathField.backgroundColor = [NSColor clearColor];
+    pathField.bordered = NO;
+    pathField.editable = NO;
+    pathField.font = [NSFont systemFontOfSize:[NSFont smallSystemFontSize]];
+    pathField.textColor = [[NSColor controlTextColor] colorWithAlphaComponent:0.7];
+    pathField.tag = 2;
+    cell = pathField.cell;
+    cell.lineBreakMode = NSLineBreakByTruncatingHead;
+    [view addSubview:pathField];
+    
+    iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 4, 32, 32)];
+    iconView.tag = 3;
+    [view addSubview:iconView];
+    
+    statusField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 21, tableColumn.width - 37, 14)];
+    statusField.autoresizingMask = NSViewMinXMargin;
+    statusField.backgroundColor = [NSColor clearColor];
+    statusField.textColor = [NSColor colorWithDeviceRed:1.00 green:1.00 blue:1.00 alpha:1.0];
+    statusField.bordered = NO;
+    statusField.editable = NO;
+    statusField.font = [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]];
+    cell = statusField.cell;
+    cell.alignment = NSCenterTextAlignment;
+    statusField.tag = 4;
+    [view addSubview:statusField];
+  }
+  
+  filenameField.stringValue = file.fileUrl.lastPathComponent;
+  
+  NSString *basePath = self.fileURL.path.stringByStandardizingPath.stringByAbbreviatingWithTildeInPath;
+  NSString *path = file.fileUrl.path.stringByStandardizingPath.stringByAbbreviatingWithTildeInPath;
+  if (path.length > basePath.length && [[path substringToIndex:basePath.length] isEqualToString:basePath]) {
+    path = [path substringFromIndex:basePath.length + 1];
+  }
+  pathField.stringValue = path;
+  
+  iconView.image = [[NSWorkspace sharedWorkspace] iconForFile:file.fileUrl.path];
+  
+  statusField.stringValue = file.humanReadibleStatus;
+  [statusField sizeToFit];
+  [statusField setFrame:NSMakeRect(view.frame.size.width - statusField.frame.size.width - 4, statusField.frame.origin.y, statusField.frame.size.width + 4, 14)];
+  statusField.backgroundColor = [NSColor colorWithDeviceRed:0.60 green:0.65 blue:0.70 alpha:1.0];
+  [filenameField setFrame:NSMakeRect(filenameField.frame.origin.x, filenameField.frame.origin.y, view.frame.size.width - statusField.frame.size.width - filenameField.frame.origin.x, filenameField.frame.size.height)];
+  
+  return view;
 }
 
 - (NSArray *)fetchFilesWithStatus

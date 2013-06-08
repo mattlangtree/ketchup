@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface KDocument : NSDocument <NSSplitViewDelegate, NSOutlineViewDataSource>
+@interface KDocument : NSDocument <NSSplitViewDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
 
 // window (created by in xib file)
 @property (strong) IBOutlet NSWindow *window;

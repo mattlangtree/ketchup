@@ -39,42 +39,43 @@
   return nil;
 }
 
-- (NSString *)description
+- (NSString *)humanReadibleStatus
 {
-  NSMutableString *desc = [NSMutableString string];
-  
-  [desc appendString:@"<KDocumentVersionedFile "];
-  [desc appendString:self.fileUrl.path.description];
-  [desc appendString:@">"];
+  NSMutableArray *statusStrings = @[].mutableCopy;
   
   if (self.status & KFileStatusNone)
-    [desc appendString:@" KFileStatusNone"];
+    [statusStrings addObject:@"None"];
   
   if (self.status & KFileStatusModified)
-    [desc appendString:@" KFileStatusModified"];
+    [statusStrings addObject:@"Modified"];
   
   if (self.status & KFileStatusAdded)
-    [desc appendString:@" KFileStatusAdded"];
+    [statusStrings addObject:@"Added"];
   
   if (self.status & KFileStatusDeleted)
-    [desc appendString:@" KFileStatusDeleted"];
+    [statusStrings addObject:@"Deleted"];
   
   if (self.status & KFileStatusRenamed)
-    [desc appendString:@" KFileStatusRenamed"];
+    [statusStrings addObject:@"Renamed"];
   
   if (self.status & KFileStatusCopied)
-    [desc appendString:@" KFileStatusCopied"];
+    [statusStrings addObject:@"Copied"];
   
   if (self.status & KFileStatusUpdated)
-    [desc appendString:@" KFileStatusUpdated"];
+    [statusStrings addObject:@"Updated"];
   
   if (self.status & KFileStatusUntracked)
-    [desc appendString:@" KFileStatusUntracked"];
+    [statusStrings addObject:@"Untracked"];
   
   if (self.status & KFileStatusIgnored)
-    [desc appendString:@" KFileStatusIgnored"];
+    [statusStrings addObject:@"Ignored"];
   
-  return desc.copy;
+  return [statusStrings componentsJoinedByString:@", "];
+}
+
+- (NSString *)description
+{
+  return [NSString stringWithFormat:@"Versioned File: %@ - %@", self.fileUrl.path.stringByAbbreviatingWithTildeInPath, self.humanReadibleStatus];
 }
 
 @end
