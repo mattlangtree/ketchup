@@ -9,6 +9,13 @@
 #import "KGitDocument.h"
 #import "KDocumentVersionedFile.h"
 
+@interface KGitDocument()
+
+@property (strong) NSArray *filesWithStatus;
+
+@end
+
+
 @implementation KGitDocument
 
 - (NSArray *)fetchFilesWithStatus
@@ -127,6 +134,12 @@
   [self addFiles];
   [self commitFiles];
   [self pushFiles];
+  
+  self.filesWithStatus = [self fetchFilesWithStatus];
+  [self.filesOutlineView reloadData];
+  
+  [self.commitTextView setString:@""];
+  
 }
 
 - (void)addFiles

@@ -9,6 +9,13 @@
 #import "KSVNDocument.h"
 #import "KDocumentVersionedFile.h"
 
+@interface KSVNDocument()
+
+@property (strong) NSArray *filesWithStatus;
+
+@end
+
+
 @implementation KSVNDocument
 
 - (NSString *)svnLaunchPath
@@ -161,7 +168,73 @@
 
 - (void)commit
 {
-  NSLog(@"Commit not implemented for SVN yet.");
+  [self addFiles];
+  [self commitFiles];
+  
+  self.filesWithStatus = [self fetchFilesWithStatus];
+  [self.filesOutlineView reloadData];
+
+  [self.commitTextView setString:@""];
+}
+
+- (void)addFiles
+{
+  NSLog(@"Current directory: %@",self.fileURL.path);
+  
+  NSString *addCommand = [[self svnLaunchPath] stringByAppendingFormat:@" add * --force"];
+  
+  NSTask *task = [[NSTask alloc] init];
+  task.launchPath = @"/bin/sh";
+  task.arguments = @[@"-c",addCommand];
+  task.currentDirectoryPath = self.fileURL.path;
+  task.standardOutput = [NSPipe pipe];
+  task.standardError = [NSPipe pipe];
+  
+  [task launch];
+  [task waitUntilExit];
+  
+  NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
+  NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
+  
+  NSString *outputString = [[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding];
+  NSString *errorString = [[NSString alloc] initWithData:error encoding:NSUTF8StringEncoding];
+  
+  if (errorString.length > 0) {
+    NSLog(@"error happened: %@",errorString);
+    return;
+  }
+  
+  NSLog(@"outputString: %@",outputString);
+  
+}
+
+- (void)commitFiles
+{
+  NSLog(@"Current directory: %@",self.fileURL.path);
+  
+  NSTask *task = [[NSTask alloc] init];
+  task.launchPath = [self svnLaunchPath];
+  task.arguments = @[@"commit", @"-m",self.commitTextView.string];
+  task.currentDirectoryPath = self.fileURL.path;
+  task.standardOutput = [NSPipe pipe];
+  task.standardError = [NSPipe pipe];
+  
+  [task launch];
+  [task waitUntilExit];
+  
+  NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
+  NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
+  
+  NSString *outputString = [[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding];
+  NSString *errorString = [[NSString alloc] initWithData:error encoding:NSUTF8StringEncoding];
+  
+  if (errorString.length > 0) {
+    NSLog(@"error happened: %@",errorString);
+    return;
+  }
+  
+  NSLog(@"outputString: %@",outputString);
+    
 }
 
 @end
