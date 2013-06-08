@@ -189,6 +189,8 @@
   self.commitButton.bezelStyle = NSRoundedBezelStyle;
   [self.commitButton sizeToFit];
   self.commitButton.frame = NSMakeRect(sidebarWidth - 16 - self.commitButton.frame.size.width, 4, self.commitButton.frame.size.width + 6, self.commitButton.frame.size.height + 1);
+  [self.commitButton setAction:@selector(commit)];
+  [self.commitButton setTarget:nil];
   [self.commitView addSubview:self.commitButton];
   
   // create content views
@@ -255,6 +257,26 @@
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
   return @"fourty-two.m";
+}
+
+
+#pragma mark - Core Version Control functionality 
+// (git and SVN to subclass)
+
+- (void)commit
+{
+//  [self addFiles];
+//  [self commitFiles];
+}
+
+- (void)addFiles
+{
+  
+}
+
+- (void)commitFiles
+{
+  
 }
 
 @end

@@ -49,7 +49,7 @@
 		3871F65E175FF34200AB5900 /* Ketchup-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ketchup-Prefix.pch"; sourceTree = "<group>"; };
 		3871F660175FF34200AB5900 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		3871F662175FF34200AB5900 /* KDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KDocument.h; sourceTree = "<group>"; };
-		3871F663175FF34200AB5900 /* KDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KDocument.m; sourceTree = "<group>"; };
+		3871F663175FF34200AB5900 /* KDocument.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = KDocument.m; sourceTree = "<group>"; tabWidth = 2; };
 		3871F666175FF34200AB5900 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KDocument.xib; sourceTree = "<group>"; };
 		3871F669175FF34200AB5900 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3871F670175FF34200AB5900 /* KetchupTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KetchupTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
