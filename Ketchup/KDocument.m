@@ -8,6 +8,12 @@
 
 #import "KDocument.h"
 
+@interface KDocument()
+
+@property (strong) NSArray *filesWithStatus;
+
+@end
+
 @implementation KDocument
 
 @synthesize window = _kwindow; // cannot use _window, because NSDocument already has that ivar
@@ -206,6 +212,10 @@
   
   [self.window makeFirstResponder:self.filesOutlineView];
   [self.window makeKeyAndOrderFront:self];
+  
+  // load files
+  self.filesWithStatus = [self fetchFilesWithStatus];
+  [self.filesOutlineView reloadData];
 }
 
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError
@@ -238,11 +248,12 @@
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
-  return 42;
+  return self.filesWithStatus.count;
 }
+
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item;
 {
-  return @"fourty-two.m";
+  return [self.filesWithStatus objectAtIndex:index];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
@@ -250,11 +261,15 @@
   return NO;
 }
 
-/* NOTE: this method is optional for the View Based OutlineView.
- */
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-  return @"fourty-two.m";
+  return [item description];
+}
+
+- (NSArray *)fetchFilesWithStatus
+{
+  NSLog(@"%s: subclass should implement this.", __PRETTY_FUNCTION__);
+  return @[];
 }
 
 @end
