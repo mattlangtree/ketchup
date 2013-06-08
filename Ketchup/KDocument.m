@@ -140,17 +140,17 @@
   
   // TODO: this should be a mail.app style gradient if it is possible to scroll down, and completely invisible if you can't scroll down. the same thing should also be at the top of the outline view
   NSBox *scrollViewBottomBorder = [[NSBox alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, 1)];
+  scrollViewBottomBorder.autoresizingMask = NSViewWidthSizable;
   scrollViewBottomBorder.boxType = NSBoxSeparator;
   scrollViewBottomBorder.alphaValue = 0.25;
   [self.filesView addSubview:scrollViewBottomBorder];
   
   
   self.commitView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, commitMessageHeight)];
-  self.remoteView.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
+  self.commitView.autoresizingMask = NSViewWidthSizable;
   [self.sidebarView addSubview:self.commitView];
   
   self.commitLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
-  self.commitLabel.autoresizingMask = NSViewHeightSizable | NSViewWidthSizable;
   self.commitLabel.font = [NSFont boldSystemFontOfSize:13];
   self.commitLabel.textColor = [NSColor colorWithDeviceRed:0.44 green:0.49 blue:0.55 alpha:1.0];
   self.commitLabel.shadow = [[NSShadow alloc] init];
@@ -167,20 +167,20 @@
   [self.commitView addSubview:self.commitLabel];
   
   self.commitTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.commitTextView.autoresizingMask = NSViewWidthSizable;
   self.commitTextView.font = [NSFont systemFontOfSize:13];
   self.commitTextView.textColor = [NSColor blackColor];
   
   NSScrollView *commitScrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(10, 40, sidebarWidth-20, commitMessageHeight-80)];
+  commitScrollView.autoresizingMask = NSViewWidthSizable;
   commitScrollView.backgroundColor = [NSColor redColor];
   commitScrollView.documentView = self.commitTextView;
   commitScrollView.hasVerticalScroller = YES;
   commitScrollView.autoresizesSubviews = YES;
-  commitScrollView.autoresizingMask = NSViewMinYMargin;
   [self.commitView addSubview:commitScrollView];
   self.commitTextView.frame = NSMakeRect(10, 10, commitScrollView.frame.size.width, commitScrollView.frame.size.height);
   
   self.commitAutoSyncButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
-  self.commitAutoSyncButton.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
   self.commitAutoSyncButton.title = [self autoSyncButtonTitle];
   self.commitAutoSyncButton.buttonType = NSSwitchButton;
   self.commitAutoSyncButton.bezelStyle = NSRoundedBezelStyle;
@@ -189,7 +189,7 @@
   [self.commitView addSubview:self.commitAutoSyncButton];
   
   self.commitButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
-  self.commitButton.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+  self.commitButton.autoresizingMask = NSViewMinXMargin;
   self.commitButton.title = @"Commit";
   self.commitButton.buttonType = NSMomentaryLightButton;
   self.commitButton.bezelStyle = NSRoundedBezelStyle;
