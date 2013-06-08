@@ -70,6 +70,25 @@
   if (self.status & KFileStatusIgnored)
     [statusStrings addObject:@"Ignored"];
   
+  if (self.status & KFileStatusConflicted)
+    [statusStrings addObject:@"Conflicted"];
+  
+  if (self.status & KFileStatusIncomplete)
+    [statusStrings addObject:@"Incomplete"];
+  
+  if (self.status & KFileStatusMerged)
+    [statusStrings addObject:@"Merged"];
+  
+  if (self.status & KFileStatusMissing)
+    [statusStrings addObject:@"Missing"];
+  
+  if (self.status & KFileStatusObstructed)
+    [statusStrings addObject:@"Obstructed"];
+  
+  if (self.status & KFileStatusReplaced)
+    [statusStrings addObject:@"Replaced"];
+
+  
   return [statusStrings componentsJoinedByString:@", "];
 }
 
@@ -77,7 +96,23 @@
 {
   if (self.status & KFileStatusUntracked)
     return YES;
+  
   if (self.status & KFileStatusDeleted)
+    return YES;
+  
+  if (self.status & KFileStatusConflicted)
+    return YES;
+  
+  if (self.status & KFileStatusIncomplete)
+    return YES;
+  
+  if (self.status & KFileStatusMissing)
+    return YES;
+  
+  if (self.status & KFileStatusObstructed)
+    return YES;
+  
+  if (self.status & KFileStatusReplaced)
     return YES;
   
   return NO;

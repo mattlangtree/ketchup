@@ -17,7 +17,13 @@ typedef NS_OPTIONS(NSUInteger, KDocumentVersionedFileStatus) {
   KFileStatusCopied     = 1 << 4,    // 'C' in git. not supported in svn
   KFileStatusUpdated    = 1 << 5,    // 'U'
   KFileStatusUntracked  = 1 << 6,    // '?'
-  KFileStatusIgnored    = 1 << 7     // '!' in git
+  KFileStatusIgnored    = 1 << 7,    // '!' in git
+  KFileStatusConflicted = 1 << 8,
+  KFileStatusIncomplete = 1 << 9,
+  KFileStatusMerged     = 1 << 10,
+  KFileStatusMissing    = 1 << 11,
+  KFileStatusObstructed = 1 << 12,
+  KFileStatusReplaced   = 1 << 13
 };
 
 @interface KDocumentVersionedFile : NSObject
