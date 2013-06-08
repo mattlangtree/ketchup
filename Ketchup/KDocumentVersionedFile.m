@@ -47,10 +47,10 @@
     [statusStrings addObject:@"None"];
   
   if (self.status & KFileStatusModified)
-    [statusStrings addObject:@"Modified"];
+    [statusStrings addObject:@"Edited"];
   
   if (self.status & KFileStatusAdded)
-    [statusStrings addObject:@"Added"];
+    [statusStrings addObject:@"New"];
   
   if (self.status & KFileStatusDeleted)
     [statusStrings addObject:@"Deleted"];

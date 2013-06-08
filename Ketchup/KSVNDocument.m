@@ -95,6 +95,8 @@
         status |= KFileStatusObstructed;
       } else if ([statusString isEqualToString:@"replaced"]) {
         status |= KFileStatusReplaced;
+      } else if ([statusString isEqualToString:@"unversioned"]) {
+        status |= KFileStatusUntracked;
       } else {
         NSLog(@"unknown svn status: %@", statusString);
         return @[];

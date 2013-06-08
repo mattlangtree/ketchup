@@ -132,7 +132,7 @@
   [self.filesOutlineView addTableColumn:column];
   self.filesOutlineView.outlineTableColumn = column;
   
-  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(-5, 1, sidebarWidth, self.filesView.frame.size.height - 32)];
+  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 1, sidebarWidth, self.filesView.frame.size.height - 32)];
   scrollView.documentView = self.filesOutlineView;
   scrollView.hasVerticalScroller = YES;
   scrollView.autoresizesSubviews = YES;
@@ -335,13 +335,13 @@
   
   statusField.stringValue = file.humanReadibleStatus;
   [statusField sizeToFit];
-  [statusField setFrame:NSMakeRect(view.frame.size.width - statusField.frame.size.width - 4, statusField.frame.origin.y, statusField.frame.size.width + 4, 14)];
+  [statusField setFrame:NSMakeRect(view.frame.size.width - statusField.frame.size.width - 8, statusField.frame.origin.y, statusField.frame.size.width + 4, 14)];
   if (file.isWarningStatus) {
     statusField.backgroundColor = [NSColor colorWithDeviceRed:0.71 green:0.19 blue:0.29 alpha:1.0];
   } else {
     statusField.backgroundColor = [NSColor colorWithDeviceRed:0.60 green:0.65 blue:0.70 alpha:1.0];
   }
-  [filenameField setFrame:NSMakeRect(filenameField.frame.origin.x, filenameField.frame.origin.y, view.frame.size.width - statusField.frame.size.width - filenameField.frame.origin.x, filenameField.frame.size.height)];
+  [filenameField setFrame:NSMakeRect(filenameField.frame.origin.x, filenameField.frame.origin.y, view.frame.size.width - statusField.frame.size.width - filenameField.frame.origin.x - 4, filenameField.frame.size.height)];
   
   return view;
 }
