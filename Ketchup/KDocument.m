@@ -455,6 +455,60 @@
   }
   [self.contentView addSubview:scrollView];
   
+  // highlight changes
+  NSMutableSet *leftDiffViewHighlightedRanges = [[NSMutableSet alloc] init];
+  NSMutableSet *rightDiffViewHighlightedRanges = [[NSMutableSet alloc] init];
+  for (NSDictionary *changeset in [self changesInFile:file]) {
+    NSUInteger firstLineNumber = [[[changeset valueForKey:@"leftLineRange"] objectAtIndex:0] unsignedIntegerValue];
+    NSUInteger lastLineNumber = (firstLineNumber + [[[changeset valueForKey:@"leftLineRange"] objectAtIndex:1] unsignedIntegerValue]) - 1;
+    
+    NSRange changesetRange = NSMakeRange(NSNotFound, NSNotFound);
+    NSUInteger lineNumber = 0;
+    for (NSValue *value in [self.leftDiffView.string lineEnumeratorForLinesInRange:NSMakeRange(0, self.leftDiffView.string.length)]) {
+      lineNumber++;
+      
+      if (lineNumber == firstLineNumber) {
+        changesetRange.location = value.rangeValue.location;
+      }
+      if (lineNumber == lastLineNumber) {
+        changesetRange.length = NSMaxRange(value.rangeValue) - changesetRange.location;
+        
+        if (NSMaxRange(changesetRange) < self.leftDiffView.string.length) {
+          changesetRange.length++;
+        }
+        break;
+      }
+    }
+    if (changesetRange.location != NSNotFound && changesetRange.length != NSNotFound) {
+      [leftDiffViewHighlightedRanges addObject:[NSValue valueWithRange:changesetRange]];
+    }
+    
+    firstLineNumber = [[[changeset valueForKey:@"rightLineRange"] objectAtIndex:0] unsignedIntegerValue];
+    lastLineNumber = (firstLineNumber + [[[changeset valueForKey:@"rightLineRange"] objectAtIndex:1] unsignedIntegerValue]) - 1;
+    
+    changesetRange = NSMakeRange(NSNotFound, NSNotFound);
+    lineNumber = 0;
+    for (NSValue *value in [self.rightDiffView.string lineEnumeratorForLinesInRange:NSMakeRange(0, self.rightDiffView.string.length)]) {
+      lineNumber++;
+      
+      if (lineNumber == firstLineNumber) {
+        changesetRange.location = value.rangeValue.location;
+      }
+      if (lineNumber == lastLineNumber) {
+        changesetRange.length = NSMaxRange(value.rangeValue) - changesetRange.location;
+        if (NSMaxRange(changesetRange) < self.rightDiffView.string.length) {
+          changesetRange.length++;
+        }
+        break;
+      }
+    }
+    if (changesetRange.location != NSNotFound && changesetRange.length != NSNotFound) {
+      [rightDiffViewHighlightedRanges addObject:[NSValue valueWithRange:changesetRange]];
+    }
+  }
+  [self.leftDiffView setHighlightedRanges:leftDiffViewHighlightedRanges.copy];
+  [self.rightDiffView setHighlightedRanges:rightDiffViewHighlightedRanges.copy];
+  
   // make sure scroll bars are good
   [self.rightDiffView.layoutManager ensureLayoutForTextContainer:self.rightDiffView.textContainer];
   
@@ -470,6 +524,12 @@
       [encodingWarningAlert beginSheetModalForWindow:self.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
     });
   }
+}
+
+- (NSArray *)changesInFile:(KDocumentVersionedFile *)file
+{
+  NSLog(@"subclass must implement this");
+  return @[];
 }
 
 - (NSString *)headContentsOfFile:(KDocumentVersionedFile *)file

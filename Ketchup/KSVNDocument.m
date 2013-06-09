@@ -161,6 +161,68 @@
   return textContent;
 }
 
+- (NSArray *)changesInFile:(KDocumentVersionedFile *)file
+{
+  // run `svn diff file`
+  NSTask *task = [[NSTask alloc] init];
+  task.launchPath = self.svnLaunchPath;
+  task.arguments = @[@"diff", file.fileUrl.path];
+  task.currentDirectoryPath = self.fileURL.path;
+  task.standardOutput = [NSPipe pipe];
+  task.standardError = [NSPipe pipe];
+  
+  [task launch];
+  [task waitUntilExit];
+  
+  // grab the output data, and check for an error
+  NSData *outputData = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
+  NSString *error = [[NSString alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile] encoding:NSUTF8StringEncoding];
+  
+  if (error.length > 0) {
+    NSLog(@"Svn error: %@", error);
+    return @[];
+  }
+  
+  NSString *textContent = [NSString stringWithUnknownData:outputData usedEncoding:NULL];
+  if (!textContent) {
+    NSLog(@"cannot diff file %@", file.fileUrl);
+    return @[];
+  }
+  
+  BOOL areScanningChangeset = NO;
+  NSRange leftLineRange = NSMakeRange(0, 0);
+  NSRange rightLineRange = NSMakeRange(0, 0);
+  NSRegularExpression *changesetLineDeltaPattern = [NSRegularExpression regularExpressionWithPattern:@"([0-9]+)\\,([0-9]+)" options:0 error:NULL];
+  NSMutableArray *changes = [NSMutableArray array];
+  for (NSValue *rangeValue in [textContent lineEnumeratorForLinesInRange:NSMakeRange(0, textContent.length)]) {
+    NSRange lineRange = rangeValue.rangeValue;
+    
+    if ([textContent characterAtIndex:lineRange.location] == '@' && [textContent characterAtIndex:lineRange.location + 1] == '@') {
+      areScanningChangeset = YES;
+
+      NSString *line = [textContent substringWithRange:lineRange];
+      NSArray *matches = [changesetLineDeltaPattern matchesInString:line options:0 range:NSMakeRange(0, line.length)];
+      
+      leftLineRange.location = [[line substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:1]] integerValue];
+      leftLineRange.length = [[line substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:2]] integerValue];
+      
+      rightLineRange.location = [[line substringWithRange:[[matches objectAtIndex:1] rangeAtIndex:1]] integerValue];
+      rightLineRange.length = [[line substringWithRange:[[matches objectAtIndex:1] rangeAtIndex:2]] integerValue];
+      
+      [changes addObject:@{
+       @"leftLineRange": @[[NSNumber numberWithUnsignedInteger:rightLineRange.location], [NSNumber numberWithUnsignedInteger:rightLineRange.length]],
+       @"rightLineRange": @[[NSNumber numberWithUnsignedInteger:leftLineRange.location], [NSNumber numberWithUnsignedInteger:leftLineRange.length]]
+       }];
+      
+      continue;
+    }
+  }
+  
+  NSLog(@"%@", changes);
+  
+  return changes.copy;
+}
+
 - (NSString *)syncButtonTitle
 {
   return @"Update";

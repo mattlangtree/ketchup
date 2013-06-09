@@ -982,7 +982,7 @@ if ([DuxPreferences editorDarkMode]) {
     [NSBezierPath strokeLineFromPoint:NSMakePoint(position, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(position, NSMaxY(documentVisibleRect))];
   }
   
-  // draw highlighted elements
+  // draw highlighted elements and ranges
   NSRange glyphRange;
   NSRectArray glyphRects;
   NSUInteger glyphRectsIndex;
@@ -1003,7 +1003,30 @@ if ([DuxPreferences editorDarkMode]) {
       [NSBezierPath fillRect:glyphRect];
     }
   }
-
+  
+  for (NSValue *range in self.highlightedRanges) {
+    glyphRange = [layoutManager glyphRangeForCharacterRange:range.rangeValue actualCharacterRange:NULL];
+    
+    glyphRects = [layoutManager rectArrayForGlyphRange:glyphRange withinSelectedGlyphRange:glyphRange inTextContainer:textContainer rectCount:&glyphRectsCount];
+    CGFloat y = FLT_MAX;
+    CGFloat height = 0;
+    CGRect glyphRect;
+    for (glyphRectsIndex = 0; glyphRectsIndex < glyphRectsCount; glyphRectsIndex++) {
+      glyphRect = glyphRects[glyphRectsIndex];
+      
+      if (glyphRect.origin.y < y)
+        y = glyphRect.origin.y;
+      if (y + height < glyphRect.origin.y + glyphRect.size.height) {
+        height = (glyphRect.origin.y + glyphRect.size.height) - y;
+      }
+    }
+    glyphRect = CGRectMake(0, floor(y) - 0.5, self.bounds.size.width, ceil(height));
+    
+    [[NSColor colorWithDeviceRed:0.35 green:0.54 blue:0.93 alpha:0.2] set];
+    [NSBezierPath fillRect:glyphRect];
+    [[NSColor colorWithDeviceRed:0.35 green:0.54 blue:0.93 alpha:0.7] set];
+    [NSBezierPath strokeRect:glyphRect];
+  }
   
   // line numbers
   if (self.showLineNumbers) {
@@ -1108,6 +1131,13 @@ if ([DuxPreferences editorDarkMode]) {
       [self setNeedsDisplay:YES];
     }
   });
+}
+
+- (void)setHighlightedRanges:(NSSet *)highlightedRanges
+{
+  _highlightedRanges = highlightedRanges;
+  
+  [self setNeedsDisplay:YES];
 }
 
 - (void)processLines

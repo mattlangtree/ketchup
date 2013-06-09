@@ -24,7 +24,8 @@
 
 @property (weak) MyTextDocument *textDocument;
 @property (weak) DuxSyntaxHighlighter *highlighter;
-@property (strong) NSSet *highlightedElements;
+@property (strong) NSSet *highlightedElements; // highlighted in yellow. used internally
+@property (strong, nonatomic) NSSet *highlightedRanges; // highlighted in blue. can be used externally to highlight a set of ranges
 @property BOOL showLineNumbers;
 @property BOOL showPageGuide;
 @property NSUInteger pageGuidePosition;
