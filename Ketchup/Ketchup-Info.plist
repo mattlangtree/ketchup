@@ -11,14 +11,8 @@
 			<array>
 				<string>*</string>
 			</array>
-			<key>LSHandlerRank</key>
-			<string>Default</string>
 			<key>CFBundleTypeIconFile</key>
 			<string></string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.folder</string>
-			</array>
 			<key>CFBundleTypeMIMETypes</key>
 			<array/>
 			<key>CFBundleTypeName</key>
@@ -27,6 +21,12 @@
 			<array/>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.folder</string>
+			</array>
 			<key>LSTypeIsPackage</key>
 			<true/>
 			<key>NSDocumentClass</key>
@@ -37,14 +37,8 @@
 			<array>
 				<string>*</string>
 			</array>
-			<key>LSHandlerRank</key>
-			<string>Default</string>
 			<key>CFBundleTypeIconFile</key>
 			<string></string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.folder</string>
-			</array>
 			<key>CFBundleTypeMIMETypes</key>
 			<array/>
 			<key>CFBundleTypeName</key>
@@ -53,6 +47,12 @@
 			<array/>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.folder</string>
+			</array>
 			<key>LSTypeIsPackage</key>
 			<true/>
 			<key>NSDocumentClass</key>

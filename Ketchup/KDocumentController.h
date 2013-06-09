@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface KDocumentController : NSDocumentController
+@interface KDocumentController : NSDocumentController <NSApplicationDelegate>
 
 @end

@@ -10,6 +10,12 @@
 
 @implementation KDocumentController
 
+- (BOOL)applicationOpenUntitledFile:(NSApplication *)theApplication
+{
+  [self openDocument:self];
+  return YES;
+}
+
 - (NSInteger)runModalOpenPanel:(NSOpenPanel *)openPanel forTypes:(NSArray *)types
 {
   openPanel.canChooseDirectories = YES;
