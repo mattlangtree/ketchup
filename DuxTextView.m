@@ -1020,7 +1020,7 @@ if ([DuxPreferences editorDarkMode]) {
         height = (glyphRect.origin.y + glyphRect.size.height) - y;
       }
     }
-    glyphRect = CGRectMake(0, floor(y) - 0.5, self.bounds.size.width, ceil(height));
+    glyphRect = CGRectMake(-1, floor(y) - 0.5, self.bounds.size.width + 2, ceil(height));
     
     [[NSColor colorWithDeviceRed:0.35 green:0.54 blue:0.93 alpha:0.2] set];
     [NSBezierPath fillRect:glyphRect];
