@@ -86,6 +86,8 @@
   [self.remoteSyncButton sizeToFit];
   self.remoteSyncButton.frame = NSMakeRect(sidebarWidth - 16 - self.remoteSyncButton.frame.size.width, self.remoteView.frame.size.height - 5 - self.remoteSyncButton.frame.size.height, self.remoteSyncButton.frame.size.width + 6, self.remoteSyncButton.frame.size.height + 1);
   [self.remoteView addSubview:self.remoteSyncButton];
+  [self.remoteSyncButton setTarget:nil];
+  [self.remoteSyncButton setAction:@selector(syncWithRemote:)];
   
   self.remoteStatusIconView = [[NSImageView alloc] initWithFrame:NSMakeRect(13, 17, 16, 16)];
   self.remoteStatusIconView.image = [NSImage imageNamed:@"led-up-to-date"];
@@ -551,6 +553,17 @@
 {
   NSLog(@"%s: subclass should implement this.", __PRETTY_FUNCTION__);
 }
+
+- (void)syncWithRemote:(id)sender
+{
+  self.remoteSyncButton.title = @"N/Imp.";
+  [self.remoteSyncButton sizeToFit];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    self.remoteSyncButton.title = [self syncButtonTitle];
+    [self.remoteSyncButton sizeToFit];
+  });
+}
+
 
 - (void)showAuthenticationDialog:(id)sender
 {

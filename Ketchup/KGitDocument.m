@@ -18,6 +18,43 @@
 
 @implementation KGitDocument
 
+- (id)init
+{
+  if ((self = [super init])) {
+
+    kWorkingCopyStatusNoneString = NSLocalizedString(@"Checking Status", nil);
+    kWorkingCopyStatusCheckingString = NSLocalizedString(@"Checking Status", nil);
+    kWorkingCopyStatusSyncedString = NSLocalizedString(@"Local/Remote are in sync", nil);
+    kWorkingCopyStatusRemoteAheadString = NSLocalizedString(@"Remote contains newer commits", nil);
+    kWorkingCopyStatusLocalAheadString = NSLocalizedString(@"Local contains newer commits", nil);
+    
+    self.status = kWorkingCopyStatusNone;
+    [self updateRemoteSyncStatus];
+  }
+  return self;
+}
+
+- (void)updateRemoteSyncStatus
+{
+  switch (self.status) {
+    case kWorkingCopyStatusNone:
+      self.remoteStatusField.stringValue = kWorkingCopyStatusNoneString;
+      break;
+    case kWorkingCopyStatusChecking:
+      self.remoteStatusField.stringValue = kWorkingCopyStatusCheckingString;
+      break;
+    case kWorkingCopyStatusSynced:
+      self.remoteStatusField.stringValue = kWorkingCopyStatusSyncedString;
+      break;
+    case kWorkingCopyStatusRemoteAhead:
+      self.remoteStatusField.stringValue = kWorkingCopyStatusRemoteAheadString;
+      break;
+    case kWorkingCopyStatusLocalAhead:
+      self.remoteStatusField.stringValue = kWorkingCopyStatusLocalAheadString;
+      break;      
+  }
+}
+
 - (NSArray *)fetchFilesWithStatus
 {
   // run `git status --percelain -z`
@@ -129,11 +166,19 @@
   return files.copy;
 }
 
+- (void)syncWithRemote:(id)sender
+{
+  self.status = kWorkingCopyStatusChecking;
+  [self updateRemoteSyncStatus];
+
+  [self pullFromRemote];
+}
+
 - (void)commit
 {
   [self addFiles];
   [self commitFiles];
-  [self pushFiles];
+  [self pushToRemote];
   
   self.filesWithStatus = [self fetchFilesWithStatus];
   [self.filesOutlineView reloadData];
@@ -164,11 +209,9 @@
   
   if (errorString.length > 0) {
     NSLog(@"error happened: %@",errorString);
-    return;
   }
   
   NSLog(@"outputString: %@",outputString);
-  
 }
 
 - (void)commitFiles
@@ -193,20 +236,54 @@
   
   if (errorString.length > 0) {
     NSLog(@"error happened: %@",errorString);
-    return;
   }
   
   NSLog(@"outputString: %@",outputString);
   
 }
 
-- (void)pushFiles
+- (void)pullFromRemote
 {
   // Need to add logic in here to make sure that the authentication dialog is
   // shown if the user hasn't authenticated with git yet.
   
-//  [self showAuthenticationDialog:self.commitButton];
-//  return;
+  //  [self showAuthenticationDialog:self.commitButton];
+  //  return;
+  
+  NSTask *task = [[NSTask alloc] init];
+  task.launchPath = @"/usr/bin/git";
+  task.arguments = @[@"pull", @"origin",@"master"];
+  task.currentDirectoryPath = self.fileURL.path;
+  task.standardOutput = [NSPipe pipe];
+  task.standardError = [NSPipe pipe];
+  
+  [task launch];
+  [task waitUntilExit];
+  
+  NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
+  NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
+  
+  NSString *outputString = [[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding];
+  NSString *errorString = [[NSString alloc] initWithData:error encoding:NSUTF8StringEncoding];
+  
+  if (errorString.length > 0) {
+    NSLog(@"error happened: %@",errorString);
+  }
+  
+  self.status = kWorkingCopyStatusSynced;
+  [self updateRemoteSyncStatus];
+  
+  NSLog(@"outputString: %@",outputString);
+  
+}
+
+- (void)pushToRemote
+{
+  // Need to add logic in here to make sure that the authentication dialog is
+  // shown if the user hasn't authenticated with git yet.
+  
+  //  [self showAuthenticationDialog:self.commitButton];
+  //  return;
   
   NSLog(@"Current directory: %@",self.fileURL.path);
   
@@ -228,10 +305,12 @@
   
   if (errorString.length > 0) {
     NSLog(@"error happened: %@",errorString);
-    return;
   }
   
   NSLog(@"outputString: %@",outputString);
+  
+  self.status = kWorkingCopyStatusSynced;
+  [self updateRemoteSyncStatus];
   
 }
 
