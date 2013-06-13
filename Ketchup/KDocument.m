@@ -127,7 +127,7 @@
   self.filesOutlineView.headerView = nil;
   self.filesOutlineView.dataSource = self;
   self.filesOutlineView.delegate = self;
-  self.filesOutlineView.rowHeight = 40;
+  self.filesOutlineView.rowHeight = 20;
   
   NSTableColumn * column = [[NSTableColumn alloc] initWithIdentifier:@"filename"];
   [column setWidth:sidebarWidth];
@@ -272,6 +272,7 @@
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(KDocumentVersionedFile *)file
 {
   NSView *view = [outlineView makeViewWithIdentifier:tableColumn.identifier owner:self];
+  NSButton *checkboxButton;
   NSImageView *iconView;
   NSTextField *filenameField;
   NSTextField *pathField;
@@ -279,39 +280,50 @@
   if (view) {
     filenameField = [view viewWithTag:1];
     pathField = [view viewWithTag:2];
-    iconView = [view viewWithTag:3];
-    statusField = [view viewWithTag:4];
+    checkboxButton = [view viewWithTag:3];
+    iconView = [view viewWithTag:4];
+    statusField = [view viewWithTag:5];
   } else {
     view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, tableColumn.width, outlineView.rowHeight)];
     
-    filenameField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 17, tableColumn.width - 37, 20)];
+    filenameField = [[NSTextField alloc] initWithFrame:NSMakeRect(58, 0, tableColumn.width - 58, 20)];
     filenameField.autoresizingMask = NSViewWidthSizable;
     filenameField.backgroundColor = [NSColor clearColor];
     filenameField.bordered = NO;
     filenameField.editable = NO;
-    filenameField.font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+    filenameField.font = [NSFont systemFontOfSize:[NSFont smallSystemFontSize]];
     filenameField.tag = 1;
     NSTextFieldCell *cell = filenameField.cell;
-    cell.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    cell.lineBreakMode = NSLineBreakByTruncatingHead;
     [view addSubview:filenameField];
     
-    pathField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 0, tableColumn.width - 37, 17)];
-    pathField.autoresizingMask = NSViewWidthSizable;
-    pathField.backgroundColor = [NSColor clearColor];
-    pathField.bordered = NO;
-    pathField.editable = NO;
-    pathField.font = [NSFont systemFontOfSize:[NSFont smallSystemFontSize]];
-    pathField.textColor = [[NSColor controlTextColor] colorWithAlphaComponent:0.7];
-    pathField.tag = 2;
-    cell = pathField.cell;
-    cell.lineBreakMode = NSLineBreakByTruncatingHead;
-    [view addSubview:pathField];
-    
-    iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 4, 32, 32)];
-    iconView.tag = 3;
+//    pathField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 0, tableColumn.width - 37, 17)];
+//    pathField.autoresizingMask = NSViewWidthSizable;
+//    pathField.backgroundColor = [NSColor clearColor];
+//    pathField.bordered = NO;
+//    pathField.editable = NO;
+//    pathField.font = [NSFont systemFontOfSize:[NSFont smallSystemFontSize]];
+//    pathField.textColor = [[NSColor controlTextColor] colorWithAlphaComponent:0.7];
+//    pathField.tag = 2;
+//    cell = pathField.cell;
+//    cell.lineBreakMode = NSLineBreakByTruncatingHead;
+//    [view addSubview:pathField];
+
+    checkboxButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+    checkboxButton.title = nil;
+    checkboxButton.buttonType = NSSwitchButton;
+    checkboxButton.bezelStyle = NSRoundedBezelStyle;
+    [checkboxButton sizeToFit];
+    checkboxButton.frame = NSMakeRect(2, 0, 20, 20);
+    [view addSubview:checkboxButton];
+    checkboxButton.tag = 3;
+    checkboxButton.state = NSOnState;
+
+    iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(38, 0, 16, 16)];
+    iconView.tag = 4;
     [view addSubview:iconView];
-    
-    statusField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 21, tableColumn.width - 37, 14)];
+
+    statusField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 2, tableColumn.width - 37, 14)];
     statusField.autoresizingMask = NSViewMinXMargin;
     statusField.textColor = [NSColor colorWithDeviceRed:1.00 green:1.00 blue:1.00 alpha:1.0];
     statusField.bordered = NO;
@@ -319,7 +331,7 @@
     statusField.font = [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]];
     cell = statusField.cell;
     cell.alignment = NSCenterTextAlignment;
-    statusField.tag = 4;
+    statusField.tag = 5;
     [view addSubview:statusField];
   }
   
@@ -330,10 +342,10 @@
   if (path.length > basePath.length && [[path substringToIndex:basePath.length] isEqualToString:basePath]) {
     path = [path substringFromIndex:basePath.length + 1];
   }
-  pathField.stringValue = path;
+  filenameField.stringValue = path;
   
   iconView.image = [[NSWorkspace sharedWorkspace] iconForFile:file.fileUrl.path];
-  
+
   statusField.stringValue = file.humanReadibleStatus;
   [statusField sizeToFit];
   [statusField setFrame:NSMakeRect(view.frame.size.width - statusField.frame.size.width - 8, statusField.frame.origin.y, statusField.frame.size.width + 4, 14)];
