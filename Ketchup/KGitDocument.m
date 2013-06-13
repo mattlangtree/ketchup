@@ -83,6 +83,9 @@
   NSUInteger dataLength = outputData.length;
   NSCharacterSet *whitespaceCharacters = [NSCharacterSet whitespaceCharacterSet];
   NSMutableArray *files = [NSMutableArray array];
+
+  BOOL isRenamedFile = NO;
+
   while (scanLocation < dataLength) {
     NSUInteger nullLocation = [outputData rangeOfData:nullData options:0 range:NSMakeRange(scanLocation, dataLength - scanLocation)].location;
     if (nullLocation == NSNotFound)
@@ -101,7 +104,22 @@
     if (nonWhitespaceLocation > 0) {
       scanString = [scanString substringFromIndex:nonWhitespaceLocation];
     }
-    
+
+    // Handle special case where files are renamed.
+    if (isRenamedFile) {
+      KDocumentVersionedFile *file = (KDocumentVersionedFile *)[files lastObject];
+
+      NSURL *fileUrl = [self.fileURL URLByAppendingPathComponent:scanString];
+      if (!fileUrl) {
+        NSLog(@"cannot find file '%@'", scanString);
+        return @[];
+      }
+      file.previousFileUrl = fileUrl;
+      scanLocation = nullLocation + 1;
+      isRenamedFile = NO;
+      continue;
+    }
+
     // find the first whitespace char (everything before it is the "status" of a file
     NSUInteger whitespaceLocation = [scanString rangeOfCharacterFromSet:whitespaceCharacters].location;
     if (whitespaceLocation == NSNotFound) {
@@ -148,6 +166,10 @@
           return @[];
           break;
       }
+    }
+
+    if (status == KFileStatusRenamed) {
+      isRenamedFile = YES;
     }
     
     // create a url and make sure it actually exists (to see if we decoded the string properly)
