@@ -24,7 +24,7 @@
 
     kWorkingCopyStatusNoneString = NSLocalizedString(@"Checking Status", nil);
     kWorkingCopyStatusCheckingString = NSLocalizedString(@"Checking Status", nil);
-    kWorkingCopyStatusSyncedString = NSLocalizedString(@"Local/Remote are in sync", nil);
+    kWorkingCopyStatusSyncedString = NSLocalizedString(@"Synced with Remote", nil);
     kWorkingCopyStatusRemoteAheadString = NSLocalizedString(@"Remote contains newer commits", nil);
     kWorkingCopyStatusLocalAheadString = NSLocalizedString(@"Local contains newer commits", nil);
     

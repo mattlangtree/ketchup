@@ -59,25 +59,10 @@
   self.sidebarView.layer.frame = self.sidebarView.bounds;
   ((CAGradientLayer *)self.sidebarView.layer).colors = @[(id)([NSColor colorWithDeviceRed:0.82 green:0.85 blue:0.88 alpha:1.0].CGColor), (id)([NSColor colorWithDeviceRed:0.87 green:0.89 blue:0.91 alpha:1.0].CGColor)];
   
-  self.remoteView = [[NSView alloc] initWithFrame:NSMakeRect(0, windowHeight - 75, sidebarWidth, 75)];
+  self.remoteView = [[NSView alloc] initWithFrame:NSMakeRect(0, windowHeight - 40, sidebarWidth, 40)];
   self.remoteView.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
   [self.sidebarView addSubview:self.remoteView];
-  
-  self.remoteLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
-  self.remoteLabel.backgroundColor = [NSColor clearColor];
-  self.remoteLabel.editable = NO;
-  self.remoteLabel.bordered = NO;
-  self.remoteLabel.font = [NSFont boldSystemFontOfSize:13];
-  self.remoteLabel.textColor = [NSColor colorWithDeviceRed:0.44 green:0.49 blue:0.55 alpha:1.0];
-  self.remoteLabel.shadow = [[NSShadow alloc] init];
-  self.remoteLabel.shadow.shadowOffset = NSMakeSize(0, 1);
-  self.remoteLabel.shadow.shadowBlurRadius = 0.25;
-  self.remoteLabel.shadow.shadowColor = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
-  self.remoteLabel.stringValue = @"REMOTE";
-  [self.remoteLabel sizeToFit];
-  self.remoteLabel.frame = NSMakeRect(10, self.remoteView.frame.size.height - 9 - self.remoteLabel.frame.size.height, self.remoteLabel.frame.size.width, self.remoteLabel.frame.size.height);
-  [self.remoteView addSubview:self.remoteLabel];
-  
+
   self.remoteSyncButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
   self.remoteSyncButton.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
   self.remoteSyncButton.title = [self syncButtonTitle];
@@ -89,19 +74,40 @@
   [self.remoteSyncButton setTarget:nil];
   [self.remoteSyncButton setAction:@selector(syncWithRemote:)];
   
-  self.remoteStatusIconView = [[NSImageView alloc] initWithFrame:NSMakeRect(13, 17, 16, 16)];
+  self.remoteStatusIconView = [[NSImageView alloc] initWithFrame:NSMakeRect(13, 10, 16, 16)];
   self.remoteStatusIconView.image = [NSImage imageNamed:@"led-up-to-date"];
   [self.remoteView addSubview:self.remoteStatusIconView];
   
-  self.remoteStatusField = [[NSTextField alloc] initWithFrame:NSMakeRect(33, 0, sidebarWidth - 50, 35)];
+  self.remoteStatusField = [[NSTextField alloc] initWithFrame:NSMakeRect(40, 2, sidebarWidth - 50, 25)];
   self.remoteStatusField.autoresizingMask = NSViewWidthSizable;
   self.remoteStatusField.font = [NSFont systemFontOfSize:13];
   self.remoteStatusField.backgroundColor = [NSColor clearColor];
   self.remoteStatusField.bordered = NO;
   self.remoteStatusField.editable = NO;
-  self.remoteStatusField.stringValue = @"Local/Remote are in sync";
+  self.remoteStatusField.stringValue = @"Synced with Remote";
   [self.remoteView addSubview:self.remoteStatusField];
+
   
+  self.commitsView = [[NSView alloc] initWithFrame:NSMakeRect(0, windowHeight - 75, sidebarWidth, 35)];
+  self.commitsView.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
+  [self.sidebarView addSubview:self.commitsView];
+
+  self.commitsLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.commitsLabel.backgroundColor = [NSColor clearColor];
+  self.commitsLabel.editable = NO;
+  self.commitsLabel.bordered = NO;
+  self.commitsLabel.font = [NSFont boldSystemFontOfSize:13];
+  self.commitsLabel.textColor = [NSColor colorWithDeviceRed:0.44 green:0.49 blue:0.55 alpha:1.0];
+  self.commitsLabel.shadow = [[NSShadow alloc] init];
+  self.commitsLabel.shadow.shadowOffset = NSMakeSize(0, 1);
+  self.commitsLabel.shadow.shadowBlurRadius = 0.25;
+  self.commitsLabel.shadow.shadowColor = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+  self.commitsLabel.stringValue = @"UNSYNCED COMMITS";
+  [self.commitsLabel sizeToFit];
+  self.commitsLabel.frame = NSMakeRect(10, self.commitsView.frame.size.height - 9 - self.commitsLabel.frame.size.height, self.commitsLabel.frame.size.width, self.commitsLabel.frame.size.height);
+  [self.commitsView addSubview:self.commitsLabel];
+
+
   self.filesView = [[NSView alloc] initWithFrame:NSMakeRect(0, 200, sidebarWidth, windowHeight - 275)];
   self.filesView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
   [self.sidebarView addSubview:self.filesView];
@@ -296,18 +302,6 @@
     NSTextFieldCell *cell = filenameField.cell;
     cell.lineBreakMode = NSLineBreakByTruncatingHead;
     [view addSubview:filenameField];
-    
-//    pathField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 0, tableColumn.width - 37, 17)];
-//    pathField.autoresizingMask = NSViewWidthSizable;
-//    pathField.backgroundColor = [NSColor clearColor];
-//    pathField.bordered = NO;
-//    pathField.editable = NO;
-//    pathField.font = [NSFont systemFontOfSize:[NSFont smallSystemFontSize]];
-//    pathField.textColor = [[NSColor controlTextColor] colorWithAlphaComponent:0.7];
-//    pathField.tag = 2;
-//    cell = pathField.cell;
-//    cell.lineBreakMode = NSLineBreakByTruncatingHead;
-//    [view addSubview:pathField];
 
     checkboxButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
     checkboxButton.title = nil;
@@ -343,7 +337,6 @@
     path = [path substringFromIndex:basePath.length + 1];
   }
   filenameField.toolTip = path;
-//  filenameField.stringValue = path;
 
   iconView.image = [[NSWorkspace sharedWorkspace] iconForFile:file.fileUrl.path];
 
@@ -355,6 +348,7 @@
   } else {
     statusField.backgroundColor = [NSColor colorWithDeviceRed:0.60 green:0.65 blue:0.70 alpha:1.0];
   }
+  
   [filenameField setFrame:NSMakeRect(filenameField.frame.origin.x, filenameField.frame.origin.y, view.frame.size.width - statusField.frame.size.width - filenameField.frame.origin.x - 4, filenameField.frame.size.height)];
   
   return view;

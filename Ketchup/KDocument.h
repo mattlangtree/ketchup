@@ -24,10 +24,14 @@
 
 // "remote" section at the top of the sidebar
 @property (strong) NSView *remoteView;
-@property (strong) NSTextField *remoteLabel;
 @property (strong) NSButton *remoteSyncButton;
 @property (strong) NSImageView *remoteStatusIconView;
 @property (strong) NSTextField *remoteStatusField;
+
+// "unsynced commits" section in the sidebar
+@property (strong) NSView *commitsView;
+@property (strong) NSTextField *commitsLabel;
+
 
 // "files" section in the sidebar
 @property (strong) NSView *filesView;
