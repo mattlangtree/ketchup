@@ -286,7 +286,7 @@
   } else {
     view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, tableColumn.width, outlineView.rowHeight)];
     
-    filenameField = [[NSTextField alloc] initWithFrame:NSMakeRect(58, 0, tableColumn.width - 58, 20)];
+    filenameField = [[NSTextField alloc] initWithFrame:NSMakeRect(58, 0, tableColumn.width - 58, 18)];
     filenameField.autoresizingMask = NSViewWidthSizable;
     filenameField.backgroundColor = [NSColor clearColor];
     filenameField.bordered = NO;
@@ -319,11 +319,11 @@
     checkboxButton.tag = 3;
     checkboxButton.state = NSOnState;
 
-    iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(38, 0, 16, 16)];
+    iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(38, 2, 16, 16)];
     iconView.tag = 4;
     [view addSubview:iconView];
 
-    statusField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 2, tableColumn.width - 37, 14)];
+    statusField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 3, tableColumn.width - 37, 14)];
     statusField.autoresizingMask = NSViewMinXMargin;
     statusField.textColor = [NSColor colorWithDeviceRed:1.00 green:1.00 blue:1.00 alpha:1.0];
     statusField.bordered = NO;
@@ -342,8 +342,9 @@
   if (path.length > basePath.length && [[path substringToIndex:basePath.length] isEqualToString:basePath]) {
     path = [path substringFromIndex:basePath.length + 1];
   }
-  filenameField.stringValue = path;
-  
+  filenameField.toolTip = path;
+//  filenameField.stringValue = path;
+
   iconView.image = [[NSWorkspace sharedWorkspace] iconForFile:file.fileUrl.path];
 
   statusField.stringValue = file.humanReadibleStatus;
