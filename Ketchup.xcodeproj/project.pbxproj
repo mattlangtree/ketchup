@@ -124,6 +124,7 @@
 		38C8A3F517633742005DBC23 /* DuxCSSNumberValueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3E717633742005DBC23 /* DuxCSSNumberValueElement.m */; };
 		38C8A3F617633742005DBC23 /* DuxCSSColorValueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3E917633742005DBC23 /* DuxCSSColorValueElement.m */; };
 		38C8A3F717633742005DBC23 /* DuxCSSAtRuleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3EB17633742005DBC23 /* DuxCSSAtRuleElement.m */; };
+		38F2FAEA176C4A94003AB959 /* DuxPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B31C1763394200F5F5DC /* DuxPreferences.m */; };
 		C9D21E9B1763010900A3DDDE /* KHGDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D21E9A1763010900A3DDDE /* KHGDocument.m */; };
 /* End PBXBuildFile section */
 
@@ -988,6 +989,7 @@
 				388CD066176337B600ECAAC9 /* DuxCKeywordElement.m in Sources */,
 				388CD068176337B600ECAAC9 /* DuxCSingleLineCommentElement.m in Sources */,
 				388CD06A176337B600ECAAC9 /* DuxCBlockCommentElement.m in Sources */,
+				38F2FAEA176C4A94003AB959 /* DuxPreferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
