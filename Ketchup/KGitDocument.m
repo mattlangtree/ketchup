@@ -188,19 +188,33 @@
   return files.copy;
 }
 
+- (void)autoSyncButtonChanged:(id)sender
+{
+  self.commitButton.title = (self.commitAutoSyncButton.state == NSOnState) ? @"Commit and Sync" : @"Commit";
+  [self.commitButton sizeToFit];
+  self.commitButton.frame = self.commitButton.frame = NSMakeRect(self.sidebarView.frame.size.width - 16 - self.commitButton.frame.size.width, 4, self.commitButton.frame.size.width + 6, self.commitButton.frame.size.height + 1);
+
+}
+
+
 - (void)syncWithRemote:(id)sender
 {
   self.status = kWorkingCopyStatusChecking;
   [self updateRemoteSyncStatus];
 
   [self pullFromRemote];
+  
+  [self pushToRemote];
 }
 
 - (void)commit
 {
   [self addFiles];
   [self commitFiles];
-  [self pushToRemote];
+  
+  if (self.commitAutoSyncButton.state == NSOnState) {
+    [self pushToRemote];
+  }
   
   self.filesWithStatus = [self fetchFilesWithStatus];
   [self.filesOutlineView reloadData];
@@ -258,6 +272,17 @@
   
   if (errorString.length > 0) {
     NSLog(@"error happened: %@",errorString);
+
+    if (([errorString rangeOfString:@"Aborting commit due to empty commit message."].length != NSNotFound)) {
+      NSAlert *alert = [[NSAlert alloc] init];
+      [alert addButtonWithTitle:@"OK"];
+      [alert setMessageText:@"Please enter a commit message."];
+      [alert setAlertStyle:NSCriticalAlertStyle];
+      [alert beginSheetModalForWindow:self.window
+                        modalDelegate:self
+                       didEndSelector:nil
+                          contextInfo:NULL];
+    }
   }
   
   NSLog(@"outputString: %@",outputString);

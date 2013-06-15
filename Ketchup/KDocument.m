@@ -199,6 +199,9 @@
   self.commitAutoSyncButton.frame = NSMakeRect(10, 10, sidebarWidth - 20, 20);
   [self.commitView addSubview:self.commitAutoSyncButton];
   
+  [self.commitAutoSyncButton setTarget:self];
+  [self.commitAutoSyncButton setAction:@selector(autoSyncButtonChanged:)];
+  
   self.commitButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
   self.commitButton.autoresizingMask = NSViewMinXMargin;
   self.commitButton.title = @"Commit";
@@ -559,6 +562,11 @@
 - (void)commit
 {
   NSLog(@"%s: subclass should implement this.", __PRETTY_FUNCTION__);
+}
+
+- (void)autoSyncButtonChanged:(id)sender
+{
+  
 }
 
 - (void)syncWithRemote:(id)sender
