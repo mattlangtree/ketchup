@@ -224,7 +224,9 @@
   // Files List Right Click Menu
   self.filesRightClickMenu = [[NSMenu alloc] init];
   NSMenuItem *menuItem = [self.filesRightClickMenu addItemWithTitle:@"Reveal in Finder" action:@selector(revealInFinder:) keyEquivalent:@""];
+  NSMenuItem *openMenuItem = [self.filesRightClickMenu addItemWithTitle:@"Open in Default Editor" action:@selector(openInDefaultEditor:) keyEquivalent:@""];
   [menuItem setTarget:nil];
+  [openMenuItem setTarget:nil];
   [self.filesOutlineView setMenu:self.filesRightClickMenu];
 
 
@@ -604,11 +606,9 @@
   });
 }
 
-
 - (void)showAuthenticationDialog:(id)sender
 {
   CGFloat textFieldHeight = 23;
-
   NSView *authenticationView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 280, 110)];
   
   self.usernameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
@@ -675,6 +675,13 @@
   NSInteger clickedRow = [self.filesOutlineView clickedRow];
   KDocumentVersionedFile *fileForClickedRow = [self.filesOutlineView itemAtRow:clickedRow];
   [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[fileForClickedRow.fileUrl]];
+}
+
+- (void)openInDefaultEditor:(NSMenuItem *)menuItem
+{
+  NSInteger clickedRow = [self.filesOutlineView clickedRow];
+  KDocumentVersionedFile *fileForClickedRow = [self.filesOutlineView itemAtRow:clickedRow];
+  [[NSWorkspace sharedWorkspace] openFile:fileForClickedRow.fileUrl.path];
 }
 
 @end
