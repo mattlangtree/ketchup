@@ -29,7 +29,7 @@
       [NSApp setDelegate:self];
       NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
       [notifCenter addObserver:self selector:@selector(refreshFilesListFromNotification:) name:KFilesDidChangeNotification object:nil];
-
+      
     }
     return self;
 }
@@ -220,7 +220,14 @@
   [self.commitButton setAction:@selector(commit)];
   [self.commitButton setTarget:nil];
   [self.commitView addSubview:self.commitButton];
-  
+
+  // Files List Right Click Menu
+  self.filesRightClickMenu = [[NSMenu alloc] init];
+  NSMenuItem *menuItem = [self.filesRightClickMenu addItemWithTitle:@"Reveal in Finder" action:@selector(revealInFinder:) keyEquivalent:@""];
+  [menuItem setTarget:nil];
+  [self.filesOutlineView setMenu:self.filesRightClickMenu];
+
+
   // create content views
   self.contentView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, contentWidth, windowHeight)];
   
@@ -361,7 +368,9 @@
   }
   
   [filenameField setFrame:NSMakeRect(filenameField.frame.origin.x, filenameField.frame.origin.y, view.frame.size.width - statusField.frame.size.width - filenameField.frame.origin.x - 4, filenameField.frame.size.height)];
-  
+
+//  [view setMenu:[self defaultMenuForRow:1]];
+
   return view;
 }
 
@@ -599,7 +608,7 @@
 - (void)showAuthenticationDialog:(id)sender
 {
   CGFloat textFieldHeight = 23;
-  
+
   NSView *authenticationView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 280, 110)];
   
   self.usernameTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
@@ -638,16 +647,12 @@
   if ( result == NSAlertFirstButtonReturn ) { // OK button
     NSLog(@"first button");
   }
-//  else if ( result == NSAlertSecondButtonReturn ) { // Cancel button
-//    NSLog(@"second button");
-//  }
 }
 
 #pragma mark - App Delegate methods
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
 {
-  NSLog(@"Became Active");
 }
 
 #pragma mark - Filesystem App Delegate Methods
@@ -658,5 +663,18 @@
   return NSTerminateNow;
 }
 
+# pragma mark - Right Click menu items
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+  return YES;
+}
+
+- (void)revealInFinder:(NSMenuItem *)menuItem
+{
+  NSInteger clickedRow = [self.filesOutlineView clickedRow];
+  KDocumentVersionedFile *fileForClickedRow = [self.filesOutlineView itemAtRow:clickedRow];
+  [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[fileForClickedRow.fileUrl]];
+}
 
 @end

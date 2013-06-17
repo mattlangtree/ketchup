@@ -58,6 +58,8 @@
 @property (strong) NSSecureTextField *passwordTextField;
 @property (strong) NSButton *storePasswordButton;
 
+@property (strong) NSMenu *filesRightClickMenu;
+
 - (void)showAuthenticationDialog:(id)sender;
 
 @end
