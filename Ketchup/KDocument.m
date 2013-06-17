@@ -30,6 +30,14 @@
       NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
       [notifCenter addObserver:self selector:@selector(refreshFilesListFromNotification:) name:KFilesDidChangeNotification object:nil];
       
+      kWorkingCopyStatusNoneString = NSLocalizedString(@"Checking Status", nil);
+      kWorkingCopyStatusCheckingString = NSLocalizedString(@"Checking Status", nil);
+      kWorkingCopyStatusSyncedString = NSLocalizedString(@"Synced with Remote", nil);
+      kWorkingCopyStatusRemoteAheadString = NSLocalizedString(@"Remote contains newer commits", nil);
+      kWorkingCopyStatusLocalAheadString = NSLocalizedString(@"Local contains newer commits", nil);
+      
+      self.status = kWorkingCopyStatusNone;
+      
     }
     return self;
 }
@@ -199,6 +207,7 @@
   [self.commitView addSubview:commitScrollView];
   self.commitTextView.frame = NSMakeRect(10, 10, commitScrollView.frame.size.width, commitScrollView.frame.size.height);
   
+  
   self.commitAutoSyncButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
   self.commitAutoSyncButton.title = [self autoSyncButtonTitle];
   self.commitAutoSyncButton.buttonType = NSSwitchButton;
@@ -220,6 +229,22 @@
   [self.commitButton setAction:@selector(commit)];
   [self.commitButton setTarget:nil];
   [self.commitView addSubview:self.commitButton];
+  
+  self.loadingLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.loadingLabel.font = [NSFont boldSystemFontOfSize:16];
+  self.loadingLabel.textColor = [NSColor whiteColor];
+  self.loadingLabel.shadow = [[NSShadow alloc] init];
+  self.loadingLabel.alignment = NSCenterTextAlignment;
+  self.loadingLabel.stringValue = @"Sending...";
+  self.loadingLabel.editable = NO;
+  [self.loadingLabel sizeToFit];
+  self.loadingLabel.backgroundColor = [NSColor colorWithCalibratedRed:0 green:0 blue:0 alpha:0.4];
+  self.loadingLabel.bordered = NO;
+  self.loadingLabel.frame = NSMakeRect(0, 0, sidebarWidth, commitMessageHeight);
+  
+  [self.commitView addSubview:self.loadingLabel];
+  [self.loadingLabel setHidden:YES];
+
 
   // Files List Right Click Menu
   self.filesRightClickMenu = [[NSMenu alloc] init];
@@ -591,7 +616,12 @@
 
 - (void)commit
 {
-  NSLog(@"%s: subclass should implement this.", __PRETTY_FUNCTION__);
+  [self.loadingLabel setHidden:NO];
+}
+
+- (void)commitDidFinish
+{
+  [self.loadingLabel setHidden:YES];
 }
 
 - (void)autoSyncButtonChanged:(id)sender
@@ -709,5 +739,27 @@
     [self discardChangesInFile:fileForClickedRow];
   }
 }
+
+- (void)updateRemoteSyncStatus
+{
+  switch (self.status) {
+    case kWorkingCopyStatusNone:
+      self.remoteStatusField.stringValue = kWorkingCopyStatusNoneString;
+      break;
+    case kWorkingCopyStatusChecking:
+      self.remoteStatusField.stringValue = kWorkingCopyStatusCheckingString;
+      break;
+    case kWorkingCopyStatusSynced:
+      self.remoteStatusField.stringValue = kWorkingCopyStatusSyncedString;
+      break;
+    case kWorkingCopyStatusRemoteAhead:
+      self.remoteStatusField.stringValue = kWorkingCopyStatusRemoteAheadString;
+      break;
+    case kWorkingCopyStatusLocalAhead:
+      self.remoteStatusField.stringValue = kWorkingCopyStatusLocalAheadString;
+      break;
+  }
+}
+
 
 @end

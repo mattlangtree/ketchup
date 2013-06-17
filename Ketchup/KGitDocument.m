@@ -22,37 +22,8 @@
 {
   if ((self = [super init])) {
 
-    kWorkingCopyStatusNoneString = NSLocalizedString(@"Checking Status", nil);
-    kWorkingCopyStatusCheckingString = NSLocalizedString(@"Checking Status", nil);
-    kWorkingCopyStatusSyncedString = NSLocalizedString(@"Synced with Remote", nil);
-    kWorkingCopyStatusRemoteAheadString = NSLocalizedString(@"Remote contains newer commits", nil);
-    kWorkingCopyStatusLocalAheadString = NSLocalizedString(@"Local contains newer commits", nil);
-    
-    self.status = kWorkingCopyStatusNone;
-    [self updateRemoteSyncStatus];
   }
   return self;
-}
-
-- (void)updateRemoteSyncStatus
-{
-  switch (self.status) {
-    case kWorkingCopyStatusNone:
-      self.remoteStatusField.stringValue = kWorkingCopyStatusNoneString;
-      break;
-    case kWorkingCopyStatusChecking:
-      self.remoteStatusField.stringValue = kWorkingCopyStatusCheckingString;
-      break;
-    case kWorkingCopyStatusSynced:
-      self.remoteStatusField.stringValue = kWorkingCopyStatusSyncedString;
-      break;
-    case kWorkingCopyStatusRemoteAhead:
-      self.remoteStatusField.stringValue = kWorkingCopyStatusRemoteAheadString;
-      break;
-    case kWorkingCopyStatusLocalAhead:
-      self.remoteStatusField.stringValue = kWorkingCopyStatusLocalAheadString;
-      break;      
-  }
 }
 
 - (NSArray *)fetchFilesWithStatus
@@ -209,6 +180,9 @@
 
 - (void)commit
 {
+  // Super does some extra view drawing..
+  [super commit];
+
   [self addFiles];
   [self commitFiles];
   
@@ -220,6 +194,9 @@
   [self.filesOutlineView reloadData];
   
   [self.commitTextView setString:@""];
+
+  // Super does some extra view drawing..
+  [super commitDidFinish];
 }
 
 - (void)addFiles

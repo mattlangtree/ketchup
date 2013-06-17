@@ -12,7 +12,23 @@
 #import "DuxPreferences.h"
 #import "DuxSyntaxHighlighter.h"
 
+typedef NS_OPTIONS(NSUInteger, KDocumentWorkingCopyStatus) {
+  kWorkingCopyStatusNone        = 0,         // no status
+  kWorkingCopyStatusChecking    = 1 << 0,
+  kWorkingCopyStatusSynced      = 1 << 1,
+  kWorkingCopyStatusRemoteAhead = 1 << 2,
+  kWorkingCopyStatusLocalAhead  = 1 << 3,
+};
+
 @interface KDocument : NSDocument <NSSplitViewDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
+{
+  NSString *kWorkingCopyStatusNoneString;
+  NSString *kWorkingCopyStatusCheckingString;
+  NSString *kWorkingCopyStatusSyncedString;
+  NSString *kWorkingCopyStatusRemoteAheadString;
+  NSString *kWorkingCopyStatusLocalAheadString;
+
+}
 
 // window (created by in xib file)
 @property (strong) IBOutlet NSWindow *window;
@@ -41,6 +57,7 @@
 // "commit" section at the bottom of the sidebar
 @property (strong) NSView *commitView;
 @property (strong) NSTextField *commitLabel;
+@property (strong) NSTextField *loadingLabel;
 @property (strong) NSTextView *commitTextView;
 @property (strong) NSButton *commitAutoSyncButton;
 @property (strong) NSButton *commitButton;
@@ -60,6 +77,11 @@
 
 @property (strong) NSMenu *filesRightClickMenu;
 
+@property (nonatomic) KDocumentWorkingCopyStatus status;
+
 - (void)showAuthenticationDialog:(id)sender;
+- (void)commit;
+- (void)commitDidFinish;
+- (void)updateRemoteSyncStatus;
 
 @end

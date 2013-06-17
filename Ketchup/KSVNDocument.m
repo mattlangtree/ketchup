@@ -228,8 +228,29 @@
   return @"Update";
 }
 
+- (void)autoSyncButtonChanged:(id)sender
+{
+  self.commitButton.title = (self.commitAutoSyncButton.state == NSOnState) ? @"Update & Commit" : @"Commit";
+  [self.commitButton sizeToFit];
+  self.commitButton.frame = self.commitButton.frame = NSMakeRect(self.sidebarView.frame.size.width - 16 - self.commitButton.frame.size.width, 4, self.commitButton.frame.size.width + 6, self.commitButton.frame.size.height + 1);
+}
+
+- (void)syncWithRemote:(id)sender
+{
+  self.status = kWorkingCopyStatusChecking;
+  [self updateRemoteSyncStatus];
+  
+  [self pullFromRemote];
+  
+  [self commitFiles];
+}
+
+
 - (void)commit
 {
+  // Super does some extra view drawing..
+  [super commit];
+  
   [self addFiles];
   [self commitFiles];
   
@@ -237,6 +258,9 @@
   [self.filesOutlineView reloadData];
 
   [self.commitTextView setString:@""];
+
+  // Super does some extra view drawing..
+  [super commitDidFinish];
 }
 
 - (void)addFiles
@@ -299,13 +323,46 @@
     
 }
 
+- (void)pullFromRemote
+{
+  // Need to add logic in here to make sure that the authentication dialog is
+  // shown if the user hasn't authenticated with git yet.
+  
+  //  [self showAuthenticationDialog:self.commitButton];
+  //  return;
+  
+  NSTask *task = [[NSTask alloc] init];
+  task.launchPath = [self svnLaunchPath];
+  task.arguments = @[@"update"];
+  task.currentDirectoryPath = self.fileURL.path;
+  task.standardOutput = [NSPipe pipe];
+  task.standardError = [NSPipe pipe];
+  
+  [task launch];
+  [task waitUntilExit];
+  
+  NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
+  NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
+  
+  NSString *outputString = [[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding];
+  NSString *errorString = [[NSString alloc] initWithData:error encoding:NSUTF8StringEncoding];
+  
+  if (errorString.length > 0) {
+    NSLog(@"error happened: %@",errorString);
+  }
+  
+  self.status = kWorkingCopyStatusSynced;
+  [self updateRemoteSyncStatus];
+  
+  NSLog(@"outputString: %@",outputString);
+}
+
 
 - (void)discardChangesInFile:(KDocumentVersionedFile *)versionedFile
 {
     if (versionedFile.status == KFileStatusUntracked) {
         // I didn't want to write deletion code.. so delete the file yourself..
         [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[versionedFile.fileUrl]];
-
         return;
     }
 
