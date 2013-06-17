@@ -8,6 +8,7 @@
 
 #import "KDocument.h"
 #import "KDocumentVersionedFile.h"
+#import "KFilesWatcher.h"
 
 @interface KDocument()
 
@@ -24,6 +25,11 @@
     self = [super init];
     if (self) {
     // Add your subclass-specific initialization here.
+
+      [NSApp setDelegate:self];
+      NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+      [notifCenter addObserver:self selector:@selector(refreshFilesListFromNotification:) name:KFilesDidChangeNotification object:nil];
+
     }
     return self;
 }
@@ -51,6 +57,8 @@
   
   self.window.title = [self.fileURL.path stringByAbbreviatingWithTildeInPath];
   self.window.representedURL = self.fileURL;
+
+  [[KFilesWatcher sharedWatcher] startWatchingWithPath:self.fileURL.path];
   
   // create sidebar views
   self.sidebarView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, windowHeight)];
@@ -538,6 +546,14 @@
   }
 }
 
+- (void)refreshFilesListFromNotification:(NSNotification *)notification
+{
+  if (![self.window isKeyWindow]) {
+    self.filesWithStatus = [self fetchFilesWithStatus];
+    [self.filesOutlineView reloadData];
+  }
+}
+
 - (NSArray *)changesInFile:(KDocumentVersionedFile *)file
 {
   NSLog(@"subclass must implement this");
@@ -625,6 +641,21 @@
 //  else if ( result == NSAlertSecondButtonReturn ) { // Cancel button
 //    NSLog(@"second button");
 //  }
+}
+
+#pragma mark - App Delegate methods
+
+- (void)applicationDidBecomeActive:(NSNotification *)aNotification
+{
+  NSLog(@"Became Active");
+}
+
+#pragma mark - Filesystem App Delegate Methods
+
+- (NSApplicationTerminateReply)applicationShouldTerminate: (NSApplication *)app
+{
+  [[KFilesWatcher sharedWatcher] stopWatching];
+  return NSTerminateNow;
 }
 
 

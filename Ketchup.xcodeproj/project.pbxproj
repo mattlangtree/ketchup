@@ -125,6 +125,8 @@
 		38C8A3F617633742005DBC23 /* DuxCSSColorValueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3E917633742005DBC23 /* DuxCSSColorValueElement.m */; };
 		38C8A3F717633742005DBC23 /* DuxCSSAtRuleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3EB17633742005DBC23 /* DuxCSSAtRuleElement.m */; };
 		38F2FAEA176C4A94003AB959 /* DuxPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B31C1763394200F5F5DC /* DuxPreferences.m */; };
+		C9B1605B176EB7EE00B1E1D1 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B1605A176EB7EE00B1E1D1 /* CoreServices.framework */; };
+		C9B16062176EBEE400B1E1D1 /* KFilesWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */; };
 		C9D21E9B1763010900A3DDDE /* KHGDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D21E9A1763010900A3DDDE /* KHGDocument.m */; };
 /* End PBXBuildFile section */
 
@@ -350,6 +352,9 @@
 		38C8A3E917633742005DBC23 /* DuxCSSColorValueElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSColorValueElement.m; sourceTree = "<group>"; };
 		38C8A3EA17633742005DBC23 /* DuxCSSAtRuleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSAtRuleElement.h; sourceTree = "<group>"; };
 		38C8A3EB17633742005DBC23 /* DuxCSSAtRuleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSAtRuleElement.m; sourceTree = "<group>"; };
+		C9B1605A176EB7EE00B1E1D1 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		C9B1605E176EBB4F00B1E1D1 /* KFilesWatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KFilesWatcher.h; sourceTree = "<group>"; };
+		C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KFilesWatcher.m; sourceTree = "<group>"; };
 		C9D21E991763010900A3DDDE /* KHGDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGDocument.h; sourceTree = "<group>"; };
 		C9D21E9A1763010900A3DDDE /* KHGDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHGDocument.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -359,6 +364,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9B1605B176EB7EE00B1E1D1 /* CoreServices.framework in Frameworks */,
 				3875E49217608D11002D427E /* QuartzCore.framework in Frameworks */,
 				3871F651175FF34200AB5900 /* Cocoa.framework in Frameworks */,
 			);
@@ -560,6 +566,7 @@
 		3871F64F175FF34200AB5900 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9B1605A176EB7EE00B1E1D1 /* CoreServices.framework */,
 				3875E49117608D11002D427E /* QuartzCore.framework */,
 				3871F650175FF34200AB5900 /* Cocoa.framework */,
 				3871F671175FF34200AB5900 /* SenTestingKit.framework */,
@@ -595,6 +602,8 @@
 				C9D21E9A1763010900A3DDDE /* KHGDocument.m */,
 				38C8A3B91762CF50005DBC23 /* KDocumentVersionedFile.h */,
 				38C8A3BA1762CF50005DBC23 /* KDocumentVersionedFile.m */,
+				C9B1605E176EBB4F00B1E1D1 /* KFilesWatcher.h */,
+				C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */,
 				3871F668175FF34200AB5900 /* MainMenu.xib */,
 				3871F657175FF34200AB5900 /* Supporting Files */,
 			);
@@ -964,6 +973,7 @@
 				3833B30A1763388F00F5F5DC /* DuxXMLBaseElement.m in Sources */,
 				3833B30B1763388F00F5F5DC /* DuxXMLTagElement.m in Sources */,
 				3833B30C1763388F00F5F5DC /* DuxXMLTagAttributeElement.m in Sources */,
+				C9B16062176EBEE400B1E1D1 /* KFilesWatcher.m in Sources */,
 				3833B30D1763388F00F5F5DC /* DuxXMLEntityElement.m in Sources */,
 				3833B30E1763388F00F5F5DC /* DuxXMLCommentElement.m in Sources */,
 				3833B3171763390200F5F5DC /* NSColor+DuxColors.m in Sources */,

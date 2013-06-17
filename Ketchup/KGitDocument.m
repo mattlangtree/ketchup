@@ -220,7 +220,6 @@
   [self.filesOutlineView reloadData];
   
   [self.commitTextView setString:@""];
-  
 }
 
 - (void)addFiles
