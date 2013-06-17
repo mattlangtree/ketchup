@@ -135,7 +135,7 @@
   // run `svn cat -r HEAD file`
   NSTask *task = [[NSTask alloc] init];
   task.launchPath = self.svnLaunchPath;
-  task.arguments = @[@"cat", @"-r", @"HEAD", file.fileUrl.path];
+  task.arguments = @[@"cat", @"-r", @"BASE", file.fileUrl.path];
   task.currentDirectoryPath = self.fileURL.path;
   task.standardOutput = [NSPipe pipe];
   task.standardError = [NSPipe pipe];
