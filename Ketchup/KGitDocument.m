@@ -360,4 +360,42 @@
   
 }
 
+- (void)discardChangesInFile:(KDocumentVersionedFile *)versionedFile
+{
+    if (versionedFile.status == KFileStatusUntracked) {
+        // I didn't want to write deletion code.. so delete the file yourself..
+        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[versionedFile.fileUrl]];
+
+        return;
+    }
+
+    NSLog(@"Current directory: %@",self.fileURL.path);
+
+    NSTask *task = [[NSTask alloc] init];
+    task.launchPath = @"/usr/bin/git";
+    task.arguments = @[@"checkout", versionedFile.fileUrl.path];
+    task.currentDirectoryPath = self.fileURL.path;
+    task.standardOutput = [NSPipe pipe];
+    task.standardError = [NSPipe pipe];
+
+    [task launch];
+    [task waitUntilExit];
+
+    NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
+    NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
+
+    NSString *outputString = [[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding];
+    NSString *errorString = [[NSString alloc] initWithData:error encoding:NSUTF8StringEncoding];
+
+    if (errorString.length > 0) {
+        NSLog(@"error happened: %@",errorString);
+    }
+
+    NSLog(@"outputString: %@",outputString);
+
+    self.filesWithStatus = [self fetchFilesWithStatus];
+    [self.filesOutlineView reloadData];
+}
+
+
 @end

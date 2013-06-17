@@ -47,7 +47,7 @@
     [statusStrings addObject:@"None"];
   
   if (self.status & KFileStatusModified)
-    [statusStrings addObject:@"Edited"];
+    [statusStrings addObject:@"M"];
   
   if (self.status & KFileStatusAdded)
     [statusStrings addObject:@"New"];
@@ -65,7 +65,7 @@
     [statusStrings addObject:@"Updated"];
   
   if (self.status & KFileStatusUntracked)
-    [statusStrings addObject:@"Untracked"];
+    [statusStrings addObject:@"?"];
   
   if (self.status & KFileStatusIgnored)
     [statusStrings addObject:@"Ignored"];

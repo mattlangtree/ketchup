@@ -225,8 +225,11 @@
   self.filesRightClickMenu = [[NSMenu alloc] init];
   NSMenuItem *menuItem = [self.filesRightClickMenu addItemWithTitle:@"Reveal in Finder" action:@selector(revealInFinder:) keyEquivalent:@""];
   NSMenuItem *openMenuItem = [self.filesRightClickMenu addItemWithTitle:@"Open in Default Editor" action:@selector(openInDefaultEditor:) keyEquivalent:@""];
+  [self.filesRightClickMenu addItem:[NSMenuItem separatorItem]];
+  NSMenuItem *discardChangesMenuItem = [self.filesRightClickMenu addItemWithTitle:@"Discard Changes..." action:@selector(discardChanges:) keyEquivalent:@""];
   [menuItem setTarget:nil];
   [openMenuItem setTarget:nil];
+  [discardChangesMenuItem setTarget:nil];
   [self.filesOutlineView setMenu:self.filesRightClickMenu];
 
 
@@ -649,6 +652,11 @@
   }
 }
 
+- (void)discardChangesInFile:(KDocumentVersionedFile *)versionedFile
+{
+  NSLog(@"%s: subclass should implement this.", __PRETTY_FUNCTION__);
+}
+
 #pragma mark - App Delegate methods
 
 - (void)applicationDidBecomeActive:(NSNotification *)aNotification
@@ -682,6 +690,24 @@
   NSInteger clickedRow = [self.filesOutlineView clickedRow];
   KDocumentVersionedFile *fileForClickedRow = [self.filesOutlineView itemAtRow:clickedRow];
   [[NSWorkspace sharedWorkspace] openFile:fileForClickedRow.fileUrl.path];
+}
+
+- (void)discardChanges:(NSMenuItem *)menuItem
+{
+  NSInteger clickedRow = [self.filesOutlineView clickedRow];
+  KDocumentVersionedFile *fileForClickedRow = [self.filesOutlineView itemAtRow:clickedRow];
+
+  NSAlert *alert = [[NSAlert alloc] init];
+  [alert addButtonWithTitle:@"OK"];
+  [alert addButtonWithTitle:@"Cancel"];
+  [alert setMessageText:@"Are you sure?"];
+  [alert setInformativeText:@"NEED BETTER MESSAGE. Discarding a tracked files contents will revert it back to HEAD state. In the case of new/untracked files they *should* be deleted.. But for now we are just showing Finder.app to allow the user to deal with them themselves.."];
+  [alert setAlertStyle:NSWarningAlertStyle];
+  NSInteger result = [alert runModal];
+
+  if ( result == NSAlertFirstButtonReturn ) { // OK button
+    [self discardChangesInFile:fileForClickedRow];
+  }
 }
 
 @end
