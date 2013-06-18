@@ -29,7 +29,8 @@
 
   self.fileUrl = url;
   self.status = status;
-  
+  self.includeInCommit = YES;
+
   return self;
 }
 

@@ -261,7 +261,7 @@
 		3871F6961760025200AB5900 /* KSVNDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSVNDocument.h; sourceTree = "<group>"; };
 		3871F6971760025200AB5900 /* KSVNDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSVNDocument.m; sourceTree = "<group>"; };
 		3871F69B1760026B00AB5900 /* KGitDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGitDocument.h; sourceTree = "<group>"; };
-		3871F69C1760026B00AB5900 /* KGitDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGitDocument.m; sourceTree = "<group>"; };
+		3871F69C1760026B00AB5900 /* KGitDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = KGitDocument.m; sourceTree = "<group>"; tabWidth = 2; };
 		3875E49117608D11002D427E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3875E4941760B667002D427E /* led-up-to-date.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "led-up-to-date.png"; path = "artwork/led-up-to-date.png"; sourceTree = SOURCE_ROOT; };
 		3875E4951760B667002D427E /* led-up-to-date@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "led-up-to-date@2x.png"; path = "artwork/led-up-to-date@2x.png"; sourceTree = SOURCE_ROOT; };

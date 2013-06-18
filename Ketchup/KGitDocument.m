@@ -190,6 +190,14 @@
 
 - (void)autoSyncButtonChanged:(id)sender
 {
+  if (self.commitAutoSyncButton.state == NSOnState) {
+    [self.filesWithStatus enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+      KDocumentVersionedFile *versionedFile = (KDocumentVersionedFile *)obj;
+        versionedFile.includeInCommit = YES;
+    }];
+  }
+  [self.filesOutlineView reloadData];
+
   self.commitButton.title = (self.commitAutoSyncButton.state == NSOnState) ? @"Commit and Sync" : @"Commit";
   [self.commitButton sizeToFit];
   self.commitButton.frame = self.commitButton.frame = NSMakeRect(self.sidebarView.frame.size.width - 16 - self.commitButton.frame.size.width, 4, self.commitButton.frame.size.width + 6, self.commitButton.frame.size.height + 1);

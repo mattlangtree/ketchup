@@ -12,7 +12,7 @@
 #import "DuxPreferences.h"
 #import "DuxSyntaxHighlighter.h"
 
-@interface KDocument : NSDocument <NSSplitViewDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
+@interface KDocument : NSDocument <NSSplitViewDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate, NSMenuDelegate>
 
 // window (created by in xib file)
 @property (strong) IBOutlet NSWindow *window;

@@ -283,6 +283,7 @@
   return @"Auto-sync";
 }
 
+#pragma mark - OutlineView delegate methods
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
   return self.filesWithStatus.count;
@@ -335,6 +336,8 @@
     [view addSubview:checkboxButton];
     checkboxButton.tag = 3;
     checkboxButton.state = NSOnState;
+    checkboxButton.target = nil;
+    checkboxButton.action = @selector(didClickFileCheckbox:);
 
     iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(38, 2, 16, 16)];
     iconView.tag = 4;
@@ -374,7 +377,7 @@
   
   [filenameField setFrame:NSMakeRect(filenameField.frame.origin.x, filenameField.frame.origin.y, view.frame.size.width - statusField.frame.size.width - filenameField.frame.origin.x - 4, filenameField.frame.size.height)];
 
-//  [view setMenu:[self defaultMenuForRow:1]];
+  checkboxButton.state = (file.includeInCommit) ? NSOnState : NSOffState;
 
   return view;
 }
@@ -389,7 +392,7 @@
   if (self.filesOutlineView.selectedRow == -1) {
     return;
   }
-  
+
   KDocumentVersionedFile *file = [self.filesWithStatus objectAtIndex:self.filesOutlineView.selectedRow];
   
   // read diff view data
@@ -586,6 +589,28 @@
   return @[];
 }
 
+- (void)didClickFileCheckbox:(NSOutlineView *)sender
+{
+  // Set attribute to let file know if it will be included in commit
+  NSInteger row = [self.filesOutlineView rowForView:sender];
+  KDocumentVersionedFile *file = [self.filesOutlineView itemAtRow:row];
+
+  if (!file.includeInCommit) {
+    return;
+  }
+  
+  [self.filesWithStatus enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    KDocumentVersionedFile *versionedFile = (KDocumentVersionedFile *)obj;
+    if ([versionedFile isEqual:file]) {
+      versionedFile.includeInCommit = NO;
+    }
+  }];
+
+  [self.filesOutlineView reloadData];
+
+  self.commitAutoSyncButton.state = NSOffState;
+  [self autoSyncButtonChanged:self.commitAutoSyncButton];
+}
 
 #pragma mark - Core Version Control functionality 
 
