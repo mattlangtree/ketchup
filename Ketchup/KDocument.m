@@ -70,10 +70,12 @@
   
   // create sidebar views
   self.sidebarView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, windowHeight)];
+  [self.sidebarView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameLightContent]];
   self.sidebarView.wantsLayer = YES;
   self.sidebarView.layer = [CAGradientLayer layer];
   self.sidebarView.layer.frame = self.sidebarView.bounds;
-  ((CAGradientLayer *)self.sidebarView.layer).colors = @[(id)([NSColor colorWithDeviceRed:0.82 green:0.85 blue:0.88 alpha:1.0].CGColor), (id)([NSColor colorWithDeviceRed:0.87 green:0.89 blue:0.91 alpha:1.0].CGColor)];
+  self.sidebarView.layer.backgroundColor = [NSColor colorWithCalibratedRed:0.94 green:0.94 blue:0.94 alpha:1.0f].CGColor;
+//  ((CAGradientLayer *)self.sidebarView.layer).colors = @[(id)([NSColor colorWithDeviceRed:0.82 green:0.85 blue:0.88 alpha:1.0].CGColor), (id)([NSColor colorWithDeviceRed:0.87 green:0.89 blue:0.91 alpha:1.0].CGColor)];
   
   self.remoteView = [[NSView alloc] initWithFrame:NSMakeRect(0, windowHeight - 40, sidebarWidth, 40)];
   self.remoteView.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
@@ -84,6 +86,7 @@
   self.remoteSyncButton.title = [self syncButtonTitle];
   self.remoteSyncButton.buttonType = NSMomentaryLightButton;
   self.remoteSyncButton.bezelStyle = NSRoundedBezelStyle;
+  self.remoteSyncButton.font = [NSFont fontWithName:@"HelveticaNeue" size:12.f];
   [self.remoteSyncButton sizeToFit];
   self.remoteSyncButton.frame = NSMakeRect(sidebarWidth - 16 - self.remoteSyncButton.frame.size.width, self.remoteView.frame.size.height - 5 - self.remoteSyncButton.frame.size.height, self.remoteSyncButton.frame.size.width + 6, self.remoteSyncButton.frame.size.height + 1);
   [self.remoteView addSubview:self.remoteSyncButton];
@@ -94,10 +97,12 @@
   self.remoteStatusIconView.image = [NSImage imageNamed:@"led-up-to-date"];
   [self.remoteView addSubview:self.remoteStatusIconView];
   
-  self.remoteStatusField = [[NSTextField alloc] initWithFrame:NSMakeRect(40, 2, sidebarWidth - 50, 25)];
+  self.remoteStatusField = [[NSTextField alloc] initWithFrame:NSMakeRect(40, 4
+                                                                         , sidebarWidth - 50, 25)];
   self.remoteStatusField.autoresizingMask = NSViewWidthSizable;
-  self.remoteStatusField.font = [NSFont systemFontOfSize:13];
+  self.remoteStatusField.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
   self.remoteStatusField.backgroundColor = [NSColor clearColor];
+  self.remoteStatusField.textColor = [NSColor colorWithCalibratedRed:0.1 green:0.1 blue:0.1 alpha:1.0f];
   self.remoteStatusField.bordered = NO;
   self.remoteStatusField.editable = NO;
   self.remoteStatusField.stringValue = @"Synced with Remote";
@@ -112,7 +117,7 @@
   self.commitsLabel.backgroundColor = [NSColor clearColor];
   self.commitsLabel.editable = NO;
   self.commitsLabel.bordered = NO;
-  self.commitsLabel.font = [NSFont boldSystemFontOfSize:13];
+  self.commitsLabel.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
   self.commitsLabel.textColor = [NSColor colorWithDeviceRed:0.44 green:0.49 blue:0.55 alpha:1.0];
   self.commitsLabel.shadow = [[NSShadow alloc] init];
   self.commitsLabel.shadow.shadowOffset = NSMakeSize(0, 1);
@@ -133,7 +138,7 @@
   self.filesLabel.autoresizingMask = NSViewMinYMargin;
   self.filesLabel.editable = NO;
   self.filesLabel.bordered = NO;
-  self.filesLabel.font = [NSFont boldSystemFontOfSize:13];
+  self.filesLabel.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
   self.filesLabel.textColor = [NSColor colorWithDeviceRed:0.44 green:0.49 blue:0.55 alpha:1.0];
   self.filesLabel.shadow = [[NSShadow alloc] init];
   self.filesLabel.shadow.shadowOffset = NSMakeSize(0, 1);
@@ -150,6 +155,8 @@
   self.filesOutlineView.dataSource = self;
   self.filesOutlineView.delegate = self;
   self.filesOutlineView.rowHeight = 20;
+  [self.filesOutlineView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameLightContent]];
+
   
   NSTableColumn * column = [[NSTableColumn alloc] initWithIdentifier:@"filename"];
   [column setWidth:sidebarWidth];
@@ -178,7 +185,7 @@
   [self.sidebarView addSubview:self.commitView];
   
   self.commitLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
-  self.commitLabel.font = [NSFont boldSystemFontOfSize:13];
+  self.commitLabel.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
   self.commitLabel.textColor = [NSColor colorWithDeviceRed:0.44 green:0.49 blue:0.55 alpha:1.0];
   self.commitLabel.shadow = [[NSShadow alloc] init];
   self.commitLabel.shadow.shadowOffset = NSMakeSize(0, 1);
@@ -210,6 +217,7 @@
   
   self.commitAutoSyncButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
   self.commitAutoSyncButton.title = [self autoSyncButtonTitle];
+  self.commitAutoSyncButton.font = [NSFont fontWithName:@"HelveticaNeue" size:12.f];
   self.commitAutoSyncButton.buttonType = NSSwitchButton;
   self.commitAutoSyncButton.bezelStyle = NSRoundedBezelStyle;
   [self.commitAutoSyncButton sizeToFit];
@@ -222,6 +230,7 @@
   self.commitButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
   self.commitButton.autoresizingMask = NSViewMinXMargin;
   self.commitButton.title = @"Commit";
+  self.commitButton.font = [NSFont fontWithName:@"HelveticaNeue" size:12.f];
   self.commitButton.buttonType = NSMomentaryLightButton;
   self.commitButton.bezelStyle = NSRoundedBezelStyle;
   [self.commitButton sizeToFit];
@@ -265,6 +274,7 @@
   self.windowSplitView = [[NSSplitView alloc] initWithFrame:[self.window.contentView bounds]];
   self.windowSplitView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
   [self.windowSplitView setVertical:YES];
+  self.windowSplitView.dividerStyle = NSSplitViewDividerStyleThin;
   self.windowSplitView.delegate = self;
   [self.windowSplitView addSubview:self.sidebarView];
   [self.windowSplitView addSubview:self.contentView];
