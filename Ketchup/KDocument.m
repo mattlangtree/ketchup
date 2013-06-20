@@ -367,7 +367,6 @@
 
     statusField = [[NSTextField alloc] initWithFrame:NSMakeRect(37, 3, tableColumn.width - 37, 14)];
     statusField.autoresizingMask = NSViewMinXMargin;
-    statusField.textColor = [NSColor colorWithDeviceRed:1.00 green:1.00 blue:1.00 alpha:1.0];
     statusField.bordered = NO;
     statusField.editable = NO;
     statusField.font = [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]];
@@ -393,8 +392,11 @@
   [statusField setFrame:NSMakeRect(view.frame.size.width - statusField.frame.size.width - 8, statusField.frame.origin.y, statusField.frame.size.width + 4, 14)];
   if (file.isWarningStatus) {
     statusField.backgroundColor = [NSColor colorWithDeviceRed:0.71 green:0.19 blue:0.29 alpha:1.0];
+    statusField.textColor = [NSColor whiteColor];
   } else {
-    statusField.backgroundColor = [NSColor colorWithDeviceRed:0.60 green:0.65 blue:0.70 alpha:1.0];
+    statusField.backgroundColor = [NSColor clearColor];
+    statusField.textColor = [NSColor colorWithDeviceRed:0.60 green:0.65 blue:0.70 alpha:1.0];
+    
   }
   
   [filenameField setFrame:NSMakeRect(filenameField.frame.origin.x, filenameField.frame.origin.y, view.frame.size.width - statusField.frame.size.width - filenameField.frame.origin.x - 4, filenameField.frame.size.height)];
