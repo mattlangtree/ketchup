@@ -200,6 +200,7 @@
   
   NSUInteger leftLineCounter = 0;
   NSUInteger rightLineCounter = 0;
+  NSInteger lineChangeDelta = 0;
   for (NSValue *rangeValue in [textContent lineEnumeratorForLinesInRange:NSMakeRange(0, textContent.length)]) {
     NSRange lineRange = rangeValue.rangeValue;
     
@@ -226,25 +227,40 @@
       rightLineCounter = rightLineRange.location - 1;
     } else if (areScanningChangeset && [textContent characterAtIndex:lineRange.location] == '+') {
       leftLineCounter++;
+      lineChangeDelta--;
       NSString *leftLine = [NSString stringWithFormat:@"%lu   %@\n", leftLineCounter, [textContent substringWithRange:NSMakeRange(lineRange.location + 1, lineRange.length - 1)]];
-      NSString *rightLine = @" \n";
+      
       
       [change[@"leftHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"leftString"] length] - 1, leftLine.length)]];
-      [change[@"rightHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"rightString"] length] - 1, rightLine.length)]];
+      
       
       [change[@"leftString"] appendString:leftLine];
-      [change[@"rightString"] appendString:rightLine];
+      
     } else if (areScanningChangeset && [textContent characterAtIndex:lineRange.location] == '-') {
       rightLineCounter++;
-      NSString *leftLine = @" \n";
-      NSString *rightLine = [NSString stringWithFormat:@"%lu  %@\n", rightLineCounter, [textContent substringWithRange:NSMakeRange(lineRange.location + 1, lineRange.length - 1)]];
+      lineChangeDelta++;
       
-      [change[@"leftHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"leftString"] length] - 1, leftLine.length)]];
+      NSString *rightLine = [NSString stringWithFormat:@"%lu   %@\n", rightLineCounter, [textContent substringWithRange:NSMakeRange(lineRange.location + 1, lineRange.length - 1)]];
+      
+      
       [change[@"rightHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"rightString"] length] - 1, rightLine.length)]];
       
-      [change[@"leftString"] appendString:leftLine];
+      
       [change[@"rightString"] appendString:rightLine];
     } else if (areScanningChangeset) {
+      while (lineChangeDelta > 0) {
+        lineChangeDelta--;
+        NSString *leftLine = @" \n";
+        [change[@"leftHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"leftString"] length] - 1, leftLine.length)]];
+        [change[@"leftString"] appendString:leftLine];
+      }
+      while (lineChangeDelta < 0) {
+        lineChangeDelta++;
+        NSString *rightLine = @" \n";
+        [change[@"rightHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"rightString"] length] - 1, rightLine.length)]];
+        [change[@"rightString"] appendString:rightLine];
+      }
+      
       leftLineCounter++;
       rightLineCounter++;
       if (leftLineCounter >= leftLineRange.location + leftLineRange.length - 1) {

@@ -444,8 +444,8 @@
   NSMutableSet *rightHighlightedRanges = [NSMutableSet set];
   for (NSDictionary *changeset in changes) {
     if (leftString.length > 0) {
-      [leftString appendString: @"\n\n\n\n               •   •   •\n\n\n\n\n"];
-      [rightString appendString:@"\n\n\n\n               •   •   •\n\n\n\n\n"];
+      [leftString appendString: @"\n\n⚡️  ⚡️  ⚡️\n\n\n"];
+      [rightString appendString:@"\n\n⚡️  ⚡️  ⚡️\n\n\n"];
     }
     
     for (NSValue *highlightedRange in changeset[@"leftHighlightedRanges"]) {
