@@ -428,18 +428,41 @@
   
   // figure out what language to use
   DuxLanguage *chosenLanguage = [DuxPlainTextLanguage sharedInstance];
-  for (Class language in [DuxLanguage registeredLanguages]) {
-    if (![language isDefaultLanguageForURL:file.fileUrl textContents:textContentToLoad])
-      continue;
+//  for (Class language in [DuxLanguage registeredLanguages]) {
+//    if (![language isDefaultLanguageForURL:file.fileUrl textContents:textContentToLoad])
+//      continue;
+//    
+//    chosenLanguage = [language sharedInstance];
+//    break;
+//  }
+  
+  // load changes
+  NSArray *changes = [self changesInFile:file];
+  NSMutableString *leftString = @"".mutableCopy;
+  NSMutableString *rightString = @"".mutableCopy;
+  NSMutableSet *leftHighlightedRanges = [NSMutableSet set];
+  NSMutableSet *rightHighlightedRanges = [NSMutableSet set];
+  for (NSDictionary *changeset in changes) {
+    if (leftString.length > 0) {
+      [leftString appendString: @"\n\n\n\n               •   •   •\n\n\n\n\n"];
+      [rightString appendString:@"\n\n\n\n               •   •   •\n\n\n\n\n"];
+    }
     
-    chosenLanguage = [language sharedInstance];
-    break;
+    for (NSValue *highlightedRange in changeset[@"leftHighlightedRanges"]) {
+      [leftHighlightedRanges addObject:[NSValue valueWithRange:NSMakeRange(leftString.length - 1 + highlightedRange.rangeValue.location, highlightedRange.rangeValue.length)]];
+    }
+    for (NSValue *highlightedRange in changeset[@"rightHighlightedRanges"]) {
+      [rightHighlightedRanges addObject:[NSValue valueWithRange:NSMakeRange(rightString.length - 1 + highlightedRange.rangeValue.location, highlightedRange.rangeValue.length)]];
+    }
+    
+    [leftString appendString:[changeset valueForKey:@"leftString"]];
+    [rightString appendString:[changeset valueForKey:@"rightString"]];
   }
   
-  CGFloat diffViewWidth = floor(self.contentView.frame.size.width / 2) - 30;
+  CGFloat diffViewWidth = floor(self.contentView.frame.size.width / 2);
   
   // create left diff view
-  self.leftDiffTextStorage = [[NSTextStorage alloc] initWithString:textContentToLoad attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+  self.leftDiffTextStorage = [[NSTextStorage alloc] initWithString:leftString attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
   self.leftSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
   self.leftDiffTextStorage.delegate = self.leftSyntaxHighlighter;
   [self.leftSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.leftDiffTextStorage];
@@ -481,7 +504,7 @@
   
   
   // create right diff view
-  self.rightDiffTextStorage = [[NSTextStorage alloc] initWithString:[self headContentsOfFile:file] attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+  self.rightDiffTextStorage = [[NSTextStorage alloc] initWithString:rightString attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
   self.rightSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
   self.rightDiffTextStorage.delegate = self.rightSyntaxHighlighter;
   [self.rightSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.rightDiffTextStorage];
@@ -517,58 +540,60 @@
   [self.contentView addSubview:scrollView];
   
   // highlight changes
-  NSMutableSet *leftDiffViewHighlightedRanges = [[NSMutableSet alloc] init];
-  NSMutableSet *rightDiffViewHighlightedRanges = [[NSMutableSet alloc] init];
-  for (NSDictionary *changeset in [self changesInFile:file]) {
-    NSUInteger firstLineNumber = [[[changeset valueForKey:@"leftLineRange"] objectAtIndex:0] unsignedIntegerValue];
-    NSUInteger lastLineNumber = (firstLineNumber + [[[changeset valueForKey:@"leftLineRange"] objectAtIndex:1] unsignedIntegerValue]) - 1;
-    
-    NSRange changesetRange = NSMakeRange(NSNotFound, NSNotFound);
-    NSUInteger lineNumber = 0;
-    for (NSValue *value in [self.leftDiffView.string lineEnumeratorForLinesInRange:NSMakeRange(0, self.leftDiffView.string.length)]) {
-      lineNumber++;
-      
-      if (lineNumber == firstLineNumber) {
-        changesetRange.location = value.rangeValue.location;
-      }
-      if (lineNumber == lastLineNumber) {
-        changesetRange.length = NSMaxRange(value.rangeValue) - changesetRange.location;
-        
-        if (NSMaxRange(changesetRange) < self.leftDiffView.string.length) {
-          changesetRange.length++;
-        }
-        break;
-      }
-    }
-    if (changesetRange.location != NSNotFound && changesetRange.length != NSNotFound) {
-      [leftDiffViewHighlightedRanges addObject:[NSValue valueWithRange:changesetRange]];
-    }
-    
-    firstLineNumber = [[[changeset valueForKey:@"rightLineRange"] objectAtIndex:0] unsignedIntegerValue];
-    lastLineNumber = (firstLineNumber + [[[changeset valueForKey:@"rightLineRange"] objectAtIndex:1] unsignedIntegerValue]) - 1;
-    
-    changesetRange = NSMakeRange(NSNotFound, NSNotFound);
-    lineNumber = 0;
-    for (NSValue *value in [self.rightDiffView.string lineEnumeratorForLinesInRange:NSMakeRange(0, self.rightDiffView.string.length)]) {
-      lineNumber++;
-      
-      if (lineNumber == firstLineNumber) {
-        changesetRange.location = value.rangeValue.location;
-      }
-      if (lineNumber == lastLineNumber) {
-        changesetRange.length = NSMaxRange(value.rangeValue) - changesetRange.location;
-        if (NSMaxRange(changesetRange) < self.rightDiffView.string.length) {
-          changesetRange.length++;
-        }
-        break;
-      }
-    }
-    if (changesetRange.location != NSNotFound && changesetRange.length != NSNotFound) {
-      [rightDiffViewHighlightedRanges addObject:[NSValue valueWithRange:changesetRange]];
-    }
+//  NSMutableSet *leftDiffViewHighlightedRanges = [[NSMutableSet alloc] init];
+//  NSMutableSet *rightDiffViewHighlightedRanges = [[NSMutableSet alloc] init];
+  for (NSDictionary *change in changes) {
+//    NSUInteger firstLineNumber = [[[changeset valueForKey:@"leftLineRange"] objectAtIndex:0] unsignedIntegerValue];
+//    NSUInteger lastLineNumber = (firstLineNumber + [[[changeset valueForKey:@"leftLineRange"] objectAtIndex:1] unsignedIntegerValue]) - 1;
+//    
+//    NSRange changesetRange = NSMakeRange(NSNotFound, NSNotFound);
+//    NSUInteger lineNumber = 0;
+//    for (NSValue *value in [self.leftDiffView.string lineEnumeratorForLinesInRange:NSMakeRange(0, self.leftDiffView.string.length)]) {
+//      lineNumber++;
+//      
+//      if (lineNumber == firstLineNumber) {
+//        changesetRange.location = value.rangeValue.location;
+//      }
+//      if (lineNumber == lastLineNumber) {
+//        changesetRange.length = NSMaxRange(value.rangeValue) - changesetRange.location;
+//        
+//        if (NSMaxRange(changesetRange) < self.leftDiffView.string.length) {
+//          changesetRange.length++;
+//        }
+//        break;
+//      }
+//    }
+//    if (changesetRange.location != NSNotFound && changesetRange.length != NSNotFound) {
+//      [leftDiffViewHighlightedRanges addObject:[NSValue valueWithRange:changesetRange]];
+//    }
+//    
+//    firstLineNumber = [[[changeset valueForKey:@"rightLineRange"] objectAtIndex:0] unsignedIntegerValue];
+//    lastLineNumber = (firstLineNumber + [[[changeset valueForKey:@"rightLineRange"] objectAtIndex:1] unsignedIntegerValue]) - 1;
+//    
+//    changesetRange = NSMakeRange(NSNotFound, NSNotFound);
+//    lineNumber = 0;
+//    for (NSValue *value in [self.rightDiffView.string lineEnumeratorForLinesInRange:NSMakeRange(0, self.rightDiffView.string.length)]) {
+//      lineNumber++;
+//      
+//      if (lineNumber == firstLineNumber) {
+//        changesetRange.location = value.rangeValue.location;
+//      }
+//      if (lineNumber == lastLineNumber) {
+//        changesetRange.length = NSMaxRange(value.rangeValue) - changesetRange.location;
+//        if (NSMaxRange(changesetRange) < self.rightDiffView.string.length) {
+//          changesetRange.length++;
+//        }
+//        break;
+//      }
+//    }
+//    if (changesetRange.location != NSNotFound && changesetRange.length != NSNotFound) {
+//      [rightDiffViewHighlightedRanges addObject:[NSValue valueWithRange:changesetRange]];
+//    }
   }
-  [self.leftDiffView setHighlightedRanges:leftDiffViewHighlightedRanges.copy];
-  [self.rightDiffView setHighlightedRanges:rightDiffViewHighlightedRanges.copy];
+//  [self.leftDiffView setHighlightedRanges:leftDiffViewHighlightedRanges.copy];
+//  [self.rightDiffView setHighlightedRanges:rightDiffViewHighlightedRanges.copy];
+  [self.leftDiffView setHighlightedRanges:leftHighlightedRanges.copy];
+  [self.rightDiffView setHighlightedRanges:rightHighlightedRanges.copy];
   
   // make sure scroll bars are good
   [self.rightDiffView.layoutManager ensureLayoutForTextContainer:self.rightDiffView.textContainer];

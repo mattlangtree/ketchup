@@ -1004,6 +1004,7 @@ if ([DuxPreferences editorDarkMode]) {
     }
   }
   
+  [[NSColor colorWithDeviceRed:0.35 green:0.54 blue:0.93 alpha:0.2] set];
   for (NSValue *range in self.highlightedRanges) {
     glyphRange = [layoutManager glyphRangeForCharacterRange:range.rangeValue actualCharacterRange:NULL];
     
@@ -1017,15 +1018,17 @@ if ([DuxPreferences editorDarkMode]) {
       if (glyphRect.origin.y < y)
         y = glyphRect.origin.y;
       if (y + height < glyphRect.origin.y + glyphRect.size.height) {
-        height = (glyphRect.origin.y + glyphRect.size.height) - y;
+        height = ((glyphRect.origin.y + glyphRect.size.height) - y);
       }
     }
-    glyphRect = CGRectMake(-1, floor(y) - 0.5, self.bounds.size.width + 2, ceil(height));
+    y += 15;
+    if (height > 15.1) {
+      height -= 15;
+    }
     
-    [[NSColor colorWithDeviceRed:0.35 green:0.54 blue:0.93 alpha:0.2] set];
+    glyphRect = CGRectMake(-1, floor(y), self.bounds.size.width + 2, ceil(height));
+    
     [NSBezierPath fillRect:glyphRect];
-    [[NSColor colorWithDeviceRed:0.35 green:0.54 blue:0.93 alpha:0.7] set];
-    [NSBezierPath strokeRect:glyphRect];
   }
   
   // line numbers

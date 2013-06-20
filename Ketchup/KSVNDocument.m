@@ -188,33 +188,72 @@
     NSLog(@"cannot diff file %@", file.fileUrl);
     return @[];
   }
+  NSLog(@"%@", textContent);
   
   BOOL areScanningChangeset = NO;
-  NSRange leftLineRange = NSMakeRange(0, 0);
-  NSRange rightLineRange = NSMakeRange(0, 0);
+  NSRange leftLineRange = NSMakeRange(NSNotFound, 0);
+  NSRange rightLineRange = NSMakeRange(NSNotFound, 0);
   NSRegularExpression *changesetLineDeltaPattern = [NSRegularExpression regularExpressionWithPattern:@"([0-9]+)\\,([0-9]+)" options:0 error:NULL];
   NSMutableArray *changes = [NSMutableArray array];
+  
+  NSMutableDictionary *change = nil;
+  
+  NSUInteger leftLineCounter = 0;
+  NSUInteger rightLineCounter = 0;
   for (NSValue *rangeValue in [textContent lineEnumeratorForLinesInRange:NSMakeRange(0, textContent.length)]) {
     NSRange lineRange = rangeValue.rangeValue;
     
-    if ([textContent characterAtIndex:lineRange.location] == '@' && [textContent characterAtIndex:lineRange.location + 1] == '@') {
+    if (!areScanningChangeset && [textContent characterAtIndex:lineRange.location] == '@' && [textContent characterAtIndex:lineRange.location + 1] == '@') {
       areScanningChangeset = YES;
-
+      
       NSString *line = [textContent substringWithRange:lineRange];
       NSArray *matches = [changesetLineDeltaPattern matchesInString:line options:0 range:NSMakeRange(0, line.length)];
       
-      leftLineRange.location = [[line substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:1]] integerValue];
-      leftLineRange.length = [[line substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:2]] integerValue];
+      rightLineRange.location = [[line substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:1]] integerValue];
+      rightLineRange.length = [[line substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:2]] integerValue];
       
-      rightLineRange.location = [[line substringWithRange:[[matches objectAtIndex:1] rangeAtIndex:1]] integerValue];
-      rightLineRange.length = [[line substringWithRange:[[matches objectAtIndex:1] rangeAtIndex:2]] integerValue];
+      leftLineRange.location = [[line substringWithRange:[[matches objectAtIndex:1] rangeAtIndex:1]] integerValue];
+      leftLineRange.length = [[line substringWithRange:[[matches objectAtIndex:1] rangeAtIndex:2]] integerValue];
       
-      [changes addObject:@{
-       @"leftLineRange": @[[NSNumber numberWithUnsignedInteger:rightLineRange.location], [NSNumber numberWithUnsignedInteger:rightLineRange.length]],
-       @"rightLineRange": @[[NSNumber numberWithUnsignedInteger:leftLineRange.location], [NSNumber numberWithUnsignedInteger:leftLineRange.length]]
-       }];
+      change = @{
+                 @"leftString": @"".mutableCopy,
+                 @"rightString": @"".mutableCopy,
+                 @"leftHighlightedRanges": @[].mutableCopy,
+                 @"rightHighlightedRanges": @[].mutableCopy
+                 }.mutableCopy;
       
-      continue;
+      leftLineCounter = leftLineRange.location - 1;
+      rightLineCounter = rightLineRange.location - 1;
+    } else if (areScanningChangeset && [textContent characterAtIndex:lineRange.location] == '+') {
+      leftLineCounter++;
+      NSString *leftLine = [NSString stringWithFormat:@"%lu   %@\n", leftLineCounter, [textContent substringWithRange:NSMakeRange(lineRange.location + 1, lineRange.length - 1)]];
+      NSString *rightLine = @" \n";
+      
+      [change[@"leftHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"leftString"] length] - 1, leftLine.length)]];
+      [change[@"rightHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"rightString"] length] - 1, rightLine.length)]];
+      
+      [change[@"leftString"] appendString:leftLine];
+      [change[@"rightString"] appendString:rightLine];
+    } else if (areScanningChangeset && [textContent characterAtIndex:lineRange.location] == '-') {
+      rightLineCounter++;
+      NSString *leftLine = @" \n";
+      NSString *rightLine = [NSString stringWithFormat:@"%lu  %@\n", rightLineCounter, [textContent substringWithRange:NSMakeRange(lineRange.location + 1, lineRange.length - 1)]];
+      
+      [change[@"leftHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"leftString"] length] - 1, leftLine.length)]];
+      [change[@"rightHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"rightString"] length] - 1, rightLine.length)]];
+      
+      [change[@"leftString"] appendString:leftLine];
+      [change[@"rightString"] appendString:rightLine];
+    } else if (areScanningChangeset) {
+      leftLineCounter++;
+      rightLineCounter++;
+      if (leftLineCounter >= leftLineRange.location + leftLineRange.length - 1) {
+        areScanningChangeset = NO;
+        [changes addObject:change];
+        continue;
+      }
+      [change[@"leftString"] appendString:[NSString stringWithFormat:@"%lu  %@\n", leftLineCounter, [textContent substringWithRange:lineRange]]];
+      [change[@"rightString"] appendString:[NSString stringWithFormat:@"%lu  %@\n", rightLineCounter, [textContent substringWithRange:lineRange]]];
     }
   }
   
