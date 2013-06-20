@@ -108,28 +108,8 @@
   self.remoteStatusField.stringValue = @"Synced with Remote";
   [self.remoteView addSubview:self.remoteStatusField];
 
-  
-  self.commitsView = [[NSView alloc] initWithFrame:NSMakeRect(0, windowHeight - 75, sidebarWidth, 35)];
-  self.commitsView.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
-  [self.sidebarView addSubview:self.commitsView];
 
-  self.commitsLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
-  self.commitsLabel.backgroundColor = [NSColor clearColor];
-  self.commitsLabel.editable = NO;
-  self.commitsLabel.bordered = NO;
-  self.commitsLabel.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
-  self.commitsLabel.textColor = [NSColor colorWithDeviceRed:0.44 green:0.49 blue:0.55 alpha:1.0];
-  self.commitsLabel.shadow = [[NSShadow alloc] init];
-  self.commitsLabel.shadow.shadowOffset = NSMakeSize(0, 1);
-  self.commitsLabel.shadow.shadowBlurRadius = 0.25;
-  self.commitsLabel.shadow.shadowColor = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
-  self.commitsLabel.stringValue = @"UNSYNCED COMMITS";
-  [self.commitsLabel sizeToFit];
-  self.commitsLabel.frame = NSMakeRect(10, self.commitsView.frame.size.height - 9 - self.commitsLabel.frame.size.height, self.commitsLabel.frame.size.width, self.commitsLabel.frame.size.height);
-  [self.commitsView addSubview:self.commitsLabel];
-
-
-  self.filesView = [[NSView alloc] initWithFrame:NSMakeRect(0, 200, sidebarWidth, windowHeight - 275)];
+  self.filesView = [[NSView alloc] initWithFrame:NSMakeRect(0, 200, sidebarWidth, windowHeight - 300)];
   self.filesView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
   [self.sidebarView addSubview:self.filesView];
   
@@ -265,6 +245,8 @@
   [openMenuItem setTarget:nil];
   [discardChangesMenuItem setTarget:nil];
   [self.filesOutlineView setMenu:self.filesRightClickMenu];
+  
+  [self documentSpecificViewCustomisations];
 
 
   // create content views
@@ -288,6 +270,11 @@
   // load files
   self.filesWithStatus = [self fetchFilesWithStatus];
   [self.filesOutlineView reloadData];
+}
+
+- (void)documentSpecificViewCustomisations
+{
+  
 }
 
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError

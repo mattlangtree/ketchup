@@ -26,6 +26,62 @@
   return self;
 }
 
+- (void)documentSpecificViewCustomisations
+{
+    CGFloat windowHeight = [self.window.contentView frame].size.height;
+    CGFloat sidebarWidth = 250;
+//    CGFloat contentWidth = [self.window.contentView frame].size.width - sidebarWidth;
+//    CGFloat commitMessageHeight = 200;
+    
+  self.commitsView = [[NSView alloc] initWithFrame:NSMakeRect(0, windowHeight - 110, sidebarWidth, 70)];
+  self.commitsView.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
+  [self.sidebarView addSubview:self.commitsView];
+  
+  self.commitsLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.commitsLabel.backgroundColor = [NSColor clearColor];
+  self.commitsLabel.editable = NO;
+  self.commitsLabel.bordered = NO;
+  self.commitsLabel.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
+  self.commitsLabel.textColor = [NSColor colorWithDeviceRed:0.44 green:0.49 blue:0.55 alpha:1.0];
+  self.commitsLabel.shadow = [[NSShadow alloc] init];
+  self.commitsLabel.shadow.shadowOffset = NSMakeSize(0, 1);
+  self.commitsLabel.shadow.shadowBlurRadius = 0.25;
+  self.commitsLabel.shadow.shadowColor = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+  self.commitsLabel.stringValue = @"UNSYNCED COMMITS";
+  [self.commitsLabel sizeToFit];
+  self.commitsLabel.frame = NSMakeRect(10, self.commitsView.frame.size.height - self.commitsLabel.frame.size.height, self.commitsLabel.frame.size.width, self.commitsLabel.frame.size.height);
+  [self.commitsView addSubview:self.commitsLabel];
+
+  [self updateCurrentBranch];
+  
+  self.currentBranchLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, 20)];
+  self.currentBranchLabel.backgroundColor = [NSColor clearColor];
+  self.currentBranchLabel.editable = NO;
+  self.currentBranchLabel.bordered = NO;
+  self.currentBranchLabel.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
+  self.currentBranchLabel.textColor = [NSColor textColor];
+  self.currentBranchLabel.stringValue = self.currentBranchString;
+  [self.currentBranchLabel sizeToFit];
+  self.currentBranchLabel.frame = NSMakeRect(10, self.remoteView.frame.size.height - self.currentBranchLabel.frame.size.height, self.currentBranchLabel.frame.size.width, self.currentBranchLabel.frame.size.height);
+  
+  [self.remoteStatusIconView setHidden:YES];
+  [self.remoteView addSubview:self.currentBranchLabel];
+//  self.remoteView.layer.backgroundColor = [NSColor redColor].CGColor;
+  self.remoteStatusField.frame = NSMakeRect(10, 3, sidebarWidth - 50, 20);
+  self.remoteStatusField.font = [NSFont fontWithName:@"HelveticaNeue" size:12.f];
+  
+  [self updateUnsyncedCommits];
+
+  self.unsyncedcommitsList = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+  self.unsyncedcommitsList.backgroundColor = [NSColor clearColor];
+  self.unsyncedcommitsList.editable = NO;
+  self.unsyncedcommitsList.font = [NSFont fontWithName:@"HelveticaNeue" size:12.f];
+  self.unsyncedcommitsList.textColor = [NSColor textColor];
+  self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
+  self.unsyncedcommitsList.frame = NSMakeRect(10, 0, sidebarWidth - 20, 40);
+  [self.commitsView addSubview:self.unsyncedcommitsList];
+}
+
 - (NSArray *)fetchFilesWithStatus
 {
   // run `git status --percelain -z`
@@ -66,7 +122,7 @@
     NSData *scanData = [outputData subdataWithRange:NSMakeRange(scanLocation, nullLocation - scanLocation)];
     NSString *scanString = [[NSString alloc] initWithData:scanData encoding:NSUTF8StringEncoding];
     
-    // trim leading whitespace
+    // trim leading whitespace 
     NSUInteger nonWhitespaceLocation = [scanString rangeOfCharacterFromSet:whitespaceCharacters.invertedSet].location;
     if (nonWhitespaceLocation == NSNotFound) {
       NSLog(@"failed to parse git output");
@@ -184,6 +240,9 @@
   [self pullFromRemote];
   
   [self pushToRemote];
+  
+  [self updateUnsyncedCommits];
+  self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
 }
 
 - (void)commit
@@ -191,9 +250,20 @@
   // Super does some extra view drawing..
   [super commit];
 
-  [self addFiles];
+  if (self.commitAutoSyncButton.state == NSOffState) {
+    [self partialAdd];
+  }
+  else {
+    [self addFiles];
+  }
+
   [self commitFiles];
-  
+
+  // Update unsynced commits prior to pushing (even if we aren't)
+  [self updateUnsyncedCommits];
+  self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
+
+
   if (self.commitAutoSyncButton.state == NSOnState) {
     [self pushToRemote];
   }
@@ -205,6 +275,44 @@
 
   // Super does some extra view drawing..
   [super commitDidFinish];
+}
+
+- (void)partialAdd
+{
+  NSLog(@"Current directory: %@",self.fileURL.path);
+  
+  NSMutableArray *filesList = [[NSMutableArray alloc] init];
+  [self.filesWithStatus enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    KDocumentVersionedFile *versionedFile = (KDocumentVersionedFile *)obj;
+    if (versionedFile.includeInCommit == YES) {
+      [filesList addObject:versionedFile.fileUrl.path];
+    }
+  }];
+  
+  NSLog(@"filesList: %@",filesList);
+  [filesList insertObject:@"add" atIndex:0];
+  
+  NSTask *task = [[NSTask alloc] init];
+  task.launchPath = @"/usr/bin/git";
+  task.arguments = filesList;
+  task.currentDirectoryPath = self.fileURL.path;
+  task.standardOutput = [NSPipe pipe];
+  task.standardError = [NSPipe pipe];
+  
+  [task launch];
+  [task waitUntilExit];
+  
+  NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
+  NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
+  
+  NSString *outputString = [[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding];
+  NSString *errorString = [[NSString alloc] initWithData:error encoding:NSUTF8StringEncoding];
+  
+  if (errorString.length > 0) {
+    NSLog(@"error happened: %@",errorString);
+  }
+  
+  NSLog(@"outputString: %@",outputString);
 }
 
 - (void)addFiles
@@ -382,5 +490,78 @@
     [self.filesOutlineView reloadData];
 }
 
+- (void)updateCurrentBranch
+{
+  NSTask *task = [[NSTask alloc] init];
+  task.launchPath = @"/usr/bin/git";
+  task.arguments = @[@"rev-parse", @"--symbolic-full-name",@"--abbrev-ref",@"HEAD"];
+  task.currentDirectoryPath = self.fileURL.path;
+  task.standardOutput = [NSPipe pipe];
+  task.standardError = [NSPipe pipe];
+  
+  [task launch];
+  [task waitUntilExit];
+  
+  NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
+  NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
+  
+  NSString *outputString = [[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding];
+  NSString *errorString = [[NSString alloc] initWithData:error encoding:NSUTF8StringEncoding];
+  
+  if (errorString.length > 0) {
+      NSLog(@"error happened: %@",errorString);
+  }
+  
+  NSLog(@"outputString: %@",outputString);
+  self.currentBranchString = outputString;
+}
+
+- (void)updateUnsyncedCommits
+{
+  NSTask *task = [[NSTask alloc] init];
+  task.launchPath = @"/usr/bin/git";
+  task.arguments = @[@"log", @"origin/master..HEAD"];
+  task.currentDirectoryPath = self.fileURL.path;
+  task.standardOutput = [NSPipe pipe];
+  task.standardError = [NSPipe pipe];
+  
+  [task launch];
+  [task waitUntilExit];
+  
+  NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
+  NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
+  
+  NSString *outputString = [[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding];
+  NSString *errorString = [[NSString alloc] initWithData:error encoding:NSUTF8StringEncoding];
+  
+  if (errorString.length > 0) {
+    NSLog(@"error happened: %@",errorString);
+  }
+  
+  NSLog(@"output String: %@",outputString);
+  
+  NSArray *commitMessages = [outputString componentsSeparatedByString:@"\n\ncommit"];
+  self.unsyncedCommits = [NSArray array];
+  for (NSString *message in commitMessages) {
+    NSMutableArray *linesMutable = [[message componentsSeparatedByString:@"\n"] mutableCopy];
+      NSLog(@"linesMutable: %@",linesMutable);
+    if ([linesMutable count] >= 5 ) {
+        [linesMutable removeObjectAtIndex:0];
+        [linesMutable removeObjectAtIndex:0];
+        [linesMutable removeObjectAtIndex:0];
+        [linesMutable removeObjectAtIndex:0];
+      
+      NSString *commitString = [linesMutable objectAtIndex:0];
+      NSMutableString *mStr = [commitString mutableCopy];
+      CFStringTrimWhitespace((CFMutableStringRef)mStr);
+      
+      commitString = [mStr copy];
+      self.unsyncedCommits = [self.unsyncedCommits arrayByAddingObject:commitString];
+    }
+  }
+  
+  NSLog(@"unsynced commits: %@",self.unsyncedCommits);
+  
+}
 
 @end
