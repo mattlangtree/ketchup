@@ -80,6 +80,8 @@
   self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
   self.unsyncedcommitsList.frame = NSMakeRect(10, 0, sidebarWidth - 20, 40);
   [self.commitsView addSubview:self.unsyncedcommitsList];
+
+  self.filesView.frame = NSMakeRect(0, 200, sidebarWidth, windowHeight - 300);
 }
 
 - (NSArray *)fetchFilesWithStatus

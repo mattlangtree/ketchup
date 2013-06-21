@@ -70,6 +70,8 @@ typedef NS_OPTIONS(NSUInteger, KDocumentWorkingCopyStatus) {
 @property (strong) NSTextStorage *rightDiffTextStorage;
 @property (strong) DuxSyntaxHighlighter *rightSyntaxHighlighter;
 
+@property (strong) NSImageView *fileImageView;
+
 // User authentication dialog
 @property (strong) NSTextField *usernameTextField;
 @property (strong) NSSecureTextField *passwordTextField;

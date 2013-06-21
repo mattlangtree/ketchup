@@ -109,7 +109,7 @@
   [self.remoteView addSubview:self.remoteStatusField];
 
 
-  self.filesView = [[NSView alloc] initWithFrame:NSMakeRect(0, 200, sidebarWidth, windowHeight - 300)];
+  self.filesView = [[NSView alloc] initWithFrame:NSMakeRect(0, 200, sidebarWidth, windowHeight - 230)];
   self.filesView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
   [self.sidebarView addSubview:self.filesView];
   
@@ -418,7 +418,16 @@
   }
 
   KDocumentVersionedFile *file = [self.filesWithStatus objectAtIndex:self.filesOutlineView.selectedRow];
-  
+
+  if ([self isImageFile:file.fileUrl]) {
+    self.fileImageView = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
+    self.fileImageView.image = [[NSImage alloc] initWithContentsOfFile:file.fileUrl.path];
+    [self.fileImageView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+
+    [self.contentView setSubviews:@[self.fileImageView]];
+    return;
+  }
+
   // read diff view data
   NSStringEncoding encoding;
   NSString *textContentToLoad = [NSString stringWithUnknownData:[NSData dataWithContentsOfURL:file.fileUrl] usedEncoding:&encoding];
@@ -618,6 +627,19 @@
     self.filesWithStatus = [self fetchFilesWithStatus];
     [self.filesOutlineView reloadData];
   }
+}
+
+- (BOOL)isImageFile:(NSURL *)url
+{
+  BOOL isImageFile = NO;
+
+  NSString *utiValue;
+  [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
+  if (utiValue)
+  {
+    isImageFile = UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeImage);
+  }
+  return isImageFile;
 }
 
 - (NSArray *)changesInFile:(KDocumentVersionedFile *)file

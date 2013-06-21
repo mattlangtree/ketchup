@@ -53,6 +53,16 @@
   
   if (error.length > 0) {
     NSLog(@"Svn error: %@", error);
+
+      if ([error rangeOfString:@"E155036"].location != NSNotFound) {
+          NSAlert *alert = [[NSAlert alloc] init];
+          [alert addButtonWithTitle:@"OK"];
+          [alert setMessageText:@"Repository is too old"];
+          [alert setInformativeText:@"For Ketchup to use this repository you need to run `svn upgrade` from the command line."];
+          [alert setAlertStyle:NSInformationalAlertStyle];
+          [alert runModal];
+      }
+
     return @[];
   }
   
