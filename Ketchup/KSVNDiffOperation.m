@@ -75,68 +75,78 @@
     return @[];
   
   NSArray *lines = [self parseDiffOutput:textContent];
-  NSLog(@"%@", lines);
+  
   KChange *change = nil;
-  NSInteger leftRightLineCountDelta = 0;
   NSMutableArray *changes = @[].mutableCopy;
+  NSUInteger lastNewLineNumber = 0;
+  NSUInteger lastOldLineNumber = 0;
   for (NSDictionary *line in lines) {
     NSString *type = [line valueForKey:@"type"];
     
     if ([type isEqualToString:@"ChangedLinesStart"]) {
-      if (change)
+      if (change) {
         [changes addObject:change];
+        change = nil;
+      }
       
-      change = [[KChange alloc] init];
-      leftRightLineCountDelta = 0;
+      lastNewLineNumber = [[line valueForKey:@"newLineNumber"] unsignedIntegerValue];
+      lastOldLineNumber = [[line valueForKey:@"oldLineNumber"] unsignedIntegerValue];
     } else if ([type isEqualToString:@"OldLine"]) {
-      leftRightLineCountDelta++;
-      
       NSUInteger lineNumber = [[line valueForKey:@"lineNumber"] unsignedIntegerValue];
-      if (change.oldLineLocation == 0) {
+      
+      if (!change) { // not parsing a change yet
+        change = [[KChange alloc] init];
+        change.newLineLocation = lastNewLineNumber + 1;
+        change.newLineCount = 0;
         change.oldLineLocation = lineNumber;
         change.oldLineCount = 1;
-      } else {
+      } else if ((change.oldLineLocation + change.oldLineCount) == lineNumber) { // extending the length of the "old" section of the change
         change.oldLineCount++;
+      } else { // we were parsing a change, but now we're parsing a new change
+        [changes addObject:change];
+        
+        change = [[KChange alloc] init];
+        change.newLineLocation = lastNewLineNumber + 1;
+        change.newLineCount = 0;
+        change.oldLineLocation = lineNumber;
+        change.oldLineCount = 1;
       }
       
-      NSString *rightLine = [NSString stringWithFormat:@"%lu   %@\n", lineNumber, [line valueForKey:@"line"]];
-      change.rightHighlightedRanges = [change.rightHighlightedRanges arrayByAddingObject:[NSValue valueWithRange:NSMakeRange(change.rightString.length - 1, rightLine.length)]];
-      change.rightString = [change.rightString stringByAppendingString:rightLine];
+      lastOldLineNumber = lineNumber;
     } else if ([type isEqualToString:@"NewLine"]) {
-      leftRightLineCountDelta--;
-      
       NSUInteger lineNumber = [[line valueForKey:@"lineNumber"] unsignedIntegerValue];
-      if (change.newLineLocation == 0) {
+      
+      if (!change) { // not parsing a change yet
+        change = [[KChange alloc] init];
         change.newLineLocation = lineNumber;
         change.newLineCount = 1;
-      } else {
+        change.oldLineLocation = lastOldLineNumber + 1;
+        change.oldLineCount = 0;
+      } else if ((change.newLineLocation + change.newLineCount) == lineNumber) { // change exists, and we are extending the length of newLineCount
         change.newLineCount++;
+      } else { // we were parsing a change, but now we're parsing a new one
+        [changes addObject:change];
+        
+        change = [[KChange alloc] init];
+        change.newLineLocation = lineNumber;
+        change.newLineCount = 1;
+        change.oldLineLocation = lastOldLineNumber + 1;
+        change.oldLineCount = 0;
       }
       
-      NSString *leftLine = [NSString stringWithFormat:@"%lu   %@\n", lineNumber, [line valueForKey:@"line"]];
-      change.leftHighlightedRanges = [change.leftHighlightedRanges arrayByAddingObject:[NSValue valueWithRange:NSMakeRange(change.leftString.length - 1, leftLine.length)]];
-      change.leftString = [change.leftString stringByAppendingString:leftLine];
+      lastNewLineNumber = lineNumber;
     } else if ([type isEqualToString:@"UnchangedLine"]) {
-      while (leftRightLineCountDelta > 0) {
-        leftRightLineCountDelta--;
-        NSString *leftLine = @" \n";
-        change.leftHighlightedRanges = [change.leftHighlightedRanges arrayByAddingObject:[NSValue valueWithRange:NSMakeRange(change.leftString.length - 1, leftLine.length)]];
-        change.leftString = [change.leftString stringByAppendingString:leftLine];
+      if (change) {
+        [changes addObject:change];
+        change = nil;
       }
-      while (leftRightLineCountDelta < 0) {
-        leftRightLineCountDelta++;
-        NSString *rightLine = @" \n";
-        change.rightHighlightedRanges = [change.rightHighlightedRanges arrayByAddingObject:[NSValue valueWithRange:NSMakeRange(change.rightString.length - 1, rightLine.length)]];
-        change.rightString = [change.rightString stringByAppendingString:rightLine];
-      }
-      change.leftString = [change.leftString stringByAppendingString:[NSString stringWithFormat:@"%@   %@\n", [line valueForKey:@"newLineNumber"], [line valueForKey:@"line"]]];
-      change.rightString = [change.rightString stringByAppendingString:[NSString stringWithFormat:@"%@   %@\n", [line valueForKey:@"oldLineNumber"], [line valueForKey:@"line"]]];
+      
+      lastNewLineNumber = [[line valueForKey:@"newLineNumber"] unsignedIntegerValue];
+      lastOldLineNumber = [[line valueForKey:@"oldLineNumber"] unsignedIntegerValue];
     }
   }
   if (change)
     [changes addObject:change];
-  
-  NSLog(@"%@", changes);
   
   return changes.copy;
 }
@@ -180,8 +190,6 @@
   NSRange rightLineRange = NSMakeRange(NSNotFound, 0);
   NSRegularExpression *changesetLineDeltaPattern = [NSRegularExpression regularExpressionWithPattern:@"([0-9]+)\\,([0-9]+)" options:0 error:NULL];
   
-  KChange *change = nil;
-  
   NSUInteger leftLineCounter = 0;
   NSUInteger rightLineCounter = 0;
   for (NSValue *rangeValue in [textContent lineEnumeratorForLinesInRange:NSMakeRange(0, textContent.length)]) {
@@ -193,17 +201,19 @@
       NSString *lineString = [textContent substringWithRange:lineRange];
       NSArray *matches = [changesetLineDeltaPattern matchesInString:lineString options:0 range:NSMakeRange(0, lineString.length)];
       
-      rightLineRange.location = [[lineString substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:1]] integerValue];
-      rightLineRange.length = [[lineString substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:2]] integerValue];
-      
       leftLineRange.location = [[lineString substringWithRange:[[matches objectAtIndex:1] rangeAtIndex:1]] integerValue];
       leftLineRange.length = [[lineString substringWithRange:[[matches objectAtIndex:1] rangeAtIndex:2]] integerValue];
+      
+      rightLineRange.location = [[lineString substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:1]] integerValue];
+      rightLineRange.length = [[lineString substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:2]] integerValue];
       
       leftLineCounter = leftLineRange.location - 1;
       rightLineCounter = rightLineRange.location - 1;
       
       [lines addObject:@{
-                         @"type": @"ChangedLinesStart"
+                         @"type": @"ChangedLinesStart",
+                         @"newLineNumber": [NSNumber numberWithUnsignedInteger:leftLineRange.location],
+                         @"oldLineNumber": [NSNumber numberWithUnsignedInteger:rightLineRange.location]
                          }];
     } else if (areScanningChangeset && [textContent characterAtIndex:lineRange.location] == '+') {
       leftLineCounter++;
@@ -224,8 +234,6 @@
     } else if (areScanningChangeset) {
       leftLineCounter++;
       rightLineCounter++;
-      change.leftString = [change.leftString stringByAppendingString:[NSString stringWithFormat:@"%lu  %@\n", leftLineCounter, [textContent substringWithRange:lineRange]]];
-      change.rightString = [change.rightString stringByAppendingString:[NSString stringWithFormat:@"%lu  %@\n", rightLineCounter, [textContent substringWithRange:lineRange]]];
       
       [lines addObject:@{
                          @"type": @"UnchangedLine",

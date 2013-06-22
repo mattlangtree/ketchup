@@ -21,12 +21,5 @@
 @property NSUInteger oldLineCount;
 
 
-@property NSString *leftString; // TODO: remove this, it should be part of KDiffOperation
-@property NSArray *leftHighlightedRanges; // TODO: remove this, it should be part of KDiffOperation
-
-@property NSString *rightString; // TODO: remove this, it should be part of KDiffOperation
-@property NSArray *rightHighlightedRanges; // TODO: remove this, it should be part of KDiffOperation
-
-
 
 @end

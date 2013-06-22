@@ -11,6 +11,8 @@
 #import "DuxTextView.h"
 #import "DuxPreferences.h"
 #import "DuxSyntaxHighlighter.h"
+#import "KDiffOperation.h"
+#import "KDocumentVersionedFile.h"
 
 typedef NS_OPTIONS(NSUInteger, KDocumentWorkingCopyStatus) {
   kWorkingCopyStatusNone        = 0,         // no status
@@ -85,5 +87,6 @@ typedef NS_OPTIONS(NSUInteger, KDocumentWorkingCopyStatus) {
 - (void)commit;
 - (void)commitDidFinish;
 - (void)updateRemoteSyncStatus;
+- (KDiffOperation *)diffOperationForFile:(KDocumentVersionedFile *)file;
 
 @end

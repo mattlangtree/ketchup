@@ -10,19 +10,6 @@
 
 @implementation KChange
 
-- (id)init
-{
-  if (!(self = [super init]))
-    return nil;
-  
-  self.leftString = @"";
-  self.rightString = @"".mutableCopy;
-  self.leftHighlightedRanges = @[];
-  self.rightHighlightedRanges = @[];
-  
-  return self;
-}
-
 - (NSString *)description
 {
   return [NSString stringWithFormat:@"<%@: {{%lu, %lu}, {%lu, %lu}}", NSStringFromClass([self class]), self.newLineLocation, self.newLineCount, self.oldLineLocation, self.oldLineCount];

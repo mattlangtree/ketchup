@@ -62,8 +62,7 @@ static NSUserDefaults *userDefaults;
 
 + (BOOL)showLineNumbers
 {
-  return NO;
-//  return [userDefaults boolForKey:@"DuxEditorShowLineNumbers"];
+  return [userDefaults boolForKey:@"DuxEditorShowLineNumbers"];
 }
 
 + (void)setShowLineNumbers:(BOOL)newValue

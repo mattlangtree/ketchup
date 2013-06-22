@@ -173,10 +173,9 @@
   return textContent;
 }
 
-- (NSArray *)changesInFile:(KDocumentVersionedFile *)file
+- (KDiffOperation *)diffOperationForFile:(KDocumentVersionedFile *)file
 {
-  KSVNDiffOperation *operation = [KSVNDiffOperation diffOperationWithFileUrl:file.fileUrl];
-  return operation.changes;
+  return [KSVNDiffOperation diffOperationWithFileUrl:file.fileUrl];
 }
 
 - (NSString *)syncButtonTitle

@@ -29,13 +29,13 @@ static NSTextStorage *textStorage = nil;
   [paragraphStyle setAlignment:NSRightTextAlignment];
   [paragraphStyle setLineBreakMode:NSLineBreakByTruncatingMiddle];
 if ([DuxPreferences editorDarkMode]) {
-  marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Source Code Pro ExtraLight" size:10], NSFontAttributeName,
-                      [NSColor colorWithCalibratedWhite:1 alpha:0.8], NSForegroundColorAttributeName,
+  marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Menlo" size:10], NSFontAttributeName,
+                      [NSColor colorWithCalibratedWhite:1 alpha:0.2], NSForegroundColorAttributeName,
                       paragraphStyle, NSParagraphStyleAttributeName,
                       nil];
 } else {
-  marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Source Code Pro Light" size:10], NSFontAttributeName,
-                      [NSColor colorWithCalibratedWhite:0 alpha:1], NSForegroundColorAttributeName,
+  marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Menlo" size:10], NSFontAttributeName,
+                      [NSColor colorWithCalibratedWhite:0 alpha:0.4], NSForegroundColorAttributeName,
                       paragraphStyle, NSParagraphStyleAttributeName,
                       nil];
 }
@@ -85,7 +85,7 @@ if ([DuxPreferences editorDarkMode]) {
 {
   [textStorage replaceCharactersInRange:NSMakeRange(0, textStorage.length) withAttributedString:[[NSAttributedString alloc] initWithString:string attributes:marginAttributes]];
   
-  NSPoint drawPoint = NSMakePoint(-4, lineY + 2);
+  NSPoint drawPoint = NSMakePoint(-4, lineY + 4);
   [layoutManager drawGlyphsForGlyphRange:[layoutManager glyphRangeForTextContainer:textContainer] atPoint:drawPoint];
 }
 

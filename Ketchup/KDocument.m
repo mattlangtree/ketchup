@@ -10,6 +10,7 @@
 #import "KDocumentVersionedFile.h"
 #import "KFilesWatcher.h"
 #import "KChange.h"
+#import "KDiffOperation.h"
 
 @interface KDocument()
 
@@ -428,52 +429,77 @@
     [self.contentView setSubviews:@[self.fileImageView]];
     return;
   }
-
-  // read diff view data
-  NSStringEncoding encoding;
-  NSString *textContentToLoad = [NSString stringWithUnknownData:[NSData dataWithContentsOfURL:file.fileUrl] usedEncoding:&encoding];
-  if (!textContentToLoad) {
-    NSLog(@"couldn't read file");
-  }
+  
+  // create diff
+  KDiffOperation *diffOperation = [self diffOperationForFile:file];
   
   // figure out what language to use
   DuxLanguage *chosenLanguage = [DuxPlainTextLanguage sharedInstance];
-//  for (Class language in [DuxLanguage registeredLanguages]) {
-//    if (![language isDefaultLanguageForURL:file.fileUrl textContents:textContentToLoad])
-//      continue;
-//    
-//    chosenLanguage = [language sharedInstance];
-//    break;
-//  }
+  for (Class language in [DuxLanguage registeredLanguages]) {
+    if (![language isDefaultLanguageForURL:file.fileUrl textContents:[diffOperation newFileContents]])
+      continue;
+    
+    chosenLanguage = [language sharedInstance];
+    break;
+  }
   
   // load changes
-  NSArray *changes = [self changesInFile:file];
-  NSMutableString *leftString = @"".mutableCopy;
-  NSMutableString *rightString = @"".mutableCopy;
+  NSArray *changes = diffOperation.changes;
   NSMutableSet *leftHighlightedRanges = [NSMutableSet set];
   NSMutableSet *rightHighlightedRanges = [NSMutableSet set];
   for (KChange *change in changes) {
-    if (leftString.length > 0) {
-      [leftString appendString: @"\n\n⚡️  ⚡️  ⚡️\n\n\n"];
-      [rightString appendString:@"\n\n⚡️  ⚡️  ⚡️\n\n\n"];
+    NSUInteger lineCounter = 0;
+    NSRange newRange = NSMakeRange(NSNotFound, 0);
+    for (NSValue *lineRange in [[diffOperation newFileContents] lineEnumeratorForLinesInRange:NSMakeRange(0, [diffOperation newFileContents].length)]) {
+      lineCounter++;
+      
+      if (lineCounter == change.newLineLocation) {
+        newRange.location = [lineRange rangeValue].location;
+      } else if (lineCounter > change.newLineLocation && lineCounter <= (change.newLineLocation + change.newLineCount)) {
+        newRange.length = ([lineRange rangeValue].location - newRange.location) - 1;
+      } else if (lineCounter > (change.newLineLocation + change.newLineCount)) {
+        break;
+      }
     }
+    [leftHighlightedRanges addObject:[NSValue valueWithRange:newRange]];
     
-    for (NSValue *highlightedRange in change.leftHighlightedRanges) {
-      [leftHighlightedRanges addObject:[NSValue valueWithRange:NSMakeRange(leftString.length - 1 + highlightedRange.rangeValue.location, highlightedRange.rangeValue.length)]];
+    lineCounter = 0;
+    NSRange oldRange = NSMakeRange(NSNotFound, 0);
+    for (NSValue *lineRange in [[diffOperation oldFileContents] lineEnumeratorForLinesInRange:NSMakeRange(0, [diffOperation oldFileContents].length)]) {
+      lineCounter++;
+      
+      if (lineCounter == change.oldLineLocation) {
+        oldRange.location = [lineRange rangeValue].location;
+      } else if (lineCounter > change.oldLineLocation && lineCounter <= (change.oldLineLocation + change.oldLineCount)) {
+        oldRange.length = ([lineRange rangeValue].location - oldRange.location) - 1;
+      } else if (lineCounter > (change.oldLineLocation + change.oldLineCount)) {
+        break;
+      }
     }
-    for (NSValue *highlightedRange in change.rightHighlightedRanges) {
-      [rightHighlightedRanges addObject:[NSValue valueWithRange:NSMakeRange(rightString.length - 1 + highlightedRange.rangeValue.location, highlightedRange.rangeValue.length)]];
-    }
+    [rightHighlightedRanges addObject:[NSValue valueWithRange:oldRange]];
     
-    [leftString appendString:change.leftString
-     ];
-    [rightString appendString:change.rightString];
+    
+//    if (leftString.length > 0) {
+//      [leftString appendString: @"\n\n⚡️  ⚡️  ⚡️\n\n\n"];
+//      [rightString appendString:@"\n\n⚡️  ⚡️  ⚡️\n\n\n"];
+//    }
+//    
+//    for (NSValue *highlightedRange in change.leftHighlightedRanges) {
+//      [leftHighlightedRanges addObject:[NSValue valueWithRange:NSMakeRange(leftString.length - 1 + highlightedRange.rangeValue.location, highlightedRange.rangeValue.length)]];
+//    }
+//    for (NSValue *highlightedRange in change.rightHighlightedRanges) {
+//      [rightHighlightedRanges addObject:[NSValue valueWithRange:NSMakeRange(rightString.length - 1 + highlightedRange.rangeValue.location, highlightedRange.rangeValue.length)]];
+//    }
+//    
+//    [leftString appendString:change.leftString
+//     ];
+//    [rightString appendString:change.rightString];
   }
   
   CGFloat diffViewWidth = floor(self.contentView.frame.size.width / 2);
   
   // create left diff view
-  self.leftDiffTextStorage = [[NSTextStorage alloc] initWithString:leftString attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+  self.leftDiffTextStorage = [[NSTextStorage alloc] initWithString:[diffOperation newFileContents] attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
   self.leftSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
   self.leftDiffTextStorage.delegate = self.leftSyntaxHighlighter;
   [self.leftSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.leftDiffTextStorage];
@@ -515,7 +541,7 @@
   
   
   // create right diff view
-  self.rightDiffTextStorage = [[NSTextStorage alloc] initWithString:rightString attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+  self.rightDiffTextStorage = [[NSTextStorage alloc] initWithString:[diffOperation oldFileContents] attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
   self.rightSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
   self.rightDiffTextStorage.delegate = self.rightSyntaxHighlighter;
   [self.rightSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.rightDiffTextStorage];
@@ -554,21 +580,13 @@
   [self.leftDiffView setHighlightedRanges:leftHighlightedRanges.copy];
   [self.rightDiffView setHighlightedRanges:rightHighlightedRanges.copy];
   
-  // make sure scroll bars are good
-  [self.rightDiffView.layoutManager ensureLayoutForTextContainer:self.rightDiffView.textContainer];
-  
-  // show encoding alert
-  if (encoding != NSUTF8StringEncoding) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      NSAlert *encodingWarningAlert = [[NSAlert alloc] init];
-      encodingWarningAlert.alertStyle = NSCriticalAlertStyle;
-      encodingWarningAlert.messageText = @"File could not be read as UTF-8";
-      encodingWarningAlert.informativeText = @"Dux has guessed the encoding, but could be wrong. Please use the Editor -> Text Encoding menu to choose the correct encoding for this file.";
-      [encodingWarningAlert addButtonWithTitle:@"Dismiss"];
-      
-      [encodingWarningAlert beginSheetModalForWindow:self.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
-    });
-  }
+  // after a moment, force a re-draw (i don't know why this is needed, but it is - otherwise the highilghted ranges are in the wrong position)
+  double delayInSeconds = 0;
+  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    [self.rightDiffView setNeedsDisplay:YES];
+    [self.leftDiffView setNeedsDisplay:YES];
+  });
 }
 
 - (void)refreshFilesListFromNotification:(NSNotification *)notification
@@ -592,16 +610,16 @@
   return isImageFile;
 }
 
-- (NSArray *)changesInFile:(KDocumentVersionedFile *)file
-{
-  NSLog(@"subclass must implement this");
-  return @[];
-}
-
 - (NSArray *)fetchFilesWithStatus
 {
   NSLog(@"%s: subclass should implement this.", __PRETTY_FUNCTION__);
   return @[];
+}
+
+- (KDiffOperation *)diffOperationForFile:(KDocumentVersionedFile *)file
+{
+  NSLog(@"%s: subclass should implement this.", __PRETTY_FUNCTION__);
+  return nil;
 }
 
 - (void)didClickFileCheckbox:(NSOutlineView *)sender

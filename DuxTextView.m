@@ -1021,11 +1021,10 @@ if ([DuxPreferences editorDarkMode]) {
         height = ((glyphRect.origin.y + glyphRect.size.height) - y);
       }
     }
-    y += 15;
-    if (height > 15.1) {
-      height -= 15;
-    }
     
+    if (range.rangeValue.length == 0) {
+      height = 2;
+    }
     glyphRect = CGRectMake(-1, floor(y), self.bounds.size.width + 2, ceil(height));
     
     [NSBezierPath fillRect:glyphRect];
