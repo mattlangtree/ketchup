@@ -8,6 +8,8 @@
 
 #import "KSVNDocument.h"
 #import "KDocumentVersionedFile.h"
+#import "KChange.h"
+#import "KSVNDiffOperation.h"
 
 @interface KSVNDocument()
 
@@ -140,7 +142,7 @@
   return files.copy;
 }
 
-- (NSString *)headContentsOfFile:(KDocumentVersionedFile *)file
+- (NSString *)baseContentsOfFile:(KDocumentVersionedFile *)file
 {
   // run `svn cat -r HEAD file`
   NSTask *task = [[NSTask alloc] init];
@@ -173,119 +175,8 @@
 
 - (NSArray *)changesInFile:(KDocumentVersionedFile *)file
 {
-  // run `svn diff file`
-  NSTask *task = [[NSTask alloc] init];
-  task.launchPath = self.svnLaunchPath;
-  task.arguments = @[@"diff", file.fileUrl.path];
-  task.currentDirectoryPath = self.fileURL.path;
-  task.standardOutput = [NSPipe pipe];
-  task.standardError = [NSPipe pipe];
-  
-  [task launch];
-  [task waitUntilExit];
-  
-  // grab the output data, and check for an error
-  NSData *outputData = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
-  NSString *error = [[NSString alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile] encoding:NSUTF8StringEncoding];
-  
-  if (error.length > 0) {
-    NSLog(@"Svn error: %@", error);
-    return @[];
-  }
-  
-  NSString *textContent = [NSString stringWithUnknownData:outputData usedEncoding:NULL];
-  if (!textContent) {
-    NSLog(@"cannot diff file %@", file.fileUrl);
-    return @[];
-  }
-  NSLog(@"%@", textContent);
-  
-  BOOL areScanningChangeset = NO;
-  NSRange leftLineRange = NSMakeRange(NSNotFound, 0);
-  NSRange rightLineRange = NSMakeRange(NSNotFound, 0);
-  NSRegularExpression *changesetLineDeltaPattern = [NSRegularExpression regularExpressionWithPattern:@"([0-9]+)\\,([0-9]+)" options:0 error:NULL];
-  NSMutableArray *changes = [NSMutableArray array];
-  
-  NSMutableDictionary *change = nil;
-  
-  NSUInteger leftLineCounter = 0;
-  NSUInteger rightLineCounter = 0;
-  NSInteger lineChangeDelta = 0;
-  for (NSValue *rangeValue in [textContent lineEnumeratorForLinesInRange:NSMakeRange(0, textContent.length)]) {
-    NSRange lineRange = rangeValue.rangeValue;
-    
-    if (!areScanningChangeset && [textContent characterAtIndex:lineRange.location] == '@' && [textContent characterAtIndex:lineRange.location + 1] == '@') {
-      areScanningChangeset = YES;
-      
-      NSString *line = [textContent substringWithRange:lineRange];
-      NSArray *matches = [changesetLineDeltaPattern matchesInString:line options:0 range:NSMakeRange(0, line.length)];
-      
-      rightLineRange.location = [[line substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:1]] integerValue];
-      rightLineRange.length = [[line substringWithRange:[[matches objectAtIndex:0] rangeAtIndex:2]] integerValue];
-      
-      leftLineRange.location = [[line substringWithRange:[[matches objectAtIndex:1] rangeAtIndex:1]] integerValue];
-      leftLineRange.length = [[line substringWithRange:[[matches objectAtIndex:1] rangeAtIndex:2]] integerValue];
-      
-      change = @{
-                 @"leftString": @"".mutableCopy,
-                 @"rightString": @"".mutableCopy,
-                 @"leftHighlightedRanges": @[].mutableCopy,
-                 @"rightHighlightedRanges": @[].mutableCopy
-                 }.mutableCopy;
-      
-      leftLineCounter = leftLineRange.location - 1;
-      rightLineCounter = rightLineRange.location - 1;
-    } else if (areScanningChangeset && [textContent characterAtIndex:lineRange.location] == '+') {
-      leftLineCounter++;
-      lineChangeDelta--;
-      NSString *leftLine = [NSString stringWithFormat:@"%lu   %@\n", leftLineCounter, [textContent substringWithRange:NSMakeRange(lineRange.location + 1, lineRange.length - 1)]];
-      
-      
-      [change[@"leftHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"leftString"] length] - 1, leftLine.length)]];
-      
-      
-      [change[@"leftString"] appendString:leftLine];
-      
-    } else if (areScanningChangeset && [textContent characterAtIndex:lineRange.location] == '-') {
-      rightLineCounter++;
-      lineChangeDelta++;
-      
-      NSString *rightLine = [NSString stringWithFormat:@"%lu   %@\n", rightLineCounter, [textContent substringWithRange:NSMakeRange(lineRange.location + 1, lineRange.length - 1)]];
-      
-      
-      [change[@"rightHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"rightString"] length] - 1, rightLine.length)]];
-      
-      
-      [change[@"rightString"] appendString:rightLine];
-    } else if (areScanningChangeset) {
-      while (lineChangeDelta > 0) {
-        lineChangeDelta--;
-        NSString *leftLine = @" \n";
-        [change[@"leftHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"leftString"] length] - 1, leftLine.length)]];
-        [change[@"leftString"] appendString:leftLine];
-      }
-      while (lineChangeDelta < 0) {
-        lineChangeDelta++;
-        NSString *rightLine = @" \n";
-        [change[@"rightHighlightedRanges"] addObject:[NSValue valueWithRange:NSMakeRange([change[@"rightString"] length] - 1, rightLine.length)]];
-        [change[@"rightString"] appendString:rightLine];
-      }
-      
-      leftLineCounter++;
-      rightLineCounter++;
-      if (leftLineCounter >= leftLineRange.location + leftLineRange.length - 1) {
-        areScanningChangeset = NO;
-        [changes addObject:change];
-        continue;
-      }
-      [change[@"leftString"] appendString:[NSString stringWithFormat:@"%lu  %@\n", leftLineCounter, [textContent substringWithRange:lineRange]]];
-      [change[@"rightString"] appendString:[NSString stringWithFormat:@"%lu  %@\n", rightLineCounter, [textContent substringWithRange:lineRange]]];
-    }
-  }
-  
-  NSLog(@"%@", changes);
-  
-  return changes.copy;
+  KSVNDiffOperation *operation = [KSVNDiffOperation diffOperationWithFileUrl:file.fileUrl];
+  return operation.changes;
 }
 
 - (NSString *)syncButtonTitle

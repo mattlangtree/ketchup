@@ -9,6 +9,7 @@
 #import "KDocument.h"
 #import "KDocumentVersionedFile.h"
 #import "KFilesWatcher.h"
+#import "KChange.h"
 
 @interface KDocument()
 
@@ -451,21 +452,22 @@
   NSMutableString *rightString = @"".mutableCopy;
   NSMutableSet *leftHighlightedRanges = [NSMutableSet set];
   NSMutableSet *rightHighlightedRanges = [NSMutableSet set];
-  for (NSDictionary *changeset in changes) {
+  for (KChange *change in changes) {
     if (leftString.length > 0) {
       [leftString appendString: @"\n\n⚡️  ⚡️  ⚡️\n\n\n"];
       [rightString appendString:@"\n\n⚡️  ⚡️  ⚡️\n\n\n"];
     }
     
-    for (NSValue *highlightedRange in changeset[@"leftHighlightedRanges"]) {
+    for (NSValue *highlightedRange in change.leftHighlightedRanges) {
       [leftHighlightedRanges addObject:[NSValue valueWithRange:NSMakeRange(leftString.length - 1 + highlightedRange.rangeValue.location, highlightedRange.rangeValue.length)]];
     }
-    for (NSValue *highlightedRange in changeset[@"rightHighlightedRanges"]) {
+    for (NSValue *highlightedRange in change.rightHighlightedRanges) {
       [rightHighlightedRanges addObject:[NSValue valueWithRange:NSMakeRange(rightString.length - 1 + highlightedRange.rangeValue.location, highlightedRange.rangeValue.length)]];
     }
     
-    [leftString appendString:[changeset valueForKey:@"leftString"]];
-    [rightString appendString:[changeset valueForKey:@"rightString"]];
+    [leftString appendString:change.leftString
+     ];
+    [rightString appendString:change.rightString];
   }
   
   CGFloat diffViewWidth = floor(self.contentView.frame.size.width / 2);
@@ -549,58 +551,6 @@
   [self.contentView addSubview:scrollView];
   
   // highlight changes
-//  NSMutableSet *leftDiffViewHighlightedRanges = [[NSMutableSet alloc] init];
-//  NSMutableSet *rightDiffViewHighlightedRanges = [[NSMutableSet alloc] init];
-  for (NSDictionary *change in changes) {
-//    NSUInteger firstLineNumber = [[[changeset valueForKey:@"leftLineRange"] objectAtIndex:0] unsignedIntegerValue];
-//    NSUInteger lastLineNumber = (firstLineNumber + [[[changeset valueForKey:@"leftLineRange"] objectAtIndex:1] unsignedIntegerValue]) - 1;
-//    
-//    NSRange changesetRange = NSMakeRange(NSNotFound, NSNotFound);
-//    NSUInteger lineNumber = 0;
-//    for (NSValue *value in [self.leftDiffView.string lineEnumeratorForLinesInRange:NSMakeRange(0, self.leftDiffView.string.length)]) {
-//      lineNumber++;
-//      
-//      if (lineNumber == firstLineNumber) {
-//        changesetRange.location = value.rangeValue.location;
-//      }
-//      if (lineNumber == lastLineNumber) {
-//        changesetRange.length = NSMaxRange(value.rangeValue) - changesetRange.location;
-//        
-//        if (NSMaxRange(changesetRange) < self.leftDiffView.string.length) {
-//          changesetRange.length++;
-//        }
-//        break;
-//      }
-//    }
-//    if (changesetRange.location != NSNotFound && changesetRange.length != NSNotFound) {
-//      [leftDiffViewHighlightedRanges addObject:[NSValue valueWithRange:changesetRange]];
-//    }
-//    
-//    firstLineNumber = [[[changeset valueForKey:@"rightLineRange"] objectAtIndex:0] unsignedIntegerValue];
-//    lastLineNumber = (firstLineNumber + [[[changeset valueForKey:@"rightLineRange"] objectAtIndex:1] unsignedIntegerValue]) - 1;
-//    
-//    changesetRange = NSMakeRange(NSNotFound, NSNotFound);
-//    lineNumber = 0;
-//    for (NSValue *value in [self.rightDiffView.string lineEnumeratorForLinesInRange:NSMakeRange(0, self.rightDiffView.string.length)]) {
-//      lineNumber++;
-//      
-//      if (lineNumber == firstLineNumber) {
-//        changesetRange.location = value.rangeValue.location;
-//      }
-//      if (lineNumber == lastLineNumber) {
-//        changesetRange.length = NSMaxRange(value.rangeValue) - changesetRange.location;
-//        if (NSMaxRange(changesetRange) < self.rightDiffView.string.length) {
-//          changesetRange.length++;
-//        }
-//        break;
-//      }
-//    }
-//    if (changesetRange.location != NSNotFound && changesetRange.length != NSNotFound) {
-//      [rightDiffViewHighlightedRanges addObject:[NSValue valueWithRange:changesetRange]];
-//    }
-  }
-//  [self.leftDiffView setHighlightedRanges:leftDiffViewHighlightedRanges.copy];
-//  [self.rightDiffView setHighlightedRanges:rightDiffViewHighlightedRanges.copy];
   [self.leftDiffView setHighlightedRanges:leftHighlightedRanges.copy];
   [self.rightDiffView setHighlightedRanges:rightHighlightedRanges.copy];
   
@@ -646,12 +596,6 @@
 {
   NSLog(@"subclass must implement this");
   return @[];
-}
-
-- (NSString *)headContentsOfFile:(KDocumentVersionedFile *)file
-{
-  NSLog(@"subclass must implement this");
-  return @"";
 }
 
 - (NSArray *)fetchFilesWithStatus

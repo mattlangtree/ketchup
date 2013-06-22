@@ -103,6 +103,12 @@
 		388CD098176337FE00ECAAC9 /* DuxJavaScriptSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD08D176337FE00ECAAC9 /* DuxJavaScriptSingleLineCommentElement.m */; };
 		388CD099176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD08F176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.m */; };
 		388CD09A176337FE00ECAAC9 /* DuxJavaScriptRegexElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD091176337FE00ECAAC9 /* DuxJavaScriptRegexElement.m */; };
+		38B61A071775772E004B15D6 /* KDiffOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B61A061775772E004B15D6 /* KDiffOperation.m */; };
+		38B61A081775772E004B15D6 /* KDiffOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B61A061775772E004B15D6 /* KDiffOperation.m */; };
+		38B61A0B177578B6004B15D6 /* KSVNDiffOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B61A0A177578B6004B15D6 /* KSVNDiffOperation.m */; };
+		38B61A0C177578B6004B15D6 /* KSVNDiffOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B61A0A177578B6004B15D6 /* KSVNDiffOperation.m */; };
+		38C213D7177570FB006B05DD /* KChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C213D6177570FB006B05DD /* KChange.m */; };
+		38C213D8177570FB006B05DD /* KChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C213D6177570FB006B05DD /* KChange.m */; };
 		38C8A3BB1762CF50005DBC23 /* KDocumentVersionedFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3BA1762CF50005DBC23 /* KDocumentVersionedFile.m */; };
 		38C8A3CB17633729005DBC23 /* DuxTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3BD17633728005DBC23 /* DuxTextView.m */; };
 		38C8A3CC17633729005DBC23 /* DuxTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3BF17633728005DBC23 /* DuxTextContainer.m */; };
@@ -311,6 +317,12 @@
 		388CD08F176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptBlockCommentElement.m; sourceTree = "<group>"; };
 		388CD090176337FE00ECAAC9 /* DuxJavaScriptRegexElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptRegexElement.h; sourceTree = "<group>"; };
 		388CD091176337FE00ECAAC9 /* DuxJavaScriptRegexElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptRegexElement.m; sourceTree = "<group>"; };
+		38B61A051775772E004B15D6 /* KDiffOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDiffOperation.h; sourceTree = "<group>"; };
+		38B61A061775772E004B15D6 /* KDiffOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDiffOperation.m; sourceTree = "<group>"; };
+		38B61A09177578B6004B15D6 /* KSVNDiffOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSVNDiffOperation.h; sourceTree = "<group>"; };
+		38B61A0A177578B6004B15D6 /* KSVNDiffOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSVNDiffOperation.m; sourceTree = "<group>"; };
+		38C213D5177570FB006B05DD /* KChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KChange.h; sourceTree = "<group>"; };
+		38C213D6177570FB006B05DD /* KChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KChange.m; sourceTree = "<group>"; };
 		38C8A3B91762CF50005DBC23 /* KDocumentVersionedFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDocumentVersionedFile.h; sourceTree = "<group>"; };
 		38C8A3BA1762CF50005DBC23 /* KDocumentVersionedFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDocumentVersionedFile.m; sourceTree = "<group>"; };
 		38C8A3BC17633728005DBC23 /* DuxTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextView.h; sourceTree = "<group>"; };
@@ -602,6 +614,12 @@
 				C9D21E9A1763010900A3DDDE /* KHGDocument.m */,
 				38C8A3B91762CF50005DBC23 /* KDocumentVersionedFile.h */,
 				38C8A3BA1762CF50005DBC23 /* KDocumentVersionedFile.m */,
+				38B61A051775772E004B15D6 /* KDiffOperation.h */,
+				38B61A061775772E004B15D6 /* KDiffOperation.m */,
+				38B61A09177578B6004B15D6 /* KSVNDiffOperation.h */,
+				38B61A0A177578B6004B15D6 /* KSVNDiffOperation.m */,
+				38C213D5177570FB006B05DD /* KChange.h */,
+				38C213D6177570FB006B05DD /* KChange.m */,
 				C9B1605E176EBB4F00B1E1D1 /* KFilesWatcher.h */,
 				C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */,
 				3871F668175FF34200AB5900 /* MainMenu.xib */,
@@ -894,6 +912,7 @@
 				3871F69E1760026B00AB5900 /* KGitDocument.m in Sources */,
 				38C8A3BB1762CF50005DBC23 /* KDocumentVersionedFile.m in Sources */,
 				C9D21E9B1763010900A3DDDE /* KHGDocument.m in Sources */,
+				38B61A0B177578B6004B15D6 /* KSVNDiffOperation.m in Sources */,
 				38C8A3CB17633729005DBC23 /* DuxTextView.m in Sources */,
 				38C8A3CC17633729005DBC23 /* DuxTextContainer.m in Sources */,
 				38C8A3CD17633729005DBC23 /* DuxSyntaxHighlighter.m in Sources */,
@@ -901,6 +920,7 @@
 				38C8A3CF17633729005DBC23 /* DuxLanguageElement.m in Sources */,
 				38C8A3D017633729005DBC23 /* DuxLanguageMenuItem.m in Sources */,
 				38C8A3D117633729005DBC23 /* DuxLineNumberString.m in Sources */,
+				38C213D7177570FB006B05DD /* KChange.m in Sources */,
 				38C8A3EC17633742005DBC23 /* DuxCSSLanguage.m in Sources */,
 				38C8A3ED17633742005DBC23 /* DuxCSSBaseElement.m in Sources */,
 				38C8A3EE17633742005DBC23 /* DuxCSSCommentElement.m in Sources */,
@@ -952,6 +972,7 @@
 				3833B2C31763386400F5F5DC /* DuxRubyRegularExpressionElement.m in Sources */,
 				3833B2C81763386F00F5F5DC /* DuxPlainTextLanguage.m in Sources */,
 				3833B2C91763386F00F5F5DC /* DuxPlainTextBaseElement.m in Sources */,
+				38B61A071775772E004B15D6 /* KDiffOperation.m in Sources */,
 				3833B2DC1763387900F5F5DC /* DuxPHPLanguage.m in Sources */,
 				3833B2DD1763387900F5F5DC /* DuxPHPBaseElement.m in Sources */,
 				3833B2DE1763387900F5F5DC /* DuxPHPSingleQuoteStringElement.m in Sources */,
@@ -994,10 +1015,13 @@
 				388CD05C176337B600ECAAC9 /* DuxCLanguage.m in Sources */,
 				388CD05E176337B600ECAAC9 /* DuxCBaseElement.m in Sources */,
 				388CD060176337B600ECAAC9 /* DuxCSingleQuotedStringElement.m in Sources */,
+				38B61A081775772E004B15D6 /* KDiffOperation.m in Sources */,
 				388CD062176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.m in Sources */,
 				388CD064176337B600ECAAC9 /* DuxCNumberElement.m in Sources */,
 				388CD066176337B600ECAAC9 /* DuxCKeywordElement.m in Sources */,
+				38B61A0C177578B6004B15D6 /* KSVNDiffOperation.m in Sources */,
 				388CD068176337B600ECAAC9 /* DuxCSingleLineCommentElement.m in Sources */,
+				38C213D8177570FB006B05DD /* KChange.m in Sources */,
 				388CD06A176337B600ECAAC9 /* DuxCBlockCommentElement.m in Sources */,
 				38F2FAEA176C4A94003AB959 /* DuxPreferences.m in Sources */,
 			);
@@ -1084,7 +1108,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -1111,7 +1135,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 			};
 			name = Release;
