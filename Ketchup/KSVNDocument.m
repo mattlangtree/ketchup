@@ -223,11 +223,31 @@
 {
   NSLog(@"Current directory: %@",self.fileURL.path);
   
-  NSString *addCommand = [[self svnLaunchPath] stringByAppendingFormat:@" add * --force"];
+  NSMutableArray *filesList = [[NSMutableArray alloc] init];
+  [self.filesWithStatus enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+      KDocumentVersionedFile *versionedFile = (KDocumentVersionedFile *)obj;
+      if (versionedFile.includeInCommit == YES && versionedFile.status == KFileStatusUntracked) {
+          [filesList addObject:versionedFile.fileUrl.path];
+      }
+  }];
+  
+  if ([filesList count] == 0) {
+    return;
+  }
   
   NSTask *task = [[NSTask alloc] init];
-  task.launchPath = @"/bin/sh";
-  task.arguments = @[@"-c",addCommand];
+
+  if ([self.filesWithStatus count] == [filesList count]) {
+    task.launchPath = @"/bin/sh";
+    NSString *addCommand = [[self svnLaunchPath] stringByAppendingFormat:@" add * --force"];
+    task.arguments = @[@"-c",addCommand];
+  }
+  else {
+    task.launchPath = [self svnLaunchPath];
+    [filesList insertObject:@"add" atIndex:0];
+    task.arguments = filesList;
+  }
+  
   task.currentDirectoryPath = self.fileURL.path;
   task.standardOutput = [NSPipe pipe];
   task.standardError = [NSPipe pipe];
@@ -252,11 +272,28 @@
 
 - (void)commitFiles
 {
-  NSLog(@"Current directory: %@",self.fileURL.path);
+  NSMutableArray *filesList = [[NSMutableArray alloc] init];
+  [self.filesWithStatus enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    KDocumentVersionedFile *versionedFile = (KDocumentVersionedFile *)obj;
+    if (versionedFile.includeInCommit == YES) {
+      [filesList addObject:versionedFile.fileUrl.path];
+    }
+  }];
   
   NSTask *task = [[NSTask alloc] init];
   task.launchPath = [self svnLaunchPath];
-  task.arguments = @[@"commit", @"-m",self.commitTextView.string];
+  NSArray *arguments = @[@"commit", @"-m",self.commitTextView.string];
+  
+  if ([self.filesWithStatus count] != [filesList count]) {
+    arguments = [arguments arrayByAddingObjectsFromArray:filesList];
+    task.arguments = arguments;
+  }
+  else {
+    task.arguments = arguments;
+  }
+  
+  NSLog(@"Current directory: %@",self.fileURL.path);
+  
   task.currentDirectoryPath = self.fileURL.path;
   task.standardOutput = [NSPipe pipe];
   task.standardError = [NSPipe pipe];
