@@ -12,6 +12,7 @@
 @interface KSVNDiffOperation : KDiffOperation
 {
   NSArray *_changes;
+  NSString *_oldFileContents;
 }
 
 @end

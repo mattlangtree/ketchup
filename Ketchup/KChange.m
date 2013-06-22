@@ -23,4 +23,9 @@
   return self;
 }
 
+- (NSString *)description
+{
+  return [NSString stringWithFormat:@"<%@: {{%lu, %lu}, {%lu, %lu}}", NSStringFromClass([self class]), self.newLineLocation, self.newLineCount, self.oldLineLocation, self.oldLineCount];
+}
+
 @end

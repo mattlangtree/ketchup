@@ -19,4 +19,7 @@
 @property (readonly) NSURL *url;
 @property (readonly) NSArray *changes;
 
+@property (readonly) NSString *newFileContents;
+@property (readonly) NSString *oldFileContents;
+
 @end

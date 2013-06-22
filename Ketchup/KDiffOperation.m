@@ -38,4 +38,21 @@
   return nil;
 }
 
+- (NSString *)newFileContents
+{
+  NSString *textContent = [NSString stringWithContentsOfURL:self.url usedEncoding:NULL error:NULL];
+  if (!textContent) {
+    NSLog(@"cannot read file %@", self.url);
+    return @"";
+  }
+  
+  return textContent;
+}
+
+- (NSString *)oldFileContents
+{
+  [NSException raise:@"Not Yet Implemented" format:@"A subclass must implement %s", __PRETTY_FUNCTION__];
+  return @"";
+}
+
 @end

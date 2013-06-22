@@ -8,12 +8,6 @@
 
 #import "KSVNDiffOperation.h"
 
-@interface KSVNDiffOperation ()
-
-@property NSArray *changes;
-
-@end
-
 @implementation KSVNDiffOperation
 
 - (NSString *)svnLaunchPath
@@ -37,9 +31,41 @@
   if (!(self = [super initWithFileUrl:url]))
     return nil;
   
-  self.changes = [self findChanges];
-  
   return self;
+}
+
+- (NSString *)oldFileContents
+{
+  if (_oldFileContents)
+    return _oldFileContents;
+  
+  // run `svn cat -r HEAD file`
+  NSTask *task = [[NSTask alloc] init];
+  task.launchPath = self.svnLaunchPath;
+  task.arguments = @[@"cat", @"-r", @"BASE", self.url.path];
+  task.standardOutput = [NSPipe pipe];
+  task.standardError = [NSPipe pipe];
+  
+  [task launch];
+  [task waitUntilExit];
+  
+  // grab the output data, and check for an error
+  NSData *outputData = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
+  NSString *error = [[NSString alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile] encoding:NSUTF8StringEncoding];
+  
+  if (error.length > 0) {
+    NSLog(@"Svn error: %@", error);
+    _oldFileContents = @"";
+    return _oldFileContents;
+  }
+  
+  _oldFileContents = [NSString stringWithUnknownData:outputData usedEncoding:NULL];
+  if (!_oldFileContents) {
+    NSLog(@"cannot read file %@", self.url);
+    _oldFileContents = @"";
+  }
+  
+  return _oldFileContents;
 }
 
 - (NSArray *)findChanges
@@ -49,6 +75,7 @@
     return @[];
   
   NSArray *lines = [self parseDiffOutput:textContent];
+  NSLog(@"%@", lines);
   KChange *change = nil;
   NSInteger leftRightLineCountDelta = 0;
   NSMutableArray *changes = @[].mutableCopy;
@@ -61,18 +88,34 @@
       
       change = [[KChange alloc] init];
       leftRightLineCountDelta = 0;
-    } else if ([type isEqualToString:@"NewLine"]) {
-      leftRightLineCountDelta--;
-      
-      NSString *leftLine = [NSString stringWithFormat:@"%@   %@\n", [line valueForKey:@"lineNumber"], [line valueForKey:@"line"]];
-      change.leftHighlightedRanges = [change.leftHighlightedRanges arrayByAddingObject:[NSValue valueWithRange:NSMakeRange(change.leftString.length - 1, leftLine.length)]];
-      change.leftString = [change.leftString stringByAppendingString:leftLine];
     } else if ([type isEqualToString:@"OldLine"]) {
       leftRightLineCountDelta++;
       
-      NSString *rightLine = [NSString stringWithFormat:@"%@   %@\n", [line valueForKey:@"lineNumber"], [line valueForKey:@"line"]];
+      NSUInteger lineNumber = [[line valueForKey:@"lineNumber"] unsignedIntegerValue];
+      if (change.oldLineLocation == 0) {
+        change.oldLineLocation = lineNumber;
+        change.oldLineCount = 1;
+      } else {
+        change.oldLineCount++;
+      }
+      
+      NSString *rightLine = [NSString stringWithFormat:@"%lu   %@\n", lineNumber, [line valueForKey:@"line"]];
       change.rightHighlightedRanges = [change.rightHighlightedRanges arrayByAddingObject:[NSValue valueWithRange:NSMakeRange(change.rightString.length - 1, rightLine.length)]];
       change.rightString = [change.rightString stringByAppendingString:rightLine];
+    } else if ([type isEqualToString:@"NewLine"]) {
+      leftRightLineCountDelta--;
+      
+      NSUInteger lineNumber = [[line valueForKey:@"lineNumber"] unsignedIntegerValue];
+      if (change.newLineLocation == 0) {
+        change.newLineLocation = lineNumber;
+        change.newLineCount = 1;
+      } else {
+        change.newLineCount++;
+      }
+      
+      NSString *leftLine = [NSString stringWithFormat:@"%lu   %@\n", lineNumber, [line valueForKey:@"line"]];
+      change.leftHighlightedRanges = [change.leftHighlightedRanges arrayByAddingObject:[NSValue valueWithRange:NSMakeRange(change.leftString.length - 1, leftLine.length)]];
+      change.leftString = [change.leftString stringByAppendingString:leftLine];
     } else if ([type isEqualToString:@"UnchangedLine"]) {
       while (leftRightLineCountDelta > 0) {
         leftRightLineCountDelta--;
@@ -92,6 +135,8 @@
   }
   if (change)
     [changes addObject:change];
+  
+  NSLog(@"%@", changes);
   
   return changes.copy;
 }
@@ -158,9 +203,7 @@
       rightLineCounter = rightLineRange.location - 1;
       
       [lines addObject:@{
-                         @"type": @"ChangedLinesStart",
-                         @"newLineNumberStart": [NSNumber numberWithUnsignedInteger:leftLineRange.location],
-                         @"oldLineNumberStart": [NSNumber numberWithUnsignedInteger:rightLineRange.location]
+                         @"type": @"ChangedLinesStart"
                          }];
     } else if (areScanningChangeset && [textContent characterAtIndex:lineRange.location] == '+') {
       leftLineCounter++;
@@ -192,17 +235,17 @@
                          }];
     }
   }
-  NSLog(@"%@", lines);
+  
   return lines.copy;
-}
-
-- (void)setChanges:(NSArray *)changes
-{
-  _changes = changes;
 }
 
 - (NSArray *)changes
 {
+  if (_changes)
+    return _changes;
+  
+  _changes = [self findChanges];
+  
   return _changes;
 }
 
