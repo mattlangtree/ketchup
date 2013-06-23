@@ -129,7 +129,7 @@
       NSLog(@"failed to parse svn entry %@", entry);
     
     NSString *filePathString = [[paths objectAtIndex:0] stringValue];
-    NSURL *fileUrl = [self.fileURL URLByAppendingPathComponent:filePathString];
+    NSURL *fileUrl = ([filePathString characterAtIndex:0] == '/') ? [NSURL fileURLWithPath:filePathString] : [self.fileURL URLByAppendingPathComponent:filePathString];
     if (!fileUrl) {
       NSLog(@"cannot find file '%@' in '%@'", filePathString, entry);
       return @[];
