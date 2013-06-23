@@ -11,6 +11,7 @@
 #import "KFilesWatcher.h"
 #import "KChange.h"
 #import "KDiffOperation.h"
+#import "KSyncronizedScrollView.h"
 
 @interface KDocument()
 
@@ -564,17 +565,18 @@
   self.rightDiffView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
   self.rightDiffView.highlighter = self.rightSyntaxHighlighter;
   
-  scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(self.contentView.frame.size.width - diffViewWidth, 0, diffViewWidth, self.contentView.frame.size.height)];
-  scrollView.borderType = NSNoBorder;
-  scrollView.hasVerticalScroller = YES;
-  scrollView.hasHorizontalScroller = NO;
-  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMinXMargin;
-  scrollView.autoresizesSubviews = YES;
-  scrollView.documentView = self.rightDiffView;
+  KSyncronizedScrollView *syncronizedScrollView = [[KSyncronizedScrollView alloc] initWithFrame:NSMakeRect(self.contentView.frame.size.width - diffViewWidth, 0, diffViewWidth, self.contentView.frame.size.height)];
+  syncronizedScrollView.borderType = NSNoBorder;
+  syncronizedScrollView.hasVerticalScroller = YES;
+  syncronizedScrollView.hasHorizontalScroller = NO;
+  syncronizedScrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMinXMargin;
+  syncronizedScrollView.autoresizesSubviews = YES;
+  syncronizedScrollView.documentView = self.rightDiffView;
   if ([DuxPreferences editorDarkMode]) {
-    scrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
+    syncronizedScrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
   }
-  [self.contentView addSubview:scrollView];
+  [syncronizedScrollView setSynchronizedScrollView:scrollView];
+  [self.contentView addSubview:syncronizedScrollView];
   
   // highlight changes
   [self.leftDiffView setHighlightedRanges:leftHighlightedRanges.copy];

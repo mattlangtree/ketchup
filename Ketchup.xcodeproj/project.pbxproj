@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		380567C81777B475006BC0E6 /* KSyncronizedScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 380567C71777B475006BC0E6 /* KSyncronizedScrollView.m */; };
 		3833B2A61763385800F5F5DC /* DuxJSONBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B29B1763385800F5F5DC /* DuxJSONBaseElement.m */; };
 		3833B2A71763385800F5F5DC /* DuxJSONKeyElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B29D1763385800F5F5DC /* DuxJSONKeyElement.m */; };
 		3833B2A81763385800F5F5DC /* DuxJSONLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B29F1763385800F5F5DC /* DuxJSONLanguage.m */; };
@@ -147,6 +148,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		380567C61777B475006BC0E6 /* KSyncronizedScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSyncronizedScrollView.h; sourceTree = "<group>"; };
+		380567C71777B475006BC0E6 /* KSyncronizedScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSyncronizedScrollView.m; sourceTree = "<group>"; };
 		3833B29A1763385800F5F5DC /* DuxJSONBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONBaseElement.h; sourceTree = "<group>"; };
 		3833B29B1763385800F5F5DC /* DuxJSONBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONBaseElement.m; sourceTree = "<group>"; };
 		3833B29C1763385800F5F5DC /* DuxJSONKeyElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONKeyElement.h; sourceTree = "<group>"; };
@@ -622,6 +625,8 @@
 				38C213D6177570FB006B05DD /* KChange.m */,
 				C9B1605E176EBB4F00B1E1D1 /* KFilesWatcher.h */,
 				C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */,
+				380567C61777B475006BC0E6 /* KSyncronizedScrollView.h */,
+				380567C71777B475006BC0E6 /* KSyncronizedScrollView.m */,
 				3871F668175FF34200AB5900 /* MainMenu.xib */,
 				3871F657175FF34200AB5900 /* Supporting Files */,
 			);
@@ -969,6 +974,7 @@
 				3833B2C01763386400F5F5DC /* DuxRubyNumberElement.m in Sources */,
 				3833B2C11763386400F5F5DC /* DuxRubyKeywordElement.m in Sources */,
 				3833B2C21763386400F5F5DC /* DuxRubySingleLineCommentElement.m in Sources */,
+				380567C81777B475006BC0E6 /* KSyncronizedScrollView.m in Sources */,
 				3833B2C31763386400F5F5DC /* DuxRubyRegularExpressionElement.m in Sources */,
 				3833B2C81763386F00F5F5DC /* DuxPlainTextLanguage.m in Sources */,
 				3833B2C91763386F00F5F5DC /* DuxPlainTextBaseElement.m in Sources */,
