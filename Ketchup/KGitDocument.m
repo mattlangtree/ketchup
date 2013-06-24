@@ -8,6 +8,7 @@
 
 #import "KGitDocument.h"
 #import "KDocumentVersionedFile.h"
+#import "KGitDiffOperation.h"
 
 @interface KGitDocument()
 
@@ -215,6 +216,11 @@
   }
   
   return files.copy;
+}
+
+- (KDiffOperation *)diffOperationForFile:(KDocumentVersionedFile *)file
+{
+  return [KGitDiffOperation diffOperationWithFileUrl:file.fileUrl];
 }
 
 - (void)autoSyncButtonChanged:(id)sender

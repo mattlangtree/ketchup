@@ -135,6 +135,7 @@
 		C9B1605B176EB7EE00B1E1D1 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B1605A176EB7EE00B1E1D1 /* CoreServices.framework */; };
 		C9B16062176EBEE400B1E1D1 /* KFilesWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */; };
 		C9D21E9B1763010900A3DDDE /* KHGDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D21E9A1763010900A3DDDE /* KHGDocument.m */; };
+		C9FEB6F61778051200A5DA8B /* KGitDiffOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FEB6F5177803D900A5DA8B /* KGitDiffOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -372,6 +373,8 @@
 		C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KFilesWatcher.m; sourceTree = "<group>"; };
 		C9D21E991763010900A3DDDE /* KHGDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGDocument.h; sourceTree = "<group>"; };
 		C9D21E9A1763010900A3DDDE /* KHGDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHGDocument.m; sourceTree = "<group>"; };
+		C9FEB6F4177803D900A5DA8B /* KGitDiffOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGitDiffOperation.h; sourceTree = "<group>"; };
+		C9FEB6F5177803D900A5DA8B /* KGitDiffOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGitDiffOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -629,6 +632,8 @@
 				380567C71777B475006BC0E6 /* KSyncronizedScrollView.m */,
 				3871F668175FF34200AB5900 /* MainMenu.xib */,
 				3871F657175FF34200AB5900 /* Supporting Files */,
+				C9FEB6F4177803D900A5DA8B /* KGitDiffOperation.h */,
+				C9FEB6F5177803D900A5DA8B /* KGitDiffOperation.m */,
 			);
 			path = Ketchup;
 			sourceTree = "<group>";
@@ -943,6 +948,7 @@
 				388CD05F176337B600ECAAC9 /* DuxCSingleQuotedStringElement.m in Sources */,
 				388CD061176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.m in Sources */,
 				388CD063176337B600ECAAC9 /* DuxCNumberElement.m in Sources */,
+				C9FEB6F61778051200A5DA8B /* KGitDiffOperation.m in Sources */,
 				388CD065176337B600ECAAC9 /* DuxCKeywordElement.m in Sources */,
 				388CD067176337B600ECAAC9 /* DuxCSingleLineCommentElement.m in Sources */,
 				388CD069176337B600ECAAC9 /* DuxCBlockCommentElement.m in Sources */,
