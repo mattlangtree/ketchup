@@ -220,7 +220,7 @@
 
 - (KDiffOperation *)diffOperationForFile:(KDocumentVersionedFile *)file
 {
-  return [KGitDiffOperation diffOperationWithFileUrl:file.fileUrl];
+  return [KGitDiffOperation diffOperationWithFileUrl:file.fileUrl workingDirectoryURL:self.fileURL];
 }
 
 - (void)autoSyncButtonChanged:(id)sender

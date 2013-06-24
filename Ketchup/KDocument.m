@@ -430,6 +430,11 @@
     [self.contentView setSubviews:@[self.fileImageView]];
     return;
   }
+
+  if ([self isDirectory:file.fileUrl]) {
+    NSLog(@"is directory");
+    return;
+  }
   
   // create diff
   KDiffOperation *diffOperation = [self diffOperationForFile:file];
@@ -611,6 +616,13 @@
   }
   return isImageFile;
 }
+
+- (BOOL)isDirectory:(NSURL *)url
+{
+  NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:url.path error:nil];
+  return [[attributes valueForKey:@"NSFileType"] isEqualToString:NSFileTypeDirectory];
+}
+
 
 - (NSArray *)fetchFilesWithStatus
 {
