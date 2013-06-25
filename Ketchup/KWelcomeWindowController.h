@@ -8,6 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface KWelcomeWindowController : NSWindowController
+@interface KWelcomeWindowController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
 
+@property (strong) NSArray *recentDocuments;
+@property (strong) IBOutlet NSTableView *filesList;
+
+
+- (IBAction)didDoubleClickItem:(id)sender;
 @end

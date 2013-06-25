@@ -13,13 +13,12 @@
 
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)theApplication
 {
+//  [self openDocument:self];
   if (!_welcomeController) {
     _welcomeController = [[KWelcomeWindowController alloc] init];
   }
   [_welcomeController showWindow:self];
 
-  [self openDocument:self];
-  
   return YES;
 }
 

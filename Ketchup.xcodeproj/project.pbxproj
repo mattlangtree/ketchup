@@ -575,7 +575,9 @@
 				3871F64F175FF34200AB5900 /* Frameworks */,
 				3871F64E175FF34200AB5900 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		3871F64E175FF34200AB5900 /* Products */ = {
 			isa = PBXGroup;
