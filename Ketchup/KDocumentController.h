@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class KWelcomeWindowController;
+
 @interface KDocumentController : NSDocumentController <NSApplicationDelegate>
+
+@property (strong) KWelcomeWindowController *welcomeController;
 
 @end

@@ -7,12 +7,19 @@
 //
 
 #import "KDocumentController.h"
+#import "KWelcomeWindowController.h"
 
 @implementation KDocumentController
 
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)theApplication
 {
+  if (!_welcomeController) {
+    _welcomeController = [[KWelcomeWindowController alloc] init];
+  }
+  [_welcomeController showWindow:self];
+
   [self openDocument:self];
+  
   return YES;
 }
 

@@ -132,6 +132,8 @@
 		38C8A3F617633742005DBC23 /* DuxCSSColorValueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3E917633742005DBC23 /* DuxCSSColorValueElement.m */; };
 		38C8A3F717633742005DBC23 /* DuxCSSAtRuleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C8A3EB17633742005DBC23 /* DuxCSSAtRuleElement.m */; };
 		38F2FAEA176C4A94003AB959 /* DuxPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 3833B31C1763394200F5F5DC /* DuxPreferences.m */; };
+		C914E0B51779B72500EA77F7 /* KWelcomeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C914E0B41779B72500EA77F7 /* KWelcomeWindow.xib */; };
+		C914E0B81779BD2D00EA77F7 /* KWelcomeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = C914E0B71779BD2D00EA77F7 /* KWelcomeWindowController.m */; };
 		C9B1605B176EB7EE00B1E1D1 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B1605A176EB7EE00B1E1D1 /* CoreServices.framework */; };
 		C9B16062176EBEE400B1E1D1 /* KFilesWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */; };
 		C9D21E9B1763010900A3DDDE /* KHGDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D21E9A1763010900A3DDDE /* KHGDocument.m */; };
@@ -267,7 +269,7 @@
 		3871F687175FF35100AB5900 /* Ketchup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Ketchup.entitlements; sourceTree = "<group>"; };
 		3871F68C175FFA9F00AB5900 /* appicon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = appicon.iconset; path = ../appicon.iconset; sourceTree = "<group>"; };
 		3871F68E175FFDEA00AB5900 /* KDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDocumentController.h; sourceTree = "<group>"; };
-		3871F68F175FFDEA00AB5900 /* KDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDocumentController.m; sourceTree = "<group>"; };
+		3871F68F175FFDEA00AB5900 /* KDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = KDocumentController.m; sourceTree = "<group>"; tabWidth = 2; };
 		3871F6961760025200AB5900 /* KSVNDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSVNDocument.h; sourceTree = "<group>"; };
 		3871F6971760025200AB5900 /* KSVNDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSVNDocument.m; sourceTree = "<group>"; };
 		3871F69B1760026B00AB5900 /* KGitDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGitDocument.h; sourceTree = "<group>"; };
@@ -368,6 +370,9 @@
 		38C8A3E917633742005DBC23 /* DuxCSSColorValueElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSColorValueElement.m; sourceTree = "<group>"; };
 		38C8A3EA17633742005DBC23 /* DuxCSSAtRuleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSAtRuleElement.h; sourceTree = "<group>"; };
 		38C8A3EB17633742005DBC23 /* DuxCSSAtRuleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSAtRuleElement.m; sourceTree = "<group>"; };
+		C914E0B41779B72500EA77F7 /* KWelcomeWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KWelcomeWindow.xib; sourceTree = "<group>"; };
+		C914E0B61779BD2D00EA77F7 /* KWelcomeWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWelcomeWindowController.h; sourceTree = "<group>"; };
+		C914E0B71779BD2D00EA77F7 /* KWelcomeWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWelcomeWindowController.m; sourceTree = "<group>"; };
 		C9B1605A176EB7EE00B1E1D1 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		C9B1605E176EBB4F00B1E1D1 /* KFilesWatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KFilesWatcher.h; sourceTree = "<group>"; };
 		C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KFilesWatcher.m; sourceTree = "<group>"; };
@@ -630,6 +635,9 @@
 				C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */,
 				380567C61777B475006BC0E6 /* KSyncronizedScrollView.h */,
 				380567C71777B475006BC0E6 /* KSyncronizedScrollView.m */,
+				C914E0B61779BD2D00EA77F7 /* KWelcomeWindowController.h */,
+				C914E0B71779BD2D00EA77F7 /* KWelcomeWindowController.m */,
+				C914E0B41779B72500EA77F7 /* KWelcomeWindow.xib */,
 				3871F668175FF34200AB5900 /* MainMenu.xib */,
 				3871F657175FF34200AB5900 /* Supporting Files */,
 				C9FEB6F4177803D900A5DA8B /* KGitDiffOperation.h */,
@@ -878,6 +886,7 @@
 				3871F66A175FF34200AB5900 /* MainMenu.xib in Resources */,
 				3871F68D175FFA9F00AB5900 /* appicon.iconset in Resources */,
 				3875E4961760B667002D427E /* led-up-to-date.png in Resources */,
+				C914E0B51779B72500EA77F7 /* KWelcomeWindow.xib in Resources */,
 				3875E4971760B667002D427E /* led-up-to-date@2x.png in Resources */,
 				38C8A3D217633729005DBC23 /* JumpToLinePanel.xib in Resources */,
 				3833B3251763394200F5F5DC /* PreferencesWindow.xib in Resources */,
@@ -931,6 +940,7 @@
 				38C8A3D017633729005DBC23 /* DuxLanguageMenuItem.m in Sources */,
 				38C8A3D117633729005DBC23 /* DuxLineNumberString.m in Sources */,
 				38C213D7177570FB006B05DD /* KChange.m in Sources */,
+				C914E0B81779BD2D00EA77F7 /* KWelcomeWindowController.m in Sources */,
 				38C8A3EC17633742005DBC23 /* DuxCSSLanguage.m in Sources */,
 				38C8A3ED17633742005DBC23 /* DuxCSSBaseElement.m in Sources */,
 				38C8A3EE17633742005DBC23 /* DuxCSSCommentElement.m in Sources */,
