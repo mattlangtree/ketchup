@@ -28,10 +28,6 @@
     self = [super init];
     if (self) {
     // Add your subclass-specific initialization here.
-
-      [NSApp setDelegate:self];
-      NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
-      [notifCenter addObserver:self selector:@selector(refreshFilesListFromNotification:) name:KFilesDidChangeNotification object:nil];
       
       kWorkingCopyStatusNoneString = NSLocalizedString(@"Checking Status", nil);
       kWorkingCopyStatusCheckingString = NSLocalizedString(@"Checking Status", nil);
@@ -273,6 +269,11 @@
   // load files
   self.filesWithStatus = [self fetchFilesWithStatus];
   [self.filesOutlineView reloadData];
+
+  [NSApp setDelegate:self];
+  NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+  [notifCenter addObserver:self selector:@selector(refreshFilesListFromNotification:) name:KFilesDidChangeNotification object:nil];
+
 }
 
 - (void)documentSpecificViewCustomisations
