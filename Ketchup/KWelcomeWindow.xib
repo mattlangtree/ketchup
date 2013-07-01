@@ -16,16 +16,16 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" wantsToBeColor="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="800" height="473"/>
+            <rect key="contentRect" x="196" y="240" width="800" height="469"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-            <value key="minSize" type="size" width="800" height="473"/>
-            <value key="maxSize" type="size" width="800" height="473"/>
+            <value key="minSize" type="size" width="800" height="469"/>
+            <value key="maxSize" type="size" width="800" height="469"/>
             <view key="contentView" appearanceType="lightContent" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="800" height="473"/>
+                <rect key="frame" x="0.0" y="0.0" width="800" height="469"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8ic-oz-IF0">
-                        <rect key="frame" x="17" y="222" width="459" height="42"/>
+                        <rect key="frame" x="17" y="218" width="459" height="42"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Ketchup" id="dJ3-Db-fX7">
                             <font key="font" size="34" name="MyriadPro-Regular"/>
@@ -38,14 +38,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="appicon" id="sgo-Dr-adm"/>
                     </imageView>
-                    <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="885-s2-WOK">
-                        <rect key="frame" x="493" y="-1" width="308" height="475"/>
+                    <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="47" horizontalPageScroll="10" verticalLineScroll="47" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="885-s2-WOK">
+                        <rect key="frame" x="493" y="-5" width="308" height="475"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" ambiguous="YES" id="Jyf-Zy-896">
                             <rect key="frame" x="1" y="1" width="306" height="473"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="aAt-u3-xNA">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="45" rowSizeStyle="automatic" viewBased="YES" id="aAt-u3-xNA">
                                     <rect key="frame" x="0.0" y="0.0" width="306" height="473"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -65,23 +65,9 @@
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView id="Uni-UE-bOl">
-                                                    <rect key="frame" x="1" y="1" width="303" height="17"/>
+                                                <tableCellView identifier="RecentDocument" id="Uni-UE-bOl">
+                                                    <rect key="frame" x="1" y="1" width="303" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <subviews>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7fy-hh-eV0">
-                                                            <rect key="frame" x="0.0" y="0.0" width="303" height="17"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="gKQ-vA-F4n">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                    </subviews>
-                                                    <connections>
-                                                        <outlet property="textField" destination="7fy-hh-eV0" id="b7L-OZ-r06"/>
-                                                    </connections>
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
@@ -104,7 +90,7 @@
                         </scroller>
                     </scrollView>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uLQ-9e-dJX">
-                        <rect key="frame" x="131" y="104" width="230" height="25"/>
+                        <rect key="frame" x="131" y="100" width="230" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="roundTextured" title="Open existing working copy..." bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Gxh-KL-8h6">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -112,7 +98,7 @@
                         </buttonCell>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OoI-rE-k25">
-                        <rect key="frame" x="131" y="152" width="230" height="25"/>
+                        <rect key="frame" x="135" y="146" width="222" height="29"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="roundTextured" title="Create new..." bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nk3-RF-viN">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -120,7 +106,7 @@
                         </buttonCell>
                     </button>
                     <textField appearanceType="lightContent" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oS8-6x-Wn4">
-                        <rect key="frame" x="17" y="210" width="459" height="17"/>
+                        <rect key="frame" x="17" y="206" width="459" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Version 1.0beta (#build_no#)" id="puE-TM-ea8">
                             <font key="font" metaFont="system"/>
@@ -135,4 +121,14 @@
     <resources>
         <image name="appicon" width="512" height="512"/>
     </resources>
+    <classes>
+        <class className="KWelcomeWindowController" superclassName="NSWindowController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/KWelcomeWindowController.h"/>
+            <relationships>
+                <relationship kind="action" name="didDoubleClickItem:"/>
+                <relationship kind="action" name="openExistingRepository:"/>
+                <relationship kind="outlet" name="filesList" candidateClass="NSTableView"/>
+            </relationships>
+        </class>
+    </classes>
 </document>

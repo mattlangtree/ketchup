@@ -96,8 +96,7 @@
   self.remoteStatusIconView.image = [NSImage imageNamed:@"led-up-to-date"];
   [self.remoteView addSubview:self.remoteStatusIconView];
   
-  self.remoteStatusField = [[NSTextField alloc] initWithFrame:NSMakeRect(40, 4
-                                                                         , sidebarWidth - 50, 25)];
+  self.remoteStatusField = [[NSTextField alloc] initWithFrame:NSMakeRect(40, 4, sidebarWidth - 50, 25)];
   self.remoteStatusField.autoresizingMask = NSViewWidthSizable;
   self.remoteStatusField.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
   self.remoteStatusField.backgroundColor = [NSColor clearColor];

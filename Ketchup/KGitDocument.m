@@ -55,18 +55,20 @@
 
   [self updateCurrentBranch];
   
-  self.currentBranchLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, 20)];
-  self.currentBranchLabel.backgroundColor = [NSColor clearColor];
-  self.currentBranchLabel.editable = NO;
-  self.currentBranchLabel.bordered = NO;
-  self.currentBranchLabel.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
-  self.currentBranchLabel.textColor = [NSColor textColor];
-  self.currentBranchLabel.stringValue = self.currentBranchString;
-  [self.currentBranchLabel sizeToFit];
-  self.currentBranchLabel.frame = NSMakeRect(10, self.remoteView.frame.size.height - self.currentBranchLabel.frame.size.height, self.currentBranchLabel.frame.size.width, self.currentBranchLabel.frame.size.height);
+  NSMenu *branchMenu = [[NSMenu alloc] init];
+  NSMenuItem *menuItem = [branchMenu addItemWithTitle:@"Edit .gitignore" action:@selector(revealInFinder:) keyEquivalent:@""];
+  
+  self.currentBranchButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, 20)];
+  [self.currentBranchButton setButtonType:NSMomentaryPushInButton];
+  [self.currentBranchButton setBordered:NO];
+  self.currentBranchButton.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
+  self.currentBranchButton.title = self.currentBranchString;
+  [self.currentBranchButton sizeToFit];
+  [self.currentBranchButton setMenu:branchMenu];
+  self.currentBranchButton.frame = NSMakeRect(10, self.remoteView.frame.size.height - self.currentBranchButton.frame.size.height, self.currentBranchButton.frame.size.width, self.currentBranchButton.frame.size.height);
   
   [self.remoteStatusIconView setHidden:YES];
-  [self.remoteView addSubview:self.currentBranchLabel];
+  [self.remoteView addSubview:self.currentBranchButton];
 //  self.remoteView.layer.backgroundColor = [NSColor redColor].CGColor;
   self.remoteStatusField.frame = NSMakeRect(10, 3, sidebarWidth - 50, 20);
   self.remoteStatusField.font = [NSFont fontWithName:@"HelveticaNeue" size:12.f];
