@@ -79,6 +79,13 @@
   self.unsyncedcommitsList.font = [NSFont fontWithName:@"HelveticaNeue" size:12.f];
   self.unsyncedcommitsList.textColor = [NSColor textColor];
   self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
+  
+  __block NSString *commitsListString = @"";
+  [self.unsyncedCommits enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    commitsListString = [commitsListString stringByAppendingFormat:@"%@\n",[obj substringToIndex:MIN([obj length],20)]];
+  }];
+  
+  self.unsyncedcommitsList.string = commitsListString;
   self.unsyncedcommitsList.frame = NSMakeRect(10, 0, sidebarWidth - 20, 40);
   [self.commitsView addSubview:self.unsyncedcommitsList];
 
