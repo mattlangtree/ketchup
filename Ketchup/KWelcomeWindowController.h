@@ -15,4 +15,5 @@
 
 
 - (IBAction)didDoubleClickItem:(id)sender;
+- (IBAction)openExistingRepository:(id)sender;
 @end

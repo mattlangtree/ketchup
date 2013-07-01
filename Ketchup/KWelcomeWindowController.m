@@ -55,14 +55,21 @@
     result.bordered = NO;
     result.identifier = @"RecentDocument";
   }
+  NSURL *URL = [_recentDocuments objectAtIndex:row];
+  NSArray *pathComponents = [URL pathComponents];
+  NSString *abbreviatedPathString = @"";
   
-  result.stringValue = [_recentDocuments objectAtIndex:row];
+  if ([pathComponents count] >= 2) {
+    abbreviatedPathString = [abbreviatedPathString stringByAppendingFormat:@"%@/%@",[pathComponents objectAtIndex:([pathComponents count] -2)],[URL lastPathComponent]];
+  }
+  
+//  result.stringValue = [_recentDocuments objectAtIndex:row];
+  result.stringValue = abbreviatedPathString;
   return result;
 }
 
 - (IBAction)didDoubleClickItem:(id)sender
 {
-  NSLog(@"double click item");
   NSInteger row = [_filesList clickedRow];
   NSURL *url = [_recentDocuments objectAtIndex:row];
   
@@ -74,6 +81,11 @@
     });
     
   }];
+}
+
+- (IBAction)openExistingRepository:(id)sender
+{
+  [[NSDocumentController sharedDocumentController] openDocument:nil];
 }
 
 @end
