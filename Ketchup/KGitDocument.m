@@ -96,6 +96,10 @@
 
 - (NSArray *)fetchFilesWithStatus
 {
+  
+  [self.syncProgressIndicator setHidden:NO];
+  [self.syncProgressIndicator startAnimation:self];
+
   // run `git status --percelain -z`
   NSTask *task = [[NSTask alloc] init];
   task.launchPath = @"/usr/bin/git";
@@ -224,6 +228,10 @@
     scanLocation = nullLocation + 1;
   }
   
+  [self.syncProgressIndicator setHidden:YES];
+  [self.syncProgressIndicator stopAnimation:self];
+
+  
   return files.copy;
 }
 
@@ -251,6 +259,9 @@
 
 - (void)syncWithRemote:(id)sender
 {
+  [self.syncProgressIndicator setHidden:NO];
+  [self.syncProgressIndicator startAnimation:self];
+
   self.status = kWorkingCopyStatusChecking;
   [self updateRemoteSyncStatus];
 
@@ -260,6 +271,9 @@
   
   [self updateUnsyncedCommits];
   self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
+  
+  [self.syncProgressIndicator setHidden:YES];
+  [self.syncProgressIndicator stopAnimation:self];
 }
 
 - (void)commit

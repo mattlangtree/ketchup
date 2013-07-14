@@ -121,14 +121,4 @@
     <resources>
         <image name="appicon" width="512" height="512"/>
     </resources>
-    <classes>
-        <class className="KWelcomeWindowController" superclassName="NSWindowController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/KWelcomeWindowController.h"/>
-            <relationships>
-                <relationship kind="action" name="didDoubleClickItem:"/>
-                <relationship kind="action" name="openExistingRepository:"/>
-                <relationship kind="outlet" name="filesList" candidateClass="NSTableView"/>
-            </relationships>
-        </class>
-    </classes>
 </document>

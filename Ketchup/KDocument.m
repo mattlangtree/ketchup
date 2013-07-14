@@ -105,6 +105,13 @@
   self.remoteStatusField.editable = NO;
   self.remoteStatusField.stringValue = @"Synced with Remote";
   [self.remoteView addSubview:self.remoteStatusField];
+  
+  self.syncProgressIndicator = [[NSProgressIndicator alloc] initWithFrame:NSMakeRect(10, 0, sidebarWidth - 100, 25)];
+  self.syncProgressIndicator.autoresizingMask = NSViewWidthSizable;
+  [self.syncProgressIndicator setIndeterminate:YES];
+  [self.remoteView addSubview:self.syncProgressIndicator];
+  [self.syncProgressIndicator setHidden:YES];
+
 
 
   self.filesView = [[NSView alloc] initWithFrame:NSMakeRect(0, 200, sidebarWidth, windowHeight - 230)];
