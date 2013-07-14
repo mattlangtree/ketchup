@@ -278,6 +278,9 @@
 
 - (void)commit
 {
+  [self.syncProgressIndicator setHidden:NO];
+  [self.syncProgressIndicator startAnimation:self];
+
   // Super does some extra view drawing..
   [super commit];
 
@@ -306,6 +309,9 @@
 
   // Super does some extra view drawing..
   [super commitDidFinish];
+  
+  [self.syncProgressIndicator setHidden:YES];
+  [self.syncProgressIndicator stopAnimation:self];
 }
 
 - (void)partialAdd
