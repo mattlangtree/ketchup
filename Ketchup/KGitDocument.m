@@ -94,9 +94,15 @@
   self.filesView.frame = NSMakeRect(0, 200, sidebarWidth, windowHeight - 300);
 }
 
+- (void)revealInFinder:(id)sender
+{
+  NSString *currentDirectoryPath = self.fileURL.path;
+  NSString *gitIgnorePath = [currentDirectoryPath stringByAppendingPathComponent:@"/.gitignore"];
+  [[NSWorkspace sharedWorkspace] openFile:gitIgnorePath];
+}
+
 - (NSArray *)fetchFilesWithStatus
 {
-  
   [self.syncProgressIndicator setHidden:NO];
   [self.syncProgressIndicator startAnimation:self];
 
