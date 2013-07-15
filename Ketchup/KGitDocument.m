@@ -308,6 +308,10 @@
     [self pushToRemote];
   }
   
+  // Update unsynced commits after pushing to ensure they actually went up as expected.
+  [self updateUnsyncedCommits];
+  self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
+  
   self.filesWithStatus = [self fetchFilesWithStatus];
   [self.filesOutlineView reloadData];
   
