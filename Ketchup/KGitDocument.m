@@ -303,7 +303,9 @@
   [self updateUnsyncedCommits];
   self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
 
-
+  // Super does some extra view drawing..
+  [super commitDidFinish];
+  
   if (self.commitAutoSyncButton.state == NSOnState) {
     [self pushToRemote];
   }
@@ -316,9 +318,6 @@
   [self.filesOutlineView reloadData];
   
   [self.commitTextView setString:@""];
-
-  // Super does some extra view drawing..
-  [super commitDidFinish];
   
   [self.syncProgressIndicator setHidden:YES];
   [self.syncProgressIndicator stopAnimation:self];
