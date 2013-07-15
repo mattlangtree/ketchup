@@ -26,7 +26,7 @@ static NSUserDefaults *userDefaults;
 
 + (void)registerDefaults
 {
-  NSFont *editorFont = [NSFont fontWithName:@"Menlo" size:13];
+  NSFont *editorFont = [NSFont fontWithName:@"Menlo" size:11];
   
   [userDefaults registerDefaults:@{
    @"DuxEditorFontName": editorFont.fontName,
