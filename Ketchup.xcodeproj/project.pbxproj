@@ -104,6 +104,8 @@
 		388CD098176337FE00ECAAC9 /* DuxJavaScriptSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD08D176337FE00ECAAC9 /* DuxJavaScriptSingleLineCommentElement.m */; };
 		388CD099176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD08F176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.m */; };
 		388CD09A176337FE00ECAAC9 /* DuxJavaScriptRegexElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 388CD091176337FE00ECAAC9 /* DuxJavaScriptRegexElement.m */; };
+		38AF510E177C640000651677 /* KDiffVView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AF510D177C640000651677 /* KDiffVView.m */; };
+		38AF510F177C640000651677 /* KDiffVView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AF510D177C640000651677 /* KDiffVView.m */; };
 		38B61A071775772E004B15D6 /* KDiffOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B61A061775772E004B15D6 /* KDiffOperation.m */; };
 		38B61A081775772E004B15D6 /* KDiffOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B61A061775772E004B15D6 /* KDiffOperation.m */; };
 		38B61A0B177578B6004B15D6 /* KSVNDiffOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B61A0A177578B6004B15D6 /* KSVNDiffOperation.m */; };
@@ -323,6 +325,8 @@
 		388CD08F176337FE00ECAAC9 /* DuxJavaScriptBlockCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptBlockCommentElement.m; sourceTree = "<group>"; };
 		388CD090176337FE00ECAAC9 /* DuxJavaScriptRegexElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptRegexElement.h; sourceTree = "<group>"; };
 		388CD091176337FE00ECAAC9 /* DuxJavaScriptRegexElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptRegexElement.m; sourceTree = "<group>"; };
+		38AF510C177C640000651677 /* KDiffVView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDiffVView.h; sourceTree = "<group>"; };
+		38AF510D177C640000651677 /* KDiffVView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDiffVView.m; sourceTree = "<group>"; };
 		38B61A051775772E004B15D6 /* KDiffOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDiffOperation.h; sourceTree = "<group>"; };
 		38B61A061775772E004B15D6 /* KDiffOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDiffOperation.m; sourceTree = "<group>"; };
 		38B61A09177578B6004B15D6 /* KSVNDiffOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSVNDiffOperation.h; sourceTree = "<group>"; };
@@ -637,6 +641,8 @@
 				C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */,
 				380567C61777B475006BC0E6 /* KSyncronizedScrollView.h */,
 				380567C71777B475006BC0E6 /* KSyncronizedScrollView.m */,
+				38AF510C177C640000651677 /* KDiffVView.h */,
+				38AF510D177C640000651677 /* KDiffVView.m */,
 				C914E0B61779BD2D00EA77F7 /* KWelcomeWindowController.h */,
 				C914E0B71779BD2D00EA77F7 /* KWelcomeWindowController.m */,
 				C914E0B41779B72500EA77F7 /* KWelcomeWindow.xib */,
@@ -996,6 +1002,7 @@
 				3833B2C31763386400F5F5DC /* DuxRubyRegularExpressionElement.m in Sources */,
 				3833B2C81763386F00F5F5DC /* DuxPlainTextLanguage.m in Sources */,
 				3833B2C91763386F00F5F5DC /* DuxPlainTextBaseElement.m in Sources */,
+				38AF510E177C640000651677 /* KDiffVView.m in Sources */,
 				38B61A071775772E004B15D6 /* KDiffOperation.m in Sources */,
 				3833B2DC1763387900F5F5DC /* DuxPHPLanguage.m in Sources */,
 				3833B2DD1763387900F5F5DC /* DuxPHPBaseElement.m in Sources */,
@@ -1047,6 +1054,7 @@
 				388CD068176337B600ECAAC9 /* DuxCSingleLineCommentElement.m in Sources */,
 				38C213D8177570FB006B05DD /* KChange.m in Sources */,
 				388CD06A176337B600ECAAC9 /* DuxCBlockCommentElement.m in Sources */,
+				38AF510F177C640000651677 /* KDiffVView.m in Sources */,
 				38F2FAEA176C4A94003AB959 /* DuxPreferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1112,6 +1120,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1145,6 +1154,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;

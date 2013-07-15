@@ -529,7 +529,7 @@
   self.leftDiffView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
   self.leftDiffView.highlighter = self.leftSyntaxHighlighter;
   
-  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, self.contentView.frame.size.height)];
+  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, self.contentView.frame.size.height / 2)];
   scrollView.borderType = NSNoBorder;
   scrollView.hasVerticalScroller = YES;
   scrollView.hasHorizontalScroller = NO;
@@ -571,7 +571,7 @@
   self.rightDiffView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
   self.rightDiffView.highlighter = self.rightSyntaxHighlighter;
   
-  KSyncronizedScrollView *syncronizedScrollView = [[KSyncronizedScrollView alloc] initWithFrame:NSMakeRect(self.contentView.frame.size.width - diffViewWidth, 0, diffViewWidth, self.contentView.frame.size.height)];
+  KSyncronizedScrollView *syncronizedScrollView = [[KSyncronizedScrollView alloc] initWithFrame:NSMakeRect(self.contentView.frame.size.width - diffViewWidth, 0, diffViewWidth, self.contentView.frame.size.height / 2)];
   syncronizedScrollView.borderType = NSNoBorder;
   syncronizedScrollView.hasVerticalScroller = YES;
   syncronizedScrollView.hasHorizontalScroller = NO;
