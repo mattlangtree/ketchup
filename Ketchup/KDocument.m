@@ -12,6 +12,7 @@
 #import "KChange.h"
 #import "KDiffOperation.h"
 #import "KSyncronizedScrollView.h"
+#import "KDiffView.h"
 
 @interface KDocument()
 
@@ -539,7 +540,7 @@
   scrollView.borderType = NSNoBorder;
   scrollView.hasVerticalScroller = YES;
   scrollView.hasHorizontalScroller = NO;
-  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMaxXMargin;
+  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMaxXMargin | NSViewMaxYMargin;
   scrollView.autoresizesSubviews = YES;
   scrollView.documentView = self.leftDiffView;
   if ([DuxPreferences editorDarkMode]) {
@@ -581,7 +582,7 @@
   syncronizedScrollView.borderType = NSNoBorder;
   syncronizedScrollView.hasVerticalScroller = YES;
   syncronizedScrollView.hasHorizontalScroller = NO;
-  syncronizedScrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMinXMargin;
+  syncronizedScrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMinXMargin | NSViewMaxYMargin;
   syncronizedScrollView.autoresizesSubviews = YES;
   syncronizedScrollView.documentView = self.rightDiffView;
   if ([DuxPreferences editorDarkMode]) {
@@ -601,6 +602,16 @@
     [self.rightDiffView setNeedsDisplay:YES];
     [self.leftDiffView setNeedsDisplay:YES];
   });
+  
+  // create Diff View
+  KDiffView *diffView = [[KDiffView alloc] initWithFrame:NSMakeRect(0, 0, self.contentView.frame.size.width, ceil(self.contentView.frame.size.height / 2))];
+  diffView.operation = diffOperation;
+  diffView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+  
+  scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, floor(self.contentView.frame.size.height / 2), self.contentView.frame.size.width, ceil(self.contentView.frame.size.height / 2))];
+  [scrollView addSubview:diffView];
+  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMaxYMargin;
+  [self.contentView addSubview:scrollView];
 }
 
 - (void)refreshFilesListFromNotification:(NSNotification *)notification
