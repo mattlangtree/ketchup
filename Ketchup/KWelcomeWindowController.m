@@ -46,23 +46,42 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
   
-  NSTextField *result = [tableView makeViewWithIdentifier:@"RecentDocument" owner:self];
-  
-  if (result == nil) {
-    
-    result = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 308, 45)];
-    result.editable = NO;
-    result.bordered = NO;
-    result.identifier = @"RecentDocument";
+  NSTableCellView *cellView = [tableView makeViewWithIdentifier:@"RecentDocument" owner:self];
+
+  if (cellView == nil) {
+    cellView = [[NSTableCellView alloc] initWithFrame:NSMakeRect(0, 0, 308, 45)];
+    cellView.identifier = @"RecentDocument";
   }
+
+  NSTextField *textField = [[NSTextField alloc] initWithFrame:NSMakeRect(42, 22,308, 20)];
+  textField.backgroundColor = [NSColor clearColor];
+  textField.font = [NSFont systemFontOfSize:13.f];
+  textField.editable = NO;
+  textField.bordered = NO;
+  [cellView addSubview:textField];
+
+  NSTextField *pathTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(42, 5, 263, 20)];
+  pathTextField.backgroundColor = [NSColor clearColor];
+  pathTextField.editable = NO;
+  pathTextField.bordered = NO;
+  pathTextField.font = [NSFont systemFontOfSize:11.f];
+  pathTextField.textColor = [NSColor lightGrayColor];
+  [[pathTextField cell] setLineBreakMode:NSLineBreakByTruncatingHead];
+  [cellView addSubview:pathTextField];
   
-  result.stringValue = [_recentDocuments objectAtIndex:row];
-  return result;
+  NSImageView *imageView = [[NSImageView alloc] initWithFrame:NSMakeRect(4, 7, 32, 32)];
+  [cellView addSubview:imageView];
+
+  NSURL *URL = [_recentDocuments objectAtIndex:row];
+  textField.stringValue = [URL lastPathComponent];
+  pathTextField.stringValue = [URL.path stringByDeletingLastPathComponent];
+  pathTextField.toolTip = URL.path;
+  imageView.image = [[NSWorkspace sharedWorkspace] iconForFile:URL.path];
+  return cellView;
 }
 
 - (IBAction)didDoubleClickItem:(id)sender
 {
-  NSLog(@"double click item");
   NSInteger row = [_filesList clickedRow];
   NSURL *url = [_recentDocuments objectAtIndex:row];
   
@@ -74,6 +93,12 @@
     });
     
   }];
+}
+
+- (IBAction)openExistingRepository:(id)sender
+{
+  [[NSDocumentController sharedDocumentController] openDocument:nil];
+  [self close];
 }
 
 @end

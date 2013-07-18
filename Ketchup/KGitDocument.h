@@ -11,7 +11,7 @@
 
 @interface KGitDocument : KDocument
 
-@property (nonatomic, strong) NSTextField *currentBranchLabel;
+@property (nonatomic, strong) NSButton *currentBranchButton;
 @property (nonatomic, strong) NSTextView *unsyncedcommitsList;
 
 @property (nonatomic, strong) NSString *currentBranchString;

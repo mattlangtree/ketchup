@@ -55,18 +55,20 @@
 
   [self updateCurrentBranch];
   
-  self.currentBranchLabel = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, 20)];
-  self.currentBranchLabel.backgroundColor = [NSColor clearColor];
-  self.currentBranchLabel.editable = NO;
-  self.currentBranchLabel.bordered = NO;
-  self.currentBranchLabel.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
-  self.currentBranchLabel.textColor = [NSColor textColor];
-  self.currentBranchLabel.stringValue = self.currentBranchString;
-  [self.currentBranchLabel sizeToFit];
-  self.currentBranchLabel.frame = NSMakeRect(10, self.remoteView.frame.size.height - self.currentBranchLabel.frame.size.height, self.currentBranchLabel.frame.size.width, self.currentBranchLabel.frame.size.height);
+  NSMenu *branchMenu = [[NSMenu alloc] init];
+  NSMenuItem *menuItem = [branchMenu addItemWithTitle:@"Edit .gitignore" action:@selector(showGitIgnore:) keyEquivalent:@""];
+  
+  self.currentBranchButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, 20)];
+  [self.currentBranchButton setButtonType:NSMomentaryPushInButton];
+  [self.currentBranchButton setBordered:NO];
+  self.currentBranchButton.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
+  self.currentBranchButton.title = self.currentBranchString;
+  [self.currentBranchButton sizeToFit];
+  [self.currentBranchButton setMenu:branchMenu];
+  self.currentBranchButton.frame = NSMakeRect(10, self.remoteView.frame.size.height - self.currentBranchButton.frame.size.height, self.currentBranchButton.frame.size.width, self.currentBranchButton.frame.size.height);
   
   [self.remoteStatusIconView setHidden:YES];
-  [self.remoteView addSubview:self.currentBranchLabel];
+  [self.remoteView addSubview:self.currentBranchButton];
 //  self.remoteView.layer.backgroundColor = [NSColor redColor].CGColor;
   self.remoteStatusField.frame = NSMakeRect(10, 3, sidebarWidth - 50, 20);
   self.remoteStatusField.font = [NSFont fontWithName:@"HelveticaNeue" size:12.f];
@@ -79,14 +81,31 @@
   self.unsyncedcommitsList.font = [NSFont fontWithName:@"HelveticaNeue" size:12.f];
   self.unsyncedcommitsList.textColor = [NSColor textColor];
   self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
+  
+  __block NSString *commitsListString = @"";
+  [self.unsyncedCommits enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    commitsListString = [commitsListString stringByAppendingFormat:@"%@\n",[obj substringToIndex:MIN([obj length],20)]];
+  }];
+  
+  self.unsyncedcommitsList.string = commitsListString;
   self.unsyncedcommitsList.frame = NSMakeRect(10, 0, sidebarWidth - 20, 40);
   [self.commitsView addSubview:self.unsyncedcommitsList];
 
   self.filesView.frame = NSMakeRect(0, 200, sidebarWidth, windowHeight - 300);
 }
 
+- (void)showGitIgnore:(id)sender
+{
+  NSString *currentDirectoryPath = self.fileURL.path;
+  NSString *gitIgnorePath = [currentDirectoryPath stringByAppendingPathComponent:@"/.gitignore"];
+  [[NSWorkspace sharedWorkspace] openFile:gitIgnorePath];
+}
+
 - (NSArray *)fetchFilesWithStatus
 {
+  [self.syncProgressIndicator setHidden:NO];
+  [self.syncProgressIndicator startAnimation:self];
+
   // run `git status --percelain -z`
   NSTask *task = [[NSTask alloc] init];
   task.launchPath = @"/usr/bin/git";
@@ -215,6 +234,10 @@
     scanLocation = nullLocation + 1;
   }
   
+  [self.syncProgressIndicator setHidden:YES];
+  [self.syncProgressIndicator stopAnimation:self];
+
+  
   return files.copy;
 }
 
@@ -242,6 +265,9 @@
 
 - (void)syncWithRemote:(id)sender
 {
+  [self.syncProgressIndicator setHidden:NO];
+  [self.syncProgressIndicator startAnimation:self];
+
   self.status = kWorkingCopyStatusChecking;
   [self updateRemoteSyncStatus];
 
@@ -251,10 +277,16 @@
   
   [self updateUnsyncedCommits];
   self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
+  
+  [self.syncProgressIndicator setHidden:YES];
+  [self.syncProgressIndicator stopAnimation:self];
 }
 
 - (void)commit
 {
+  [self.syncProgressIndicator setHidden:NO];
+  [self.syncProgressIndicator startAnimation:self];
+
   // Super does some extra view drawing..
   [super commit];
 
@@ -271,18 +303,24 @@
   [self updateUnsyncedCommits];
   self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
 
-
+  // Super does some extra view drawing..
+  [super commitDidFinish];
+  
   if (self.commitAutoSyncButton.state == NSOnState) {
     [self pushToRemote];
   }
+  
+  // Update unsynced commits after pushing to ensure they actually went up as expected.
+  [self updateUnsyncedCommits];
+  self.unsyncedcommitsList.string = [self.unsyncedCommits componentsJoinedByString:@"\n"];
   
   self.filesWithStatus = [self fetchFilesWithStatus];
   [self.filesOutlineView reloadData];
   
   [self.commitTextView setString:@""];
-
-  // Super does some extra view drawing..
-  [super commitDidFinish];
+  
+  [self.syncProgressIndicator setHidden:YES];
+  [self.syncProgressIndicator stopAnimation:self];
 }
 
 - (void)partialAdd

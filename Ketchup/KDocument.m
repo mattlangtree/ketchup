@@ -96,8 +96,7 @@
   self.remoteStatusIconView.image = [NSImage imageNamed:@"led-up-to-date"];
   [self.remoteView addSubview:self.remoteStatusIconView];
   
-  self.remoteStatusField = [[NSTextField alloc] initWithFrame:NSMakeRect(40, 4
-                                                                         , sidebarWidth - 50, 25)];
+  self.remoteStatusField = [[NSTextField alloc] initWithFrame:NSMakeRect(40, 4, sidebarWidth - 50, 25)];
   self.remoteStatusField.autoresizingMask = NSViewWidthSizable;
   self.remoteStatusField.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
   self.remoteStatusField.backgroundColor = [NSColor clearColor];
@@ -106,6 +105,13 @@
   self.remoteStatusField.editable = NO;
   self.remoteStatusField.stringValue = @"Synced with Remote";
   [self.remoteView addSubview:self.remoteStatusField];
+  
+  self.syncProgressIndicator = [[NSProgressIndicator alloc] initWithFrame:NSMakeRect(10, 0, sidebarWidth - 100, 25)];
+  self.syncProgressIndicator.autoresizingMask = NSViewWidthSizable;
+  [self.syncProgressIndicator setIndeterminate:YES];
+  [self.remoteView addSubview:self.syncProgressIndicator];
+  [self.syncProgressIndicator setHidden:YES];
+
 
 
   self.filesView = [[NSView alloc] initWithFrame:NSMakeRect(0, 200, sidebarWidth, windowHeight - 230)];

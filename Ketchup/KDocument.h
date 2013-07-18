@@ -45,6 +45,7 @@ typedef NS_OPTIONS(NSUInteger, KDocumentWorkingCopyStatus) {
 @property (strong) NSButton *remoteSyncButton;
 @property (strong) NSImageView *remoteStatusIconView;
 @property (strong) NSTextField *remoteStatusField;
+@property (strong) NSProgressIndicator *syncProgressIndicator;
 
 // "unsynced commits" section in the sidebar
 @property (strong) NSView *commitsView;
