@@ -609,8 +609,8 @@
   diffView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
   
   scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, floor(self.contentView.frame.size.height / 2), self.contentView.frame.size.width, ceil(self.contentView.frame.size.height / 2))];
-  [scrollView addSubview:diffView];
-  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMaxYMargin;
+  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMinYMargin;
+  scrollView.documentView = diffView;
   [self.contentView addSubview:scrollView];
 }
 

@@ -7,10 +7,12 @@
 //
 
 #import "KDiffView.h"
+#import "KChange.h"
 
 @interface KDiffView ()
 
-@property CALayer *pathLayer;
+@property NSArray *changeRecords;
+@property NSDictionary *changeRecordsByLayerName;
 
 @end
 
@@ -23,23 +25,56 @@
   
   self.wantsLayer = YES;
   self.layer.delegate = self;
-  
-  self.pathLayer = [[CALayer alloc] init];
-  self.pathLayer.delegate = self;
-  self.pathLayer.needsDisplayOnBoundsChange = YES;
-  [self.layer addSublayer:self.pathLayer];
+  self.layer.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
   
   return self;
 }
 
+- (void)setOperation:(KDiffOperation *)operation
+{
+  _operation = operation;
+  
+  NSMutableArray *changeRecords = @[].mutableCopy;
+  NSMutableDictionary *changeRecordsByLayerName = @{}.mutableCopy;
+  int changeIndex = -1;
+  for (KChange *change in operation.changes) {
+    changeIndex++;
+    
+    CALayer *layer = [[CALayer alloc] init];
+    layer.delegate = self;
+    layer.needsDisplayOnBoundsChange = YES;
+    layer.name = [NSString stringWithFormat:@"change-%i", changeIndex];
+    [self.layer addSublayer:layer];
+    
+    NSDictionary *changeRecord = @{@"change": change,
+                                   @"layer": layer};
+    
+    [changeRecords addObject:changeRecord];
+    changeRecordsByLayerName[layer.name] = changeRecord;
+  }
+  self.changeRecords = changeRecords.copy;
+  self.changeRecordsByLayerName = changeRecordsByLayerName.copy;
+  
+  [self layoutSublayersOfLayer:self.layer];
+}
+
+- (BOOL)layer:(CALayer *)layer shouldInheritContentsScale:(CGFloat)newScale fromWindow:(NSWindow *)window
+{
+  return YES;
+}
+
 - (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx
 {
-  if (layer == self.pathLayer) {
-    [self drawPathLayer:layer inContext:ctx];
+  if (!layer.name)
+    return;
+  
+  NSDictionary *changeRecord = self.changeRecordsByLayerName[layer.name];
+  if (changeRecord) {
+    [self drawChangeRecord:changeRecord withLayer:layer inContext:ctx];
   }
 }
 
-- (void)drawPathLayer:(CALayer *)layer inContext:(CGContextRef)ctx
+- (void)drawChangeRecord:(NSDictionary *)changeRecord withLayer:(CALayer *)layer inContext:(CGContextRef)ctx
 {
   // fill background with white (opaque background is necessary for subpixel text anti-aliasing)
   CGContextSetGrayFillColor(ctx, 1.0, 1.0);
@@ -55,7 +90,7 @@
   
   // Initialize an attributed string.
   CFMutableAttributedStringRef attrString = CFAttributedStringCreateMutable(kCFAllocatorDefault, 0);
-  CFAttributedStringReplaceString (attrString, CFRangeMake(0, 0), (__bridge CFStringRef)(self.operation.url.path.stringByAbbreviatingWithTildeInPath));
+  CFAttributedStringReplaceString(attrString, CFRangeMake(0, 0), (__bridge CFStringRef)([changeRecord[@"change"] description]));
   
   // Create the framesetter with the attributed string.
   CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString(attrString);
@@ -74,10 +109,18 @@
   if (layer != self.layer)
     return;
   
-  // path layer
-  CGRect expectedFrame = CGRectMake(0, self.layer.frame.size.height - 22, self.layer.frame.size.width, 22);
-  if (!CGRectEqualToRect(expectedFrame, self.pathLayer.frame)) {
-    self.pathLayer.frame = expectedFrame;
+  // change layers
+  CGFloat y = self.frame.size.height;
+  for (NSDictionary *changeRecord in self.changeRecords) {
+    CGRect expectedFrame = CGRectMake(0, y, layer.bounds.size.width, 0);
+    CGFloat height = 22; // todo: calculate actual string height
+    expectedFrame.size.height = height;
+    expectedFrame.origin.y -= height;
+    if (!CGRectEqualToRect([changeRecord[@"layer"] frame], expectedFrame)) {
+      [changeRecord[@"layer"] setFrame:expectedFrame];
+    }
+    
+    y = expectedFrame.origin.y;
   }
 }
 

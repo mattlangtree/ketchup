@@ -12,6 +12,6 @@
 
 @interface KDiffView : NSView
 
-@property KDiffOperation *operation;
+@property (nonatomic) KDiffOperation *operation;
 
 @end
