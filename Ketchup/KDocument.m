@@ -605,12 +605,14 @@
   
   // create Diff View
   KDiffView *diffView = [[KDiffView alloc] initWithFrame:NSMakeRect(0, 0, self.contentView.frame.size.width, ceil(self.contentView.frame.size.height / 2))];
-  diffView.operation = diffOperation;
-  diffView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+  diffView.operation = diffOperation;;
   
   scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, floor(self.contentView.frame.size.height / 2), self.contentView.frame.size.width, ceil(self.contentView.frame.size.height / 2))];
   scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMinYMargin;
   scrollView.documentView = diffView;
+  scrollView.hasVerticalRuler = YES;
+  scrollView.wantsLayer = YES;
+  scrollView.contentView.wantsLayer = YES;
   [self.contentView addSubview:scrollView];
 }
 
