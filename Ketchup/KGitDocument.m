@@ -115,7 +115,6 @@
   task.standardError = [NSPipe pipe];
   
   [task launch];
-  [task waitUntilExit];
   
   // grab the output data, and check for an error
   NSData *outputData = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
@@ -346,7 +345,6 @@
   task.standardError = [NSPipe pipe];
   
   [task launch];
-  [task waitUntilExit];
   
   NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
   NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
@@ -373,7 +371,6 @@
   task.standardError = [NSPipe pipe];
   
   [task launch];
-  [task waitUntilExit];
   
   NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
   NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
@@ -400,7 +397,6 @@
   task.standardError = [NSPipe pipe];
   
   [task launch];
-  [task waitUntilExit];
   
   NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
   NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
@@ -443,7 +439,6 @@
   task.standardError = [NSPipe pipe];
   
   [task launch];
-  [task waitUntilExit];
   
   NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
   NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
@@ -480,7 +475,6 @@
   task.standardError = [NSPipe pipe];
   
   [task launch];
-  [task waitUntilExit];
   
   NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
   NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
@@ -518,7 +512,6 @@
     task.standardError = [NSPipe pipe];
 
     [task launch];
-    [task waitUntilExit];
 
     NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
     NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
@@ -546,7 +539,6 @@
   task.standardError = [NSPipe pipe];
   
   [task launch];
-  [task waitUntilExit];
   
   NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
   NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];
@@ -572,7 +564,6 @@
   task.standardError = [NSPipe pipe];
   
   [task launch];
-  [task waitUntilExit];
   
   NSData *output = [[NSData alloc] initWithData:[[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile]];
   NSData *error = [[NSData alloc] initWithData:[[(NSPipe *)task.standardError fileHandleForReading] readDataToEndOfFile]];

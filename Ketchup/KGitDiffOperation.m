@@ -59,7 +59,6 @@
     task.standardError = [NSPipe pipe];
 
     [task launch];
-    [task waitUntilExit];
 
     // grab the output data, and check for an error
     NSData *outputData = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
@@ -176,7 +175,6 @@
     NSLog(@"%@ %@",task.launchPath,task.arguments);
 
     [task launch];
-    [task waitUntilExit];
 
     // grab the output data, and check for an error
     NSData *outputData = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
