@@ -56,7 +56,7 @@
   [self updateCurrentBranch];
   
   NSMenu *branchMenu = [[NSMenu alloc] init];
-  NSMenuItem *menuItem = [branchMenu addItemWithTitle:@"Edit .gitignore" action:@selector(revealInFinder:) keyEquivalent:@""];
+  NSMenuItem *menuItem = [branchMenu addItemWithTitle:@"Edit .gitignore" action:@selector(showGitIgnore:) keyEquivalent:@""];
   
   self.currentBranchButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, 20)];
   [self.currentBranchButton setButtonType:NSMomentaryPushInButton];
@@ -94,7 +94,7 @@
   self.filesView.frame = NSMakeRect(0, 200, sidebarWidth, windowHeight - 300);
 }
 
-- (void)revealInFinder:(id)sender
+- (void)showGitIgnore:(id)sender
 {
   NSString *currentDirectoryPath = self.fileURL.path;
   NSString *gitIgnorePath = [currentDirectoryPath stringByAppendingPathComponent:@"/.gitignore"];

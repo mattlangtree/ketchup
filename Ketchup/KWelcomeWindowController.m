@@ -60,12 +60,13 @@
   textField.bordered = NO;
   [cellView addSubview:textField];
 
-  NSTextField *pathTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(42, 5, 308, 20)];
+  NSTextField *pathTextField = [[NSTextField alloc] initWithFrame:NSMakeRect(42, 5, 263, 20)];
   pathTextField.backgroundColor = [NSColor clearColor];
   pathTextField.editable = NO;
   pathTextField.bordered = NO;
   pathTextField.font = [NSFont systemFontOfSize:11.f];
   pathTextField.textColor = [NSColor lightGrayColor];
+  [[pathTextField cell] setLineBreakMode:NSLineBreakByTruncatingHead];
   [cellView addSubview:pathTextField];
   
   NSImageView *imageView = [[NSImageView alloc] initWithFrame:NSMakeRect(4, 7, 32, 32)];
@@ -73,7 +74,8 @@
 
   NSURL *URL = [_recentDocuments objectAtIndex:row];
   textField.stringValue = [URL lastPathComponent];
-  pathTextField.stringValue = URL.path;
+  pathTextField.stringValue = [URL.path stringByDeletingLastPathComponent];
+  pathTextField.toolTip = URL.path;
   imageView.image = [[NSWorkspace sharedWorkspace] iconForFile:URL.path];
   return cellView;
 }
@@ -96,6 +98,7 @@
 - (IBAction)openExistingRepository:(id)sender
 {
   [[NSDocumentController sharedDocumentController] openDocument:nil];
+  [self close];
 }
 
 @end
