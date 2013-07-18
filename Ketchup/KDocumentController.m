@@ -13,12 +13,23 @@
 
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)theApplication
 {
-//  [self openDocument:self];
+  [self showWelcomeWindow];
+  
+  return YES;
+}
+
+- (void)showWelcomeWindow
+{
   if (!_welcomeController) {
     _welcomeController = [[KWelcomeWindowController alloc] init];
   }
   [_welcomeController showWindow:self];
+}
 
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
+{
+  [self showWelcomeWindow];
+  
   return YES;
 }
 
@@ -38,6 +49,12 @@
 
   if ([typeName isEqualToString:@"Mercurial Checkout"])
     return NSClassFromString(@"KHGDocument");
+  
+  // Kinda hacky, but this enables us to show the welcome window after all documents are closed.
+  if ([typeName isEqualToString:@"public.folder"]) {
+    [self showWelcomeWindow];
+    return NSClassFromString(@"NSDocument");
+  }
   
   [NSException raise:@"error" format:@"Unknown document type: %@", typeName];
   
