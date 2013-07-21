@@ -8,12 +8,14 @@
 
 #import "KDiffView.h"
 #import "KChange.h"
+#import "DuxSyntaxHighlighter.h"
 
 // number of unchanged lines to show before and after each change
 #define UNCHANGED_LINES_COUNT 10
 
 @interface KDiffView ()
 
+@property DuxSyntaxHighlighter *highlighter;
 @property NSArray *changeRecords;
 @property NSDictionary *changeRecordsByLayerName;
 
@@ -30,7 +32,7 @@
   self.layer.delegate = self;
   self.layer.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
   
-  self.textAttributes = @{NSFontAttributeName: [NSFont fontWithName:@"Menlo" size:11]};
+  self.highlighter = [[DuxSyntaxHighlighter alloc] init];
   
   return self;
 }
@@ -39,11 +41,27 @@
 {
   _operation = operation;
   
-  NSString *oldContents = operation.oldFileContents;
-  DuxStringLineEnumerator *oldLineEnumerator = [oldContents lineEnumeratorForLinesInRange:NSMakeRange(0, oldContents.length)];
-  NSString *newContents = operation.newFileContents;
-  DuxStringLineEnumerator *newLineEnumerator = [newContents lineEnumeratorForLinesInRange:NSMakeRange(0, newContents.length)];
+  // grab contents
+  NSString *oldContentsString = operation.oldFileContents;
+  DuxStringLineEnumerator *oldLineEnumerator = [oldContentsString lineEnumeratorForLinesInRange:NSMakeRange(0, oldContentsString.length)];
+  NSString *newContentsString = operation.newFileContents;
+  DuxStringLineEnumerator *newLineEnumerator = [newContentsString lineEnumeratorForLinesInRange:NSMakeRange(0, newContentsString.length)];
   
+  // apply syntax highlighting
+  DuxLanguage *chosenLanguage = [DuxPlainTextLanguage sharedInstance];
+  for (Class language in [DuxLanguage registeredLanguages]) {
+    if (![language isDefaultLanguageForURL:operation.url textContents:newContentsString])
+      continue;
+
+    chosenLanguage = [language sharedInstance];
+    break;
+  }
+  NSTextStorage *oldContents = [[NSTextStorage alloc] initWithString:oldContentsString attributes:self.highlighter.baseAttributes];
+  NSTextStorage *newContents = [[NSTextStorage alloc] initWithString:newContentsString attributes:self.highlighter.baseAttributes];
+  [self.highlighter setBaseLanguage:chosenLanguage forTextStorage:oldContents];
+  [self.highlighter setBaseLanguage:chosenLanguage forTextStorage:newContents];
+  
+  // process changes
   NSMutableArray *changeRecords = @[].mutableCopy;
   NSMutableDictionary *changeRecordsByLayerName = @{}.mutableCopy;
   NSMutableArray *unchangedPreviousLines = @[].mutableCopy;
@@ -86,7 +104,7 @@
         NSValue *lineRangeObject = [newLineEnumerator nextObject];
         NSRange lineRange = lineRangeObject.rangeValue;
         
-        [unchangedPreviousLines addObject:[newContents substringWithRange:lineRange]];
+        [unchangedPreviousLines addObject:[newContents attributedSubstringFromRange:lineRange]];
         if (unchangedPreviousLines.count > UNCHANGED_LINES_COUNT + 1) {
           [unchangedPreviousLines removeObjectAtIndex:0];
         }
@@ -99,7 +117,7 @@
         NSRange lineRange = lineRangeObject.rangeValue;
         
         if (newContentsLineNumber != change.newLineLocation) {
-          [unchangedPreviousLines addObject:[newContents substringWithRange:lineRange]];
+          [unchangedPreviousLines addObject:[newContents attributedSubstringFromRange:lineRange]];
           if (unchangedPreviousLines.count > UNCHANGED_LINES_COUNT + 1) {
             [unchangedPreviousLines removeObjectAtIndex:0];
           }
@@ -122,35 +140,49 @@
         break;
       NSRange lineRange = lineRangeObject.rangeValue;
       
-      [unchangedFollowingLines addObject:[newContents substringWithRange:lineRange]];
+      [unchangedFollowingLines addObject:[newContents attributedSubstringFromRange:lineRange]];
       
       newContentsLineNumber++;
       if (nextChange && newContentsLineNumber == nextChange.newLineLocation)
         break;
     }
     if (unchangedPreviousLines.count > UNCHANGED_LINES_COUNT) {
-      NSString *secondLine = unchangedPreviousLines[2];
+      NSAttributedString *secondLine = unchangedPreviousLines[2];
       NSString *whitespace = @"";
       if (secondLine.length > 0) {
-        NSUInteger nonWhitespaceIndex = [secondLine rangeOfCharacterFromSet:[[NSCharacterSet whitespaceCharacterSet] invertedSet]].location;
+        NSUInteger nonWhitespaceIndex = [secondLine.string rangeOfCharacterFromSet:[[NSCharacterSet whitespaceCharacterSet] invertedSet]].location;
         if (nonWhitespaceIndex == NSNotFound)
-          whitespace = secondLine;
+          whitespace = secondLine.string;
         else
-          whitespace = [secondLine substringToIndex:nonWhitespaceIndex];
+          whitespace = [secondLine.string substringToIndex:nonWhitespaceIndex];
       }
-      [unchangedPreviousLines replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@• • •", whitespace]];
+      [unchangedPreviousLines replaceObjectAtIndex:0 withObject:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@• • •", whitespace] attributes:self.highlighter.baseAttributes]];
     }
     if (unchangedFollowingLines.count > UNCHANGED_LINES_COUNT) {
-      NSString *secondLastLine = unchangedFollowingLines[UNCHANGED_LINES_COUNT - 1];
+      NSAttributedString *secondLastLine = unchangedFollowingLines[UNCHANGED_LINES_COUNT - 1];
       NSString *whitespace = @"";
       if (secondLastLine.length > 0) {
-        NSUInteger nonWhitespaceIndex = [secondLastLine rangeOfCharacterFromSet:[[NSCharacterSet whitespaceCharacterSet] invertedSet]].location;
+        NSUInteger nonWhitespaceIndex = [secondLastLine.string rangeOfCharacterFromSet:[[NSCharacterSet whitespaceCharacterSet] invertedSet]].location;
         if (nonWhitespaceIndex == NSNotFound)
-          whitespace = secondLastLine;
+          whitespace = secondLastLine.string;
         else
-          whitespace = [secondLastLine substringToIndex:nonWhitespaceIndex];
+          whitespace = [secondLastLine.string substringToIndex:nonWhitespaceIndex];
       }
-      [unchangedFollowingLines replaceObjectAtIndex:UNCHANGED_LINES_COUNT withObject:[NSString stringWithFormat:@"%@• • •", whitespace]];
+      [unchangedFollowingLines replaceObjectAtIndex:UNCHANGED_LINES_COUNT withObject:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@• • •", whitespace] attributes:self.highlighter.baseAttributes]];
+    }
+    
+    NSMutableAttributedString *unchangedPreviousContents = [[NSMutableAttributedString alloc] init];
+    NSAttributedString *newlineString = [[NSAttributedString alloc] initWithString:@"\n" attributes:self.highlighter.baseAttributes];
+    for (NSAttributedString *lineString in unchangedPreviousLines) {
+      if (unchangedPreviousContents.length > 0)
+        [unchangedPreviousContents appendAttributedString:newlineString];
+      [unchangedPreviousContents appendAttributedString:lineString];
+    }
+    NSMutableAttributedString *unchangedFollowingContents = [[NSMutableAttributedString alloc] init];
+    for (NSAttributedString *lineString in unchangedFollowingLines) {
+      if (unchangedFollowingContents.length > 0)
+        [unchangedFollowingContents appendAttributedString:newlineString];
+      [unchangedFollowingContents appendAttributedString:lineString];
     }
     
     CALayer *oldContentsLayer = [[CALayer alloc] init];
@@ -162,25 +194,25 @@
                                    @"oldContentsLayer": oldContentsLayer,
                                    @"newContentsLayer": newContentsLayer,
                                    @"unchangedFollowingContentsLayer": unchangedFollowingContentsLayer,
-                                   @"unchangedPreviousContents": [unchangedPreviousLines componentsJoinedByString:@"\n"],
-                                   @"unchangedFollowingContents": [unchangedFollowingLines componentsJoinedByString:@"\n"],
-                                   @"oldContents": [oldContents substringWithRange:oldContentsRange],
-                                   @"newContents": [newContents substringWithRange:newContentsRange]};
+                                   @"unchangedPreviousContents": unchangedPreviousContents,
+                                   @"unchangedFollowingContents": unchangedFollowingContents,
+                                   @"oldContents": [oldContents attributedSubstringFromRange:oldContentsRange],
+                                   @"newContents": [newContents attributedSubstringFromRange:newContentsRange]};
     [changeRecords addObject:changeRecord];
     
-    CGFloat height = [self heightForString:changeRecord[@"unchangedPreviousContents"] forWidth:self.frame.size.width];
+    CGFloat height = [self heightForAttributedString:changeRecord[@"unchangedPreviousContents"] forWidth:self.frame.size.width];
     unchangedPreviousContentsLayer.frame = CGRectMake(0, 0, self.frame.size.width, height);
     unchangedPreviousContentsLayer.delegate = self;
     unchangedPreviousContentsLayer.needsDisplayOnBoundsChange = YES;
     unchangedPreviousContentsLayer.transform = CATransform3DMakeScale(1.0f, -1.0f, 1.0f);
     unchangedPreviousContentsLayer.name = [NSString stringWithFormat:@"change-%li.unchangedPreviousContents", (long)changeIndex];
     unchangedPreviousContentsLayer.backgroundColor = CGColorCreateGenericGray(1.0, 1.0);
-    unchangedPreviousContentsLayer.opacity = 0.7;
+    unchangedPreviousContentsLayer.opacity = 0.6;
     [self.layer addSublayer:unchangedPreviousContentsLayer];
     changeRecordsByLayerName[unchangedPreviousContentsLayer.name] = changeRecord;
     y += unchangedPreviousContentsLayer.frame.size.height;
     
-    height = [self heightForString:changeRecord[@"oldContents"] forWidth:self.frame.size.width];
+    height = [self heightForAttributedString:changeRecord[@"oldContents"] forWidth:self.frame.size.width];
     oldContentsLayer.frame = CGRectMake(0, 0, self.frame.size.width, height);
     oldContentsLayer.delegate = self;
     oldContentsLayer.needsDisplayOnBoundsChange = YES;
@@ -191,7 +223,7 @@
     changeRecordsByLayerName[oldContentsLayer.name] = changeRecord;
     y += oldContentsLayer.frame.size.height;
     
-    height = [self heightForString:changeRecord[@"newContents"] forWidth:self.frame.size.width];
+    height = [self heightForAttributedString:changeRecord[@"newContents"] forWidth:self.frame.size.width];
     newContentsLayer.frame = CGRectMake(0, 0, self.frame.size.width, height);
     newContentsLayer.delegate = self;
     newContentsLayer.needsDisplayOnBoundsChange = YES;
@@ -202,14 +234,14 @@
     changeRecordsByLayerName[newContentsLayer.name] = changeRecord;
     y += newContentsLayer.frame.size.height;
     
-    height = [self heightForString:changeRecord[@"unchangedFollowingContents"] forWidth:self.frame.size.width];
+    height = [self heightForAttributedString:changeRecord[@"unchangedFollowingContents"] forWidth:self.frame.size.width];
     unchangedFollowingContentsLayer.frame = CGRectMake(0, 0, self.frame.size.width, height);
     unchangedFollowingContentsLayer.delegate = self;
     unchangedFollowingContentsLayer.needsDisplayOnBoundsChange = YES;
     unchangedFollowingContentsLayer.transform = CATransform3DMakeScale(1.0f, -1.0f, 1.0f);
     unchangedFollowingContentsLayer.name = [NSString stringWithFormat:@"change-%li.unchangedFollowingContents", (long)changeIndex];
     unchangedFollowingContentsLayer.backgroundColor = CGColorCreateGenericGray(1.0, 1.0);
-    unchangedFollowingContentsLayer.opacity = 0.7;
+    unchangedFollowingContentsLayer.opacity = 0.6;
     [self.layer addSublayer:unchangedFollowingContentsLayer];
     changeRecordsByLayerName[unchangedFollowingContentsLayer.name] = changeRecord;
     y += unchangedFollowingContentsLayer.frame.size.height;
@@ -262,15 +294,11 @@
   CGPathAddRect(path, NULL, bounds);
   
   // Initialize an attributed string.
-  NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:changeRecord[dataKey] attributes:self.textAttributes];
-  
-//  CFMutableAttributedStringRef attrString = CFAttributedStringCreateMutable(kCFAllocatorDefault, 0);
-//  CFAttributedStringReplaceString(attrString, CFRangeMake(0, 0), (__bridge CFStringRef)(changeRecord[dataKey]));
+  NSAttributedString *attrString = changeRecord[dataKey];
   
   // Create the framesetter with the attributed string.
   CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)(attrString));
   CGSize framesetterSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, 0), NULL, CGSizeMake(bounds.size.width, CGFLOAT_MAX), NULL);
-//  CFRelease(attrString);
   
   // Create the frame and draw it into the graphics context
   CTFrameRef frame = CTFramesetterCreateFrame(framesetter,
@@ -280,20 +308,50 @@
   CGContextFillRect(ctx, NSMakeRect(bounds.origin.x, bounds.origin.y + bounds.size.height - framesetterSize.height, bounds.size.width, framesetterSize.height));
   CTFrameDraw(frame, ctx);
   CFRelease(frame);
+  
+  // draw a top/bottom border
+  BOOL topLine = NO;
+  BOOL bottomLine = NO;
+  if ([dataKey isEqualToString:@"oldContents"]) {
+    topLine = YES;
+    if ([changeRecord[@"change"] newLineCount] == 0)
+      bottomLine = YES;
+  } else if ([dataKey isEqualToString:@"newContents"]) {
+    bottomLine = YES;
+    if ([changeRecord[@"change"] oldLineCount] == 0)
+      topLine = YES;
+  }
+  
+  CGColorRef strokeColor = CGColorCreateGenericRGB(0, 0, 0, 0.5);
+  CGContextSetStrokeColorWithColor(ctx, strokeColor);
+  CGContextSetLineWidth(ctx, 0.5);
+  if (topLine) {
+    CGContextMoveToPoint(ctx, 0, layer.frame.size.height - 0.25);
+    CGContextAddLineToPoint(ctx, layer.frame.size.width, layer.frame.size.height - 0.25);
+    CGContextStrokePath(ctx);
+  }
+  if (bottomLine) {
+    CGContextMoveToPoint(ctx, 0, 0.25);
+    CGContextAddLineToPoint(ctx, layer.frame.size.width, 0.25);
+    CGContextStrokePath(ctx);
+  }
+  CFRelease(strokeColor);
 }
 
-- (CGFloat)heightForString:(NSString *)string forWidth:(CGFloat)inWidth
+- (CGFloat)heightForAttributedString:(NSAttributedString *)attrString forWidth:(CGFloat)inWidth
 {
   // zero length string has 0 height
-  if (string.length == 0)
+  if (attrString.length == 0)
     return 0;
   
   // if last char is a newline... suffix with a " " character, or else we'll return a value without it
   NSCharacterSet *newlineCharacters = [NSCharacterSet newlineCharacterSet];
-  if ([newlineCharacters characterIsMember:[string characterAtIndex:string.length - 1]])
-    string = [string stringByAppendingString:@" "];
+  if ([newlineCharacters characterIsMember:[attrString.string characterAtIndex:attrString.length - 1]]) {
+    NSMutableAttributedString *mutableAttrString = attrString.mutableCopy;
+    [mutableAttrString appendAttributedString:[[NSAttributedString alloc] initWithString:@" " attributes:self.highlighter.baseAttributes]];
+    attrString = mutableAttrString.copy;
+  }
   
-  NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:string attributes:self.textAttributes];
   
   CGFloat H = 0;
   
@@ -323,7 +381,6 @@
     CTLineRef currentLine = (CTLineRef)CFArrayGetValueAtIndex(lineArray, j);
     CTLineGetTypographicBounds(currentLine, &ascent, &descent, &leading);
     h = ascent + descent + leading;
-//    NSLog(@"%f", h);
     H+=h;
   }
   
@@ -332,7 +389,7 @@
   CFRelease(framesetter);
   
   
-  return H;
+  return ceil(H);
 }
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer

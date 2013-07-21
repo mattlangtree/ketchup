@@ -41,7 +41,7 @@
 if ([DuxPreferences editorDarkMode]) {
   baseAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                     [DuxPreferences editorFont], NSFontAttributeName,
-                    [NSColor colorWithCalibratedWhite:0.8 alpha:1], NSForegroundColorAttributeName,
+                    [NSColor colorWithCalibratedWhite:0.8 alpha:1].CGColor, kCTForegroundColorAttributeName,
                     nil];
 } else {
   baseAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -180,7 +180,7 @@ if ([DuxPreferences editorDarkMode]) {
         [textStorage beginEditing];
         didBeginEditing = YES;
       }
-      [textStorage addAttribute:NSForegroundColorAttributeName value:[thisElement color] range:attsRange];
+      [textStorage addAttribute:(NSString *)(kCTForegroundColorAttributeName) value:(id)([thisElement color].CGColor) range:attsRange];
       [textStorage addAttribute:@"DuxLanguageElementStack" value:elementStack range:attsRange];
     }
     

@@ -13,6 +13,5 @@
 @interface KDiffView : NSView
 
 @property (nonatomic) KDiffOperation *operation;
-@property NSDictionary *textAttributes;
 
 @end
