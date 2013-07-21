@@ -200,7 +200,7 @@
                                    @"newContents": [newContents attributedSubstringFromRange:newContentsRange]};
     [changeRecords addObject:changeRecord];
     
-    CGFloat height = [self heightForAttributedString:changeRecord[@"unchangedPreviousContents"] forWidth:self.frame.size.width];
+    CGFloat height = [self layerHeightForAttributedString:changeRecord[@"unchangedPreviousContents"] forWidth:self.frame.size.width];
     unchangedPreviousContentsLayer.frame = CGRectMake(0, 0, self.frame.size.width, height);
     unchangedPreviousContentsLayer.delegate = self;
     unchangedPreviousContentsLayer.needsDisplayOnBoundsChange = YES;
@@ -208,22 +208,24 @@
     unchangedPreviousContentsLayer.name = [NSString stringWithFormat:@"change-%li.unchangedPreviousContents", (long)changeIndex];
     unchangedPreviousContentsLayer.backgroundColor = CGColorCreateGenericGray(1.0, 1.0);
     unchangedPreviousContentsLayer.opacity = 0.6;
+    [unchangedPreviousContentsLayer setNeedsDisplay];
     [self.layer addSublayer:unchangedPreviousContentsLayer];
     changeRecordsByLayerName[unchangedPreviousContentsLayer.name] = changeRecord;
     y += unchangedPreviousContentsLayer.frame.size.height;
     
-    height = [self heightForAttributedString:changeRecord[@"oldContents"] forWidth:self.frame.size.width];
+    height = [self layerHeightForAttributedString:changeRecord[@"oldContents"] forWidth:self.frame.size.width];
     oldContentsLayer.frame = CGRectMake(0, 0, self.frame.size.width, height);
     oldContentsLayer.delegate = self;
     oldContentsLayer.needsDisplayOnBoundsChange = YES;
     oldContentsLayer.transform = CATransform3DMakeScale(1.0f, -1.0f, 1.0f);
     oldContentsLayer.name = [NSString stringWithFormat:@"change-%li.oldContents", (long)changeIndex];
     oldContentsLayer.backgroundColor = CGColorCreateGenericRGB(1.0, 0.9, 0.9, 1.0);
+    [oldContentsLayer setNeedsDisplay];
     [self.layer addSublayer:oldContentsLayer];
     changeRecordsByLayerName[oldContentsLayer.name] = changeRecord;
     y += oldContentsLayer.frame.size.height;
     
-    height = [self heightForAttributedString:changeRecord[@"newContents"] forWidth:self.frame.size.width];
+    height = [self layerHeightForAttributedString:changeRecord[@"newContents"] forWidth:self.frame.size.width];
     newContentsLayer.frame = CGRectMake(0, 0, self.frame.size.width, height);
     newContentsLayer.delegate = self;
     newContentsLayer.needsDisplayOnBoundsChange = YES;
@@ -231,10 +233,11 @@
     newContentsLayer.name = [NSString stringWithFormat:@"change-%li.newContents", (long)changeIndex];
     newContentsLayer.backgroundColor = CGColorCreateGenericRGB(0.9, 1.0, 0.9, 1.0);
     [self.layer addSublayer:newContentsLayer];
+    [newContentsLayer setNeedsDisplay];
     changeRecordsByLayerName[newContentsLayer.name] = changeRecord;
     y += newContentsLayer.frame.size.height;
     
-    height = [self heightForAttributedString:changeRecord[@"unchangedFollowingContents"] forWidth:self.frame.size.width];
+    height = [self layerHeightForAttributedString:changeRecord[@"unchangedFollowingContents"] forWidth:self.frame.size.width];
     unchangedFollowingContentsLayer.frame = CGRectMake(0, 0, self.frame.size.width, height);
     unchangedFollowingContentsLayer.delegate = self;
     unchangedFollowingContentsLayer.needsDisplayOnBoundsChange = YES;
@@ -242,6 +245,7 @@
     unchangedFollowingContentsLayer.name = [NSString stringWithFormat:@"change-%li.unchangedFollowingContents", (long)changeIndex];
     unchangedFollowingContentsLayer.backgroundColor = CGColorCreateGenericGray(1.0, 1.0);
     unchangedFollowingContentsLayer.opacity = 0.6;
+    [unchangedFollowingContentsLayer setNeedsDisplay];
     [self.layer addSublayer:unchangedFollowingContentsLayer];
     changeRecordsByLayerName[unchangedFollowingContentsLayer.name] = changeRecord;
     y += unchangedFollowingContentsLayer.frame.size.height;
@@ -290,7 +294,7 @@
   
   // Initialize a rectangular path.
   CGMutablePathRef path = CGPathCreateMutable();
-  CGRect bounds = CGRectMake(10.0, -20, layer.frame.size.width - 20.0, layer.frame.size.height + 20);
+  CGRect bounds = CGRectMake(10.0, -22, layer.frame.size.width - 20.0, layer.frame.size.height + 20);
   CGPathAddRect(path, NULL, bounds);
   
   // Initialize an attributed string.
@@ -307,6 +311,7 @@
   CGContextSetFillColorWithColor(ctx, layer.backgroundColor);
   CGContextFillRect(ctx, NSMakeRect(bounds.origin.x, bounds.origin.y + bounds.size.height - framesetterSize.height, bounds.size.width, framesetterSize.height));
   CTFrameDraw(frame, ctx);
+  
   CFRelease(frame);
   
   // draw a top/bottom border
@@ -338,7 +343,7 @@
   CFRelease(strokeColor);
 }
 
-- (CGFloat)heightForAttributedString:(NSAttributedString *)attrString forWidth:(CGFloat)inWidth
+- (CGFloat)layerHeightForAttributedString:(NSAttributedString *)attrString forWidth:(CGFloat)inWidth
 {
   // zero length string has 0 height
   if (attrString.length == 0)
@@ -389,7 +394,7 @@
   CFRelease(framesetter);
   
   
-  return ceil(H);
+  return ceil(H) + 4;
 }
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer
