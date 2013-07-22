@@ -13,6 +13,7 @@
 #import "KDiffOperation.h"
 #import "KSyncronizedScrollView.h"
 #import "KDiffView.h"
+#import "KDocumentController.h"
 
 @interface KDocument()
 
