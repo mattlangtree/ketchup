@@ -510,109 +510,111 @@
 //    [rightString appendString:change.rightString];
   }
   
-  CGFloat diffViewWidth = floor(self.contentView.frame.size.width / 2);
-  
-  // create left diff view
-  self.leftDiffTextStorage = [[NSTextStorage alloc] initWithString:[diffOperation newFileContents] attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
-  self.leftSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
-  self.leftDiffTextStorage.delegate = self.leftSyntaxHighlighter;
-  [self.leftSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.leftDiffTextStorage];
-  
-  NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-  NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(diffViewWidth, FLT_MAX)];
-  textContainer.widthTracksTextView = YES;
-  
-  [self.leftDiffTextStorage addLayoutManager:layoutManager];
-  [layoutManager addTextContainer:textContainer];
-  
-  self.leftDiffView = [[DuxTextView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, 100) textContainer:textContainer];
-  self.leftDiffView.editable = NO;
-  self.leftDiffView.minSize = NSMakeSize(0, 100);
-  self.leftDiffView.maxSize = NSMakeSize(FLT_MAX, FLT_MAX);
-  [self.leftDiffView setVerticallyResizable:YES];
-  [self.leftDiffView setHorizontallyResizable:NO];
-  [self.leftDiffView setAutoresizingMask:NSViewWidthSizable];
-  self.leftDiffView.usesFindBar = YES;
-  self.leftDiffView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
-  self.leftDiffView.highlighter = self.leftSyntaxHighlighter;
-  
-  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, self.contentView.frame.size.height / 2)];
-  scrollView.borderType = NSNoBorder;
-  scrollView.hasVerticalScroller = YES;
-  scrollView.hasHorizontalScroller = NO;
-  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMaxXMargin | NSViewMaxYMargin;
-  scrollView.autoresizesSubviews = YES;
-  scrollView.documentView = self.leftDiffView;
-  if ([DuxPreferences editorDarkMode]) {
-    scrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
-  }
-  [self.contentView addSubview:scrollView];
-  
-  // make sure scroll bars are good
-  [self.leftDiffView.layoutManager ensureLayoutForTextContainer:self.leftDiffView.textContainer];
-  
-  
+//  CGFloat diffViewWidth = floor(self.contentView.frame.size.width / 2);
+//  
+//  // create left diff view
+//  self.leftDiffTextStorage = [[NSTextStorage alloc] initWithString:[diffOperation newFileContents] attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+//  self.leftSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
+//  self.leftDiffTextStorage.delegate = self.leftSyntaxHighlighter;
+//  [self.leftSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.leftDiffTextStorage];
+//  
+//  NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+//  NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(diffViewWidth, FLT_MAX)];
+//  textContainer.widthTracksTextView = YES;
+//  
+//  [self.leftDiffTextStorage addLayoutManager:layoutManager];
+//  [layoutManager addTextContainer:textContainer];
+//  
+//  self.leftDiffView = [[DuxTextView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, 100) textContainer:textContainer];
+//  self.leftDiffView.editable = NO;
+//  self.leftDiffView.minSize = NSMakeSize(0, 100);
+//  self.leftDiffView.maxSize = NSMakeSize(FLT_MAX, FLT_MAX);
+//  [self.leftDiffView setVerticallyResizable:YES];
+//  [self.leftDiffView setHorizontallyResizable:NO];
+//  [self.leftDiffView setAutoresizingMask:NSViewWidthSizable];
+//  self.leftDiffView.usesFindBar = YES;
+//  self.leftDiffView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
+//  self.leftDiffView.highlighter = self.leftSyntaxHighlighter;
+//  
+//  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, self.contentView.frame.size.height / 2)];
+//  scrollView.borderType = NSNoBorder;
+//  scrollView.hasVerticalScroller = YES;
+//  scrollView.hasHorizontalScroller = NO;
+//  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMaxXMargin | NSViewMaxYMargin;
+//  scrollView.autoresizesSubviews = YES;
+//  scrollView.documentView = self.leftDiffView;
+//  if ([DuxPreferences editorDarkMode]) {
+//    scrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
+//  }
+//  [self.contentView addSubview:scrollView];
+//  
+//  // make sure scroll bars are good
+//  [self.leftDiffView.layoutManager ensureLayoutForTextContainer:self.leftDiffView.textContainer];
   
   
-  // create right diff view
-  self.rightDiffTextStorage = [[NSTextStorage alloc] initWithString:[diffOperation oldFileContents] attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
-  self.rightSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
-  self.rightDiffTextStorage.delegate = self.rightSyntaxHighlighter;
-  [self.rightSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.rightDiffTextStorage];
   
-  layoutManager = [[NSLayoutManager alloc] init];
-  textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(diffViewWidth, FLT_MAX)];
-  textContainer.widthTracksTextView = YES;
   
-  [self.rightDiffTextStorage addLayoutManager:layoutManager];
-  [layoutManager addTextContainer:textContainer];
-  
-  self.rightDiffView = [[DuxTextView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, 100) textContainer:textContainer];
-  self.rightDiffView.editable = NO;
-  self.rightDiffView.minSize = NSMakeSize(0, 100);
-  self.rightDiffView.maxSize = NSMakeSize(FLT_MAX, FLT_MAX);
-  [self.rightDiffView setVerticallyResizable:YES];
-  [self.rightDiffView setHorizontallyResizable:NO];
-  [self.rightDiffView setAutoresizingMask:NSViewWidthSizable];
-  self.rightDiffView.usesFindBar = YES;
-  self.rightDiffView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
-  self.rightDiffView.highlighter = self.rightSyntaxHighlighter;
-  
-  KSyncronizedScrollView *syncronizedScrollView = [[KSyncronizedScrollView alloc] initWithFrame:NSMakeRect(self.contentView.frame.size.width - diffViewWidth, 0, diffViewWidth, self.contentView.frame.size.height / 2)];
-  syncronizedScrollView.borderType = NSNoBorder;
-  syncronizedScrollView.hasVerticalScroller = YES;
-  syncronizedScrollView.hasHorizontalScroller = NO;
-  syncronizedScrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMinXMargin | NSViewMaxYMargin;
-  syncronizedScrollView.autoresizesSubviews = YES;
-  syncronizedScrollView.documentView = self.rightDiffView;
-  if ([DuxPreferences editorDarkMode]) {
-    syncronizedScrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
-  }
-  [syncronizedScrollView setSynchronizedScrollView:scrollView];
-  [self.contentView addSubview:syncronizedScrollView];
-  
-  // highlight changes
-  [self.leftDiffView setHighlightedRanges:leftHighlightedRanges.copy];
-  [self.rightDiffView setHighlightedRanges:rightHighlightedRanges.copy];
-  
-  // after a moment, force a re-draw (i don't know why this is needed, but it is - otherwise the highilghted ranges are in the wrong position)
-  double delayInSeconds = 0;
-  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-    [self.rightDiffView setNeedsDisplay:YES];
-    [self.leftDiffView setNeedsDisplay:YES];
-  });
+//  // create right diff view
+//  self.rightDiffTextStorage = [[NSTextStorage alloc] initWithString:[diffOperation oldFileContents] attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+//  self.rightSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
+//  self.rightDiffTextStorage.delegate = self.rightSyntaxHighlighter;
+//  [self.rightSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.rightDiffTextStorage];
+//  
+//  layoutManager = [[NSLayoutManager alloc] init];
+//  textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(diffViewWidth, FLT_MAX)];
+//  textContainer.widthTracksTextView = YES;
+//  
+//  [self.rightDiffTextStorage addLayoutManager:layoutManager];
+//  [layoutManager addTextContainer:textContainer];
+//  
+//  self.rightDiffView = [[DuxTextView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, 100) textContainer:textContainer];
+//  self.rightDiffView.editable = NO;
+//  self.rightDiffView.minSize = NSMakeSize(0, 100);
+//  self.rightDiffView.maxSize = NSMakeSize(FLT_MAX, FLT_MAX);
+//  [self.rightDiffView setVerticallyResizable:YES];
+//  [self.rightDiffView setHorizontallyResizable:NO];
+//  [self.rightDiffView setAutoresizingMask:NSViewWidthSizable];
+//  self.rightDiffView.usesFindBar = YES;
+//  self.rightDiffView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
+//  self.rightDiffView.highlighter = self.rightSyntaxHighlighter;
+//  
+//  KSyncronizedScrollView *syncronizedScrollView = [[KSyncronizedScrollView alloc] initWithFrame:NSMakeRect(self.contentView.frame.size.width - diffViewWidth, 0, diffViewWidth, self.contentView.frame.size.height / 2)];
+//  syncronizedScrollView.borderType = NSNoBorder;
+//  syncronizedScrollView.hasVerticalScroller = YES;
+//  syncronizedScrollView.hasHorizontalScroller = NO;
+//  syncronizedScrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMinXMargin | NSViewMaxYMargin;
+//  syncronizedScrollView.autoresizesSubviews = YES;
+//  syncronizedScrollView.documentView = self.rightDiffView;
+//  if ([DuxPreferences editorDarkMode]) {
+//    syncronizedScrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
+//  }
+//  [syncronizedScrollView setSynchronizedScrollView:scrollView];
+//  [self.contentView addSubview:syncronizedScrollView];
+//  
+//  // highlight changes
+//  [self.leftDiffView setHighlightedRanges:leftHighlightedRanges.copy];
+//  [self.rightDiffView setHighlightedRanges:rightHighlightedRanges.copy];
+//  
+//  // after a moment, force a re-draw (i don't know why this is needed, but it is - otherwise the highilghted ranges are in the wrong position)
+//  double delayInSeconds = 0;
+//  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//    [self.rightDiffView setNeedsDisplay:YES];
+//    [self.leftDiffView setNeedsDisplay:YES];
+//  });
   
   // create Diff View
-  KDiffView *diffView = [[KDiffView alloc] initWithFrame:NSMakeRect(0, 0, self.contentView.frame.size.width, ceil(self.contentView.frame.size.height / 2))];
+  KDiffView *diffView = [[KDiffView alloc] initWithFrame:NSMakeRect(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
+  diffView.autoresizingMask = NSViewWidthSizable;
   diffView.operation = diffOperation;;
   
-  scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, floor(self.contentView.frame.size.height / 2), self.contentView.frame.size.width, ceil(self.contentView.frame.size.height / 2))];
-  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMinYMargin;
+  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
+  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
   scrollView.documentView = diffView;
   scrollView.hasVerticalRuler = YES;
   scrollView.wantsLayer = YES;
   scrollView.contentView.wantsLayer = YES;
+  scrollView.backgroundColor = [NSColor whiteColor];
   [self.contentView addSubview:scrollView];
 }
 

@@ -66,12 +66,12 @@ typedef NS_OPTIONS(NSUInteger, KDocumentWorkingCopyStatus) {
 @property (strong) NSButton *commitButton;
 
 // main text views to display diff of the selected file
-@property (strong) DuxTextView *leftDiffView;
-@property (strong) NSTextStorage *leftDiffTextStorage;
-@property (strong) DuxSyntaxHighlighter *leftSyntaxHighlighter;
-@property (strong) DuxTextView *rightDiffView;
-@property (strong) NSTextStorage *rightDiffTextStorage;
-@property (strong) DuxSyntaxHighlighter *rightSyntaxHighlighter;
+//@property (strong) DuxTextView *leftDiffView;
+//@property (strong) NSTextStorage *leftDiffTextStorage;
+//@property (strong) DuxSyntaxHighlighter *leftSyntaxHighlighter;
+//@property (strong) DuxTextView *rightDiffView;
+//@property (strong) NSTextStorage *rightDiffTextStorage;
+//@property (strong) DuxSyntaxHighlighter *rightSyntaxHighlighter;
 
 @property (strong) NSImageView *fileImageView;
 
