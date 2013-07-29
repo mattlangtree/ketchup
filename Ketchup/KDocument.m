@@ -245,6 +245,21 @@
   self.filesRightClickMenu = [[NSMenu alloc] init];
   NSMenuItem *menuItem = [self.filesRightClickMenu addItemWithTitle:@"Reveal in Finder" action:@selector(revealInFinder:) keyEquivalent:@""];
   NSMenuItem *openMenuItem = [self.filesRightClickMenu addItemWithTitle:@"Open in Default Editor" action:@selector(openInDefaultEditor:) keyEquivalent:@""];
+  
+  NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"PreferredEditors" ofType:@"plist"];
+  NSDictionary *editorsDictionary = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+  
+  NSLog(@"editors dictionary: %@",editorsDictionary);
+  if ([[editorsDictionary allKeys] count] > 0) {
+    [self.filesRightClickMenu addItem:[NSMenuItem separatorItem]];
+    for (int i=0; i<[[editorsDictionary allKeys] count]; i++) {
+      NSString *editor = [[editorsDictionary allKeys] objectAtIndex:i];
+      NSString *openInString = [NSString stringWithFormat:@"Open in \"%@\"",editor];
+      NSMenuItem *menuItem = [self.filesRightClickMenu addItemWithTitle:openInString action:@selector(openInEditor:) keyEquivalent:@""];
+      [menuItem setTag:i];
+    }
+  }
+  
   [self.filesRightClickMenu addItem:[NSMenuItem separatorItem]];
   NSMenuItem *discardChangesMenuItem = [self.filesRightClickMenu addItemWithTitle:@"Discard Changes..." action:@selector(discardChanges:) keyEquivalent:@""];
   [menuItem setTarget:nil];
@@ -775,6 +790,17 @@
   NSInteger clickedRow = [self.filesOutlineView clickedRow];
   KDocumentVersionedFile *fileForClickedRow = [self.filesOutlineView itemAtRow:clickedRow];
   [[NSWorkspace sharedWorkspace] openFile:fileForClickedRow.fileUrl.path];
+}
+
+- (void)openInEditor:(NSMenuItem *)menuItem
+{
+  NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"PreferredEditors" ofType:@"plist"];
+  NSDictionary *editorsDictionary = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+  NSString *appName = [[editorsDictionary allKeys] objectAtIndex:[menuItem tag]];
+  
+  NSInteger clickedRow = [self.filesOutlineView clickedRow];
+  KDocumentVersionedFile *fileForClickedRow = [self.filesOutlineView itemAtRow:clickedRow];
+  [[NSWorkspace sharedWorkspace] openFile:fileForClickedRow.fileUrl.path withApplication:appName];
 }
 
 - (void)discardChanges:(NSMenuItem *)menuItem

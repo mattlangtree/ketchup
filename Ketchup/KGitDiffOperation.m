@@ -48,8 +48,10 @@
     if (_oldFileContents)
         return _oldFileContents;
 
+    NSString *relativeURL = [self.url.path stringByReplacingOccurrencesOfString:self.workingDirectory.path withString:@"./"];
+  
     NSString *showArgument = @"HEAD:";
-    showArgument = [showArgument stringByAppendingString:self.url.path];
+    showArgument = [showArgument stringByAppendingString:relativeURL];
     // run `git show HEAD:path/to/file`
     NSTask *task = [[NSTask alloc] init];
     task.launchPath = @"/usr/bin/git";
@@ -169,7 +171,10 @@
     NSTask *task = [[NSTask alloc] init];
     task.launchPath = @"/usr/bin/git";
     task.arguments = @[@"diff", @"--word-diff=porcelain", self.url.path];
+  
+    NSLog(@"diff options: %@",@[@"diff", @"--word-diff=porcelain", self.url.path]);
     task.currentDirectoryPath = self.workingDirectory.path;
+    NSLog(@"self.workingDirectory.path: %@",self.workingDirectory.path);
     task.standardOutput = [NSPipe pipe];
     task.standardError = [NSPipe pipe];
 

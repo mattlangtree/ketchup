@@ -68,7 +68,6 @@
     _preferencesController = [[KPreferencesWindowController alloc] init];
   }
   [_preferencesController showWindow:self];
-
 }
 
 - (NSString *)typeForContentsOfURL:(NSURL *)url error:(NSError **)outError
