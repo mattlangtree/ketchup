@@ -502,10 +502,16 @@
 - (void)discardChangesInFile:(KDocumentVersionedFile *)versionedFile
 {
     if (versionedFile.status == KFileStatusUntracked) {
-        // I didn't want to write deletion code.. so delete the file yourself..
-        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[versionedFile.fileUrl]];
+      // Move file to trash..
+      NSFileManager *fileManager = [NSFileManager defaultManager];
+      NSURL *trashed;
+      NSError *error;
+      [fileManager trashItemAtURL:versionedFile.fileUrl resultingItemURL:&trashed error:&error];
 
-        return;
+      self.filesWithStatus = [self fetchFilesWithStatus];
+      [self.filesOutlineView reloadData];
+
+      return;
     }
 
     NSLog(@"Current directory: %@",self.fileURL.path);

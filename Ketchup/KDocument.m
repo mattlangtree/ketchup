@@ -782,11 +782,18 @@
   NSInteger clickedRow = [self.filesOutlineView clickedRow];
   KDocumentVersionedFile *fileForClickedRow = [self.filesOutlineView itemAtRow:clickedRow];
 
+  NSString *areYouSureString = [NSString stringWithFormat:@"Are you sure you want to discard your changes to \"%@\"?",fileForClickedRow.fileUrl.lastPathComponent];
+  NSString *copyToTrashString;
+  if (fileForClickedRow.status == KFileStatusUntracked) {
+    copyToTrashString = @"A copy will be moved to the trash first.";
+  }
   NSAlert *alert = [[NSAlert alloc] init];
-  [alert addButtonWithTitle:@"OK"];
+  [alert addButtonWithTitle:@"Discard Changes"];
   [alert addButtonWithTitle:@"Cancel"];
-  [alert setMessageText:@"Are you sure?"];
-  [alert setInformativeText:@"NEED BETTER MESSAGE. Discarding a tracked files contents will revert it back to HEAD state. In the case of new/untracked files they *should* be deleted.. But for now we are just showing Finder.app to allow the user to deal with them themselves.."];
+  [alert setMessageText:areYouSureString];
+  if (copyToTrashString) {
+    [alert setInformativeText:copyToTrashString];
+  }
   [alert setAlertStyle:NSWarningAlertStyle];
   NSInteger result = [alert runModal];
 
