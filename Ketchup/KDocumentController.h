@@ -9,9 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 @class KWelcomeWindowController;
+@class KPreferencesWindowController;
 
 @interface KDocumentController : NSDocumentController <NSApplicationDelegate>
 
 @property (strong) KWelcomeWindowController *welcomeController;
+@property (strong) KPreferencesWindowController *preferencesController;
 
 @end

@@ -136,6 +136,9 @@
 		C914E0B81779BD2D00EA77F7 /* KWelcomeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = C914E0B71779BD2D00EA77F7 /* KWelcomeWindowController.m */; };
 		C9B1605B176EB7EE00B1E1D1 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B1605A176EB7EE00B1E1D1 /* CoreServices.framework */; };
 		C9B16062176EBEE400B1E1D1 /* KFilesWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */; };
+		C9BC70A417A64FED008BCF4A /* KPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BC70A217A64FED008BCF4A /* KPreferencesWindowController.m */; };
+		C9BC70A517A64FED008BCF4A /* KPreferencesWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9BC70A317A64FED008BCF4A /* KPreferencesWindowController.xib */; };
+		C9BC70A717A6589D008BCF4A /* PreferredEditors.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9BC70A617A6589D008BCF4A /* PreferredEditors.plist */; };
 		C9D21E9B1763010900A3DDDE /* KHGDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D21E9A1763010900A3DDDE /* KHGDocument.m */; };
 		C9FEB6F61778051200A5DA8B /* KGitDiffOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FEB6F5177803D900A5DA8B /* KGitDiffOperation.m */; };
 /* End PBXBuildFile section */
@@ -376,6 +379,10 @@
 		C9B1605A176EB7EE00B1E1D1 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		C9B1605E176EBB4F00B1E1D1 /* KFilesWatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KFilesWatcher.h; sourceTree = "<group>"; };
 		C9B1605F176EBB4F00B1E1D1 /* KFilesWatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KFilesWatcher.m; sourceTree = "<group>"; };
+		C9BC70A117A64FED008BCF4A /* KPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPreferencesWindowController.h; sourceTree = "<group>"; };
+		C9BC70A217A64FED008BCF4A /* KPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPreferencesWindowController.m; sourceTree = "<group>"; };
+		C9BC70A317A64FED008BCF4A /* KPreferencesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPreferencesWindowController.xib; sourceTree = "<group>"; };
+		C9BC70A617A6589D008BCF4A /* PreferredEditors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PreferredEditors.plist; sourceTree = "<group>"; };
 		C9D21E991763010900A3DDDE /* KHGDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHGDocument.h; sourceTree = "<group>"; };
 		C9D21E9A1763010900A3DDDE /* KHGDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHGDocument.m; sourceTree = "<group>"; };
 		C9FEB6F4177803D900A5DA8B /* KGitDiffOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGitDiffOperation.h; sourceTree = "<group>"; };
@@ -615,6 +622,7 @@
 			children = (
 				3871F687175FF35100AB5900 /* Ketchup.entitlements */,
 				3871F68E175FFDEA00AB5900 /* KDocumentController.h */,
+				C9BC70A617A6589D008BCF4A /* PreferredEditors.plist */,
 				3871F68F175FFDEA00AB5900 /* KDocumentController.m */,
 				3871F662175FF34200AB5900 /* KDocument.h */,
 				3871F663175FF34200AB5900 /* KDocument.m */,
@@ -644,6 +652,9 @@
 				3871F657175FF34200AB5900 /* Supporting Files */,
 				C9FEB6F4177803D900A5DA8B /* KGitDiffOperation.h */,
 				C9FEB6F5177803D900A5DA8B /* KGitDiffOperation.m */,
+				C9BC70A117A64FED008BCF4A /* KPreferencesWindowController.h */,
+				C9BC70A217A64FED008BCF4A /* KPreferencesWindowController.m */,
+				C9BC70A317A64FED008BCF4A /* KPreferencesWindowController.xib */,
 			);
 			path = Ketchup;
 			sourceTree = "<group>";
@@ -885,11 +896,13 @@
 				3871F65B175FF34200AB5900 /* InfoPlist.strings in Resources */,
 				3871F661175FF34200AB5900 /* Credits.rtf in Resources */,
 				3871F667175FF34200AB5900 /* KDocument.xib in Resources */,
+				C9BC70A517A64FED008BCF4A /* KPreferencesWindowController.xib in Resources */,
 				3871F66A175FF34200AB5900 /* MainMenu.xib in Resources */,
 				3871F68D175FFA9F00AB5900 /* appicon.iconset in Resources */,
 				3875E4961760B667002D427E /* led-up-to-date.png in Resources */,
 				C914E0B51779B72500EA77F7 /* KWelcomeWindow.xib in Resources */,
 				3875E4971760B667002D427E /* led-up-to-date@2x.png in Resources */,
+				C9BC70A717A6589D008BCF4A /* PreferredEditors.plist in Resources */,
 				38C8A3D217633729005DBC23 /* JumpToLinePanel.xib in Resources */,
 				3833B3251763394200F5F5DC /* PreferencesWindow.xib in Resources */,
 			);
@@ -958,6 +971,7 @@
 				388CD05B176337B600ECAAC9 /* DuxCLanguage.m in Sources */,
 				388CD05D176337B600ECAAC9 /* DuxCBaseElement.m in Sources */,
 				388CD05F176337B600ECAAC9 /* DuxCSingleQuotedStringElement.m in Sources */,
+				C9BC70A417A64FED008BCF4A /* KPreferencesWindowController.m in Sources */,
 				388CD061176337B600ECAAC9 /* DuxCDoubleQuotedStringElement.m in Sources */,
 				388CD063176337B600ECAAC9 /* DuxCNumberElement.m in Sources */,
 				C9FEB6F61778051200A5DA8B /* KGitDiffOperation.m in Sources */,

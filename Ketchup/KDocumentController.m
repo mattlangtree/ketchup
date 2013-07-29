@@ -8,6 +8,7 @@
 
 #import "KDocumentController.h"
 #import "KWelcomeWindowController.h"
+#import "KPreferencesWindowController.h"
 
 @implementation KDocumentController
 
@@ -59,6 +60,15 @@
   [NSException raise:@"error" format:@"Unknown document type: %@", typeName];
   
   return NULL;
+}
+
+- (IBAction)showPreferencesWindow:(id)sender
+{
+  if (!_preferencesController) {
+    _preferencesController = [[KPreferencesWindowController alloc] init];
+  }
+  [_preferencesController showWindow:self];
+
 }
 
 - (NSString *)typeForContentsOfURL:(NSURL *)url error:(NSError **)outError

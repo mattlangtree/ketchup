@@ -56,15 +56,16 @@
   [self updateCurrentBranch];
   
   NSMenu *branchMenu = [[NSMenu alloc] init];
-  NSMenuItem *menuItem = [branchMenu addItemWithTitle:@"Edit .gitignore" action:@selector(showGitIgnore:) keyEquivalent:@""];
-  
+  NSMenuItem *menuItem = [branchMenu addItemWithTitle:@"Reveal in Finder" action:@selector(revealProjectInFinder:) keyEquivalent:@""];
+  NSMenuItem *menuItem2 = [branchMenu addItemWithTitle:@"Edit .gitignore" action:@selector(showGitIgnore:) keyEquivalent:@""];
+  [self.remoteView setMenu:branchMenu];
+
   self.currentBranchButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, sidebarWidth, 20)];
   [self.currentBranchButton setButtonType:NSMomentaryPushInButton];
   [self.currentBranchButton setBordered:NO];
   self.currentBranchButton.font = [NSFont fontWithName:@"HelveticaNeue-Bold" size:12.f];
   self.currentBranchButton.title = self.currentBranchString;
   [self.currentBranchButton sizeToFit];
-  [self.currentBranchButton setMenu:branchMenu];
   self.currentBranchButton.frame = NSMakeRect(10, self.remoteView.frame.size.height - self.currentBranchButton.frame.size.height, self.currentBranchButton.frame.size.width, self.currentBranchButton.frame.size.height);
   
   [self.remoteStatusIconView setHidden:YES];
@@ -94,11 +95,17 @@
   self.filesView.frame = NSMakeRect(0, 200, sidebarWidth, windowHeight - 300);
 }
 
+- (void)revealProjectInFinder:(id)sender
+{
+  NSString *currentDirectoryPath = self.fileURL.path;
+  [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[currentDirectoryPath]];
+}
+
 - (void)showGitIgnore:(id)sender
 {
   NSString *currentDirectoryPath = self.fileURL.path;
   NSString *gitIgnorePath = [currentDirectoryPath stringByAppendingPathComponent:@"/.gitignore"];
-  [[NSWorkspace sharedWorkspace] openFile:gitIgnorePath];
+  [[NSWorkspace sharedWorkspace] openFile:gitIgnorePath withApplication:@"TextMate"];
 }
 
 - (NSArray *)fetchFilesWithStatus
