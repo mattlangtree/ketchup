@@ -155,7 +155,7 @@
   // run `svn diff file`
   NSTask *task = [[NSTask alloc] init];
   task.launchPath = self.svnLaunchPath;
-  task.arguments = @[@"diff", self.url.path];
+  task.arguments = @[@"diff", @"--internal-diff", self.url.path];
   task.standardOutput = [NSPipe pipe];
   task.standardError = [NSPipe pipe];
   
