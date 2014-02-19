@@ -420,10 +420,6 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
-  for (NSView *view in self.contentView.subviews.copy) {
-    [view removeFromSuperview];
-  }
-  
   // figure out which file is selected
   if (self.filesOutlineView.selectedRow == -1) {
     return;
@@ -445,178 +441,38 @@
     return;
   }
   
-  // create diff
+  // load diff contents
   KDiffOperation *diffOperation = [self diffOperationForFile:file];
   
-  // figure out what language to use
-  DuxLanguage *chosenLanguage = [DuxPlainTextLanguage sharedInstance];
-  for (Class language in [DuxLanguage registeredLanguages]) {
-    if (![language isDefaultLanguageForURL:file.fileUrl textContents:[diffOperation newFileContents]])
-      continue;
+  // write to tmp path
+  CFUUIDRef uuidRef = CFUUIDCreate(NULL);
+  NSString *uuid = CFBridgingRelease(CFUUIDCreateString(NULL, uuidRef));
+  CFRelease(uuidRef);
+  
+  NSString *tmpFileOld = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"old-%@-%@.%@", file.fileUrl.lastPathComponent.stringByDeletingPathExtension, uuid, file.fileUrl.pathExtension]];
+  [diffOperation.oldFileContents writeToFile:tmpFileOld atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+  NSString *tmpFileNew = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"new-%@-%@.%@", file.fileUrl.lastPathComponent.stringByDeletingPathExtension, uuid, file.fileUrl.pathExtension]];
+  [diffOperation.newFileContents writeToFile:tmpFileNew atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+  
+  // send to filemerge
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSTask *task = [[NSTask alloc] init];
+    task.launchPath = @"/usr/bin/opendiff";
+    task.arguments = @[tmpFileOld, tmpFileNew, @"-merge", file.fileUrl.path];
+    task.standardOutput = [NSPipe pipe];
+    task.standardError = [NSPipe pipe];
     
-    chosenLanguage = [language sharedInstance];
-    break;
-  }
-  
-  // load changes
-  NSArray *changes = diffOperation.changes;
-  NSMutableSet *leftHighlightedRanges = [NSMutableSet set];
-  NSMutableSet *rightHighlightedRanges = [NSMutableSet set];
-  for (KChange *change in changes) {
-    NSUInteger lineCounter = 0;
-    NSRange newRange = NSMakeRange(NSNotFound, 0);
-    for (NSValue *lineRange in [[diffOperation newFileContents] lineEnumeratorForLinesInRange:NSMakeRange(0, [diffOperation newFileContents].length)]) {
-      lineCounter++;
-      
-      if (lineCounter == change.newLineLocation) {
-        newRange.location = [lineRange rangeValue].location;
-      } else if (lineCounter > change.newLineLocation && lineCounter <= (change.newLineLocation + change.newLineCount)) {
-        newRange.length = ([lineRange rangeValue].location - newRange.location) - 1;
-      } else if (lineCounter > (change.newLineLocation + change.newLineCount)) {
-        break;
-      }
-    }
-    [leftHighlightedRanges addObject:[NSValue valueWithRange:newRange]];
+    [task launch];
+    [task waitUntilExit];
     
-    lineCounter = 0;
-    NSRange oldRange = NSMakeRange(NSNotFound, 0);
-    for (NSValue *lineRange in [[diffOperation oldFileContents] lineEnumeratorForLinesInRange:NSMakeRange(0, [diffOperation oldFileContents].length)]) {
-      lineCounter++;
-      
-      if (lineCounter == change.oldLineLocation) {
-        oldRange.location = [lineRange rangeValue].location;
-      } else if (lineCounter > change.oldLineLocation && lineCounter <= (change.oldLineLocation + change.oldLineCount)) {
-        oldRange.length = ([lineRange rangeValue].location - oldRange.location) - 1;
-      } else if (lineCounter > (change.oldLineLocation + change.oldLineCount)) {
-        break;
-      }
-    }
-    [rightHighlightedRanges addObject:[NSValue valueWithRange:oldRange]];
+    [[NSFileManager defaultManager] removeItemAtPath:tmpFileOld error:NULL];
+    [[NSFileManager defaultManager] removeItemAtPath:tmpFileNew error:NULL];
     
-    
-//    if (leftString.length > 0) {
-//      [leftString appendString: @"\n\n⚡️  ⚡️  ⚡️\n\n\n"];
-//      [rightString appendString:@"\n\n⚡️  ⚡️  ⚡️\n\n\n"];
-//    }
-//    
-//    for (NSValue *highlightedRange in change.leftHighlightedRanges) {
-//      [leftHighlightedRanges addObject:[NSValue valueWithRange:NSMakeRange(leftString.length - 1 + highlightedRange.rangeValue.location, highlightedRange.rangeValue.length)]];
-//    }
-//    for (NSValue *highlightedRange in change.rightHighlightedRanges) {
-//      [rightHighlightedRanges addObject:[NSValue valueWithRange:NSMakeRange(rightString.length - 1 + highlightedRange.rangeValue.location, highlightedRange.rangeValue.length)]];
-//    }
-//    
-//    [leftString appendString:change.leftString
-//     ];
-//    [rightString appendString:change.rightString];
-  }
-  
-//  CGFloat diffViewWidth = floor(self.contentView.frame.size.width / 2);
-//  
-//  // create left diff view
-//  self.leftDiffTextStorage = [[NSTextStorage alloc] initWithString:[diffOperation newFileContents] attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
-//  self.leftSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
-//  self.leftDiffTextStorage.delegate = self.leftSyntaxHighlighter;
-//  [self.leftSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.leftDiffTextStorage];
-//  
-//  NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-//  NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(diffViewWidth, FLT_MAX)];
-//  textContainer.widthTracksTextView = YES;
-//  
-//  [self.leftDiffTextStorage addLayoutManager:layoutManager];
-//  [layoutManager addTextContainer:textContainer];
-//  
-//  self.leftDiffView = [[DuxTextView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, 100) textContainer:textContainer];
-//  self.leftDiffView.editable = NO;
-//  self.leftDiffView.minSize = NSMakeSize(0, 100);
-//  self.leftDiffView.maxSize = NSMakeSize(FLT_MAX, FLT_MAX);
-//  [self.leftDiffView setVerticallyResizable:YES];
-//  [self.leftDiffView setHorizontallyResizable:NO];
-//  [self.leftDiffView setAutoresizingMask:NSViewWidthSizable];
-//  self.leftDiffView.usesFindBar = YES;
-//  self.leftDiffView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
-//  self.leftDiffView.highlighter = self.leftSyntaxHighlighter;
-//  
-//  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, self.contentView.frame.size.height / 2)];
-//  scrollView.borderType = NSNoBorder;
-//  scrollView.hasVerticalScroller = YES;
-//  scrollView.hasHorizontalScroller = NO;
-//  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMaxXMargin | NSViewMaxYMargin;
-//  scrollView.autoresizesSubviews = YES;
-//  scrollView.documentView = self.leftDiffView;
-//  if ([DuxPreferences editorDarkMode]) {
-//    scrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
-//  }
-//  [self.contentView addSubview:scrollView];
-//  
-//  // make sure scroll bars are good
-//  [self.leftDiffView.layoutManager ensureLayoutForTextContainer:self.leftDiffView.textContainer];
-  
-  
-  
-  
-//  // create right diff view
-//  self.rightDiffTextStorage = [[NSTextStorage alloc] initWithString:[diffOperation oldFileContents] attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
-//  self.rightSyntaxHighlighter = [[DuxSyntaxHighlighter alloc] init];
-//  self.rightDiffTextStorage.delegate = self.rightSyntaxHighlighter;
-//  [self.rightSyntaxHighlighter setBaseLanguage:chosenLanguage forTextStorage:self.rightDiffTextStorage];
-//  
-//  layoutManager = [[NSLayoutManager alloc] init];
-//  textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(diffViewWidth, FLT_MAX)];
-//  textContainer.widthTracksTextView = YES;
-//  
-//  [self.rightDiffTextStorage addLayoutManager:layoutManager];
-//  [layoutManager addTextContainer:textContainer];
-//  
-//  self.rightDiffView = [[DuxTextView alloc] initWithFrame:NSMakeRect(0, 0, diffViewWidth, 100) textContainer:textContainer];
-//  self.rightDiffView.editable = NO;
-//  self.rightDiffView.minSize = NSMakeSize(0, 100);
-//  self.rightDiffView.maxSize = NSMakeSize(FLT_MAX, FLT_MAX);
-//  [self.rightDiffView setVerticallyResizable:YES];
-//  [self.rightDiffView setHorizontallyResizable:NO];
-//  [self.rightDiffView setAutoresizingMask:NSViewWidthSizable];
-//  self.rightDiffView.usesFindBar = YES;
-//  self.rightDiffView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
-//  self.rightDiffView.highlighter = self.rightSyntaxHighlighter;
-//  
-//  KSyncronizedScrollView *syncronizedScrollView = [[KSyncronizedScrollView alloc] initWithFrame:NSMakeRect(self.contentView.frame.size.width - diffViewWidth, 0, diffViewWidth, self.contentView.frame.size.height / 2)];
-//  syncronizedScrollView.borderType = NSNoBorder;
-//  syncronizedScrollView.hasVerticalScroller = YES;
-//  syncronizedScrollView.hasHorizontalScroller = NO;
-//  syncronizedScrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable | NSViewMinXMargin | NSViewMaxYMargin;
-//  syncronizedScrollView.autoresizesSubviews = YES;
-//  syncronizedScrollView.documentView = self.rightDiffView;
-//  if ([DuxPreferences editorDarkMode]) {
-//    syncronizedScrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
-//  }
-//  [syncronizedScrollView setSynchronizedScrollView:scrollView];
-//  [self.contentView addSubview:syncronizedScrollView];
-//  
-//  // highlight changes
-//  [self.leftDiffView setHighlightedRanges:leftHighlightedRanges.copy];
-//  [self.rightDiffView setHighlightedRanges:rightHighlightedRanges.copy];
-//  
-//  // after a moment, force a re-draw (i don't know why this is needed, but it is - otherwise the highilghted ranges are in the wrong position)
-//  double delayInSeconds = 0;
-//  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//    [self.rightDiffView setNeedsDisplay:YES];
-//    [self.leftDiffView setNeedsDisplay:YES];
-//  });
-  
-  // create Diff View
-  KDiffView *diffView = [[KDiffView alloc] initWithFrame:NSMakeRect(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
-  diffView.autoresizingMask = NSViewWidthSizable;
-  diffView.operation = diffOperation;;
-  
-  NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
-  scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-  scrollView.documentView = diffView;
-  scrollView.hasVerticalRuler = YES;
-  scrollView.wantsLayer = YES;
-  scrollView.contentView.wantsLayer = YES;
-  scrollView.backgroundColor = [NSColor whiteColor];
-  [self.contentView addSubview:scrollView];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+      self.filesWithStatus = [self fetchFilesWithStatus];
+      [self.filesOutlineView reloadData];
+    });
+  });
 }
 
 - (void)refreshFilesListFromNotification:(NSNotification *)notification
