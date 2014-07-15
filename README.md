@@ -1,11 +1,13 @@
 ketchup
 =======
 
-Ketchup is a polyglot version control client 
+Ketchup is a polyglot version control client (currently supporting SVN, Git and Mercurial).
+
+![Screenshot of Ketchup App for Mac](http://mediumstack.com/uploads/w/w3hx-full.jpg)
 
 ## Compiling Ketchup
 
-Clone the project by running `git clone git://github.com/Abizern/CommitViewer.git` in Terminal.app.
+Clone the project by running `git clone git@github.com:mattlangtree/ketchup.git` in Terminal.app.
 
 The project Ketchup.xcodeproj can be opened in XCode and you can build the app by pressing the Run button.
 
